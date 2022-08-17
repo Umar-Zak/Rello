@@ -1,14 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import "styled-components"
 import styled from "styled-components/native"
 import * as Yup from "yup"
+import {useNavigation} from "@react-navigation/native"
 import InputMask from '../components/InputMask';
 import Screen from '../components/Screen';
 import Colors from '../config/Colors';
 import AppTextInput from "../components/AppTextInput";
-import Button from '../components/Button';
 import Form from '../components/Form';
 import SubmitButton from '../components/SubmitButton';
+import Screens from '../navigation/Screens';
+import Auth, { SiginInPayload } from '../services/Auth';
+import { Alert } from 'react-native';
+import Activity from '../components/Activity';
 
 
 const validationSchema = Yup.object().shape({
@@ -23,8 +27,29 @@ const validationSchema = Yup.object().shape({
 })
 
 function LoginScreen() {
+    const navigation = useNavigation()
+    const [isLoading, setIsLoading] = useState(false)
+    const handleSignupPress = () => {
+        navigation.navigate(Screens.signup)
+    }
+
+    const handleLogin = async(body: SiginInPayload) => {
+        setIsLoading(true)
+        try {
+            await Auth.signin(body)
+            setIsLoading(false)
+            Alert.alert("Success", "Login successful")
+        } catch (error: any) {
+            setIsLoading(false)
+            console.log("Error", error);
+            Alert.alert(error.response.data.message)
+            
+        }
+    }
+
     return (
      <Container>
+       {isLoading && <Activity/>}
          <Screen>
         <>
         <TextContainer>
@@ -41,7 +66,7 @@ function LoginScreen() {
         password: ""
      }}
      validationSchema={validationSchema}
-     onSubmit={values => console.log(values)
+     onSubmit={(values: SiginInPayload) => handleLogin(values)
      }
      >
      <>
@@ -58,10 +83,10 @@ function LoginScreen() {
             label='Password*'
             name='password'
               />
-           <SubmitButton text='Sign In' />
+           <SubmitButton text='Sign In'/>
             <LoginTextContainer>
             <HaveText>Don't have account?</HaveText>
-            <Login>
+            <Login onPress={handleSignupPress}>
             <LoginText>Sign up</LoginText>
             </Login>
             </LoginTextContainer>
