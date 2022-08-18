@@ -1,3 +1,4 @@
+import { DiscountInterface, GiftCardInterface, LoyaltyInterface } from "./DTOS"
 
 const splashContents = [
     {
@@ -20,6 +21,103 @@ const splashContents = [
       },
 ]
 
+const discounts: DiscountInterface[] = [
+ {
+  address: "Test address",
+  companyname:"Melcome Ghana",
+  count:2,
+  createdAt: new Date(),
+  discountype: "test type",
+  id: "testid",
+  merchantcode: "code",
+  percentage: 15,
+  updatedAt: new Date()
+ },
+ {
+  address: "Test address",
+  companyname:"U84 Supermarket",
+  count:2,
+  createdAt: new Date(),
+  discountype: "test type",
+  id: "testid",
+  merchantcode: "code",
+  percentage: 20,
+  updatedAt: new Date()
+ },
+ {
+  address: "Test address",
+  companyname:"All Needs Supermarket",
+  count:2,
+  createdAt: new Date(),
+  discountype: "test type",
+  id: "testid",
+  merchantcode: "code",
+  percentage: 13,
+  updatedAt: new Date()
+ }
+]
+
+export const getDiscounts = () => {
+  return discounts
+}
+
+const giftCards: GiftCardInterface[] = [
+  {
+    address: "Test address",
+    category:"Test category",
+    companyname: "Lyospot Ltd",
+    count: 20.00,
+    createdAt: new Date(),
+    merchantcode: "Test code",
+    updatedAt: new Date(),
+
+  },
+  {
+    address: "Test address",
+    category:"Test category",
+    companyname: "Crysp Club",
+    count: 30.00,
+    createdAt: new Date(),
+    merchantcode: "Test code",
+    updatedAt: new Date(),
+    
+  }
+]
+
+
+export const getGiftCards = () => {
+  return giftCards
+}
+const loyalties: LoyaltyInterface[] = [
+  {
+    address:"Test address",
+    amount: 70,
+    companyname:"Agape Supermarket",
+    count: 4,
+    createdAt: new Date(),
+    id:"testid",
+    merchantcode: "Test code",
+    point: 20,
+    updatedAt: new Date()
+  },
+  {
+    address:"Test address",
+    amount: 20,
+    companyname:"Tiens Mart",
+    count: 4,
+    createdAt: new Date(),
+    id:"testid",
+    merchantcode: "Test code",
+    point: 20,
+    updatedAt: new Date()
+  }
+]
+
+export const getLoyalties = () => {
+  return loyalties
+}
 export const getSplashContent = () => {
     return splashContents
 }
+
+

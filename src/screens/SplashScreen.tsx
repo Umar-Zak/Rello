@@ -47,7 +47,7 @@ function SplashScreen() {
                     <Tagline>{contents[0].content}</Tagline>
                     <ActivityContainer>
                         {contents.map((c,  i) => (
-                            <Activity style={{opacity: i === 0? 1: 0.5}} key={i} />
+                            <Activity style={{opacity: i === 0? 1: 0.3}} key={i} />
                         ))}
                     </ActivityContainer>
                  <NextButton onPress={handleNext}>
@@ -69,7 +69,7 @@ function SplashScreen() {
                     <Tagline>{contents[1].content}</Tagline>
                     <ActivityContainer>
                         {contents.map((c,  i) => (
-                            <Activity style={{opacity: i === 1? 1: 0.5}} key={i} />
+                            <Activity style={{opacity: i === 1? 1: 0.3}} key={i} />
                         ))}
                     </ActivityContainer>
                      <NextButton onPress={handleSecondNext}>
@@ -91,7 +91,7 @@ function SplashScreen() {
                     <Tagline>{contents[2].content}</Tagline>
                     <ActivityContainer>
                         {contents.map((c,  i) => (
-                            <Activity style={{opacity: i === 2? 1: 0.5}} key={i} />
+                            <Activity style={{opacity: i === 2? 1: 0.3}} key={i} />
                         ))}
                     </ActivityContainer>
                    <NextButton onPress={handleSignIn}>
@@ -165,7 +165,7 @@ const NextText = styled.Text`
 
 const Title = styled.Text`
 text-align: center;
-color: #323232;
+color: ${Colors.deep_green};
 font-weight: 700;
 font-size: 23px;
 letter-spacing: 1px;

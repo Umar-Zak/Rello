@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -8,13 +9,27 @@ import LoginScreen from './src/screens/LoginScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 import SplashScreen from './src/screens/SplashScreen';
 import OnboardingNavigation from './src/navigation/OnboardingNavigation';
-
+import GiftCard from './src/components/GiftCard';
+import DiscountCard from './src/components/DiscountCard';
+import LoyaltyCard from './src/components/LoyaltyCard';
+import HomeScreen from './src/screens/HomeScreen';
+import AppNavigation from './src/navigation/AppNavigation';
+import RootContext from './src/context/RootContext';
 
 export default function App() {
+  const [user, setUser] = useState(false)
   return (
-   <NavigationContainer>
-    <OnboardingNavigation/>
+   <RootContext.Provider value={{
+    user, 
+    setUser
+   }} >
+    <NavigationContainer>
+      {!user && <OnboardingNavigation/>}
+   {user && <AppNavigation/>}
    </NavigationContainer>
+   </RootContext.Provider>
+
+    
       )
 }
 

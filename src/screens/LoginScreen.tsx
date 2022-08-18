@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import "styled-components"
 import styled from "styled-components/native"
 import * as Yup from "yup"
@@ -13,13 +13,14 @@ import Screens from '../navigation/Screens';
 import Auth, { SiginInPayload } from '../services/Auth';
 import { Alert } from 'react-native';
 import Activity from '../components/Activity';
-
+import RootContext from '../context/RootContext';
 
 const validationSchema = Yup.object().shape({
-    email: Yup.string()
-    .email("Email address must be valid")
-    .required("Email address is required")
-    .label("Email address"),
+    contact: Yup.string()
+    .matches(/[0-9]{10}/,"Phone number must be a 10 digit number")
+    .max(10, "Phone number must not be more than 10 digits")
+    .required("Phone number is required")
+    .label("Phone number"),
     password: Yup.string()
     .min(8, "Password should be a minimum of 8 characters")
     .required("Password is required")
@@ -29,22 +30,29 @@ const validationSchema = Yup.object().shape({
 function LoginScreen() {
     const navigation = useNavigation()
     const [isLoading, setIsLoading] = useState(false)
+    const rootContext = useContext<any>(RootContext)
+    
+  
+    
     const handleSignupPress = () => {
         navigation.navigate(Screens.signup)
     }
 
     const handleLogin = async(body: SiginInPayload) => {
         setIsLoading(true)
-        try {
-            await Auth.signin(body)
-            setIsLoading(false)
-            Alert.alert("Success", "Login successful")
-        } catch (error: any) {
-            setIsLoading(false)
-            console.log("Error", error);
-            Alert.alert(error.response.data.message)
+        // try {
+        //     await Auth.signin(body)
+        //     setIsLoading(false)
+        //     Alert.alert("Success", "Login successful")
+        // } catch (error: any) {
+        //     setIsLoading(false)
+        //     console.log("Error", error);
+        //     Alert.alert(error.response.data.message)
             
-        }
+        // }
+        setTimeout(() => {
+            rootContext.setUser(true)
+        }, 100)
     }
 
     return (
@@ -62,7 +70,7 @@ function LoginScreen() {
       <InputMask>
      <Form
      initialValues={{
-        email: "",
+        contact: "",
         password: ""
      }}
      validationSchema={validationSchema}
@@ -73,8 +81,8 @@ function LoginScreen() {
       <AppTextInput 
         autoCapitalize='none'
             autoCorrect={false}
-            label='Email*'  
-            name='email'
+            label='Phone number*' 
+            name='contact'
         />
             <AppTextInput 
             secureTextEntry 
@@ -110,7 +118,7 @@ const Title = styled.Text`
     color: white;
     margin-bottom: 14px;
     font-size: 26px;
-    font-weight: 600;
+    font-weight: 700;
 `
 
 const LoginTextContainer = styled.View`
@@ -135,6 +143,6 @@ const Tagline = styled.Text`
     width: 80%;
     line-height: 25px;
     font-size: 17px;
-    opacity: 0.8;
+    opacity: 0.9;
 `
 export default LoginScreen;

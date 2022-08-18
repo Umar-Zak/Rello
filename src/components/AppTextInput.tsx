@@ -48,11 +48,12 @@ width: 100%;
 padding-block: 5px;
 padding-left: 15px;
 padding-right: 15px;
-background: ${Colors.grey};
+/* background: ${Colors.grey}; */
 height: 52px;
 border-radius: 7px;
 color: ${Colors.dark_grey};
 font-size: 15px;
+border: 1px solid ${Colors.green};
 `
 
 const Label = styled.Text`

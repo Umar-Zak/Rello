@@ -1,5 +1,9 @@
 export default {
     onboard: "ONBOARD",
     signup: "SIGN_UP",
-    login: "SIGN_IN"
+    login: "SIGN_IN",
+    home: "HOME",
+    loyalty: "LOYALTY",
+    discount: "DISCOUNT",
+    wallet: "WALLET"
 }
