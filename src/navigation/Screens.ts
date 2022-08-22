@@ -4,6 +4,6 @@ export default {
     login: "SIGN_IN",
     home: "HOME",
     loyalty: "LOYALTY",
-    discount: "DISCOUNT",
+    discount: "DISCOUNTS",
     wallet: "WALLET"
 }

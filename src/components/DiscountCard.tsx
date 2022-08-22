@@ -1,11 +1,21 @@
 import React from 'react';
 import "styled-components"
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components/native';
 import Colors from '../config/Colors';
 import { DiscountInterface } from '../models/DTOS';
+import {selectDiscount} from "../store/entities/DiscountSlice"
+import {openDiscountModal} from "../store/ui/UI"
 function DiscountCard(discount: DiscountInterface) {
+    const dispatch = useDispatch()
+
+    const handleDiscountPressed = () => {
+        dispatch(selectDiscount(discount))
+        dispatch(openDiscountModal())
+    }
+
     return (
-        <Container>
+        <Container onPress={handleDiscountPressed} >
             <CompanyName>{discount.companyname}</CompanyName>
             <SimpleFlex>
                <Percentage>{discount.percentage}%</Percentage>

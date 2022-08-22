@@ -2,6 +2,7 @@ import React, {useState, useContext} from 'react';
 import { Animated } from 'react-native'
 import "styled-components"
 import styled from 'styled-components/native';
+
 import {MaterialIcons, AntDesign} from "@expo/vector-icons"
 import { BlurView } from 'expo-blur'
 import DiscountCard from '../components/DiscountCard';
@@ -11,12 +12,16 @@ import Screen from '../components/Screen';
 import Colors from '../config/Colors';
 import { getDiscounts, getGiftCards, getLoyalties } from '../models/StaticContent';
 import RootContext from '../context/RootContext';
+import DiscountModa from '../components/DiscountModal';
+
 function HomeScreen() {
     const discounts = getDiscounts()
     const giftCards = getGiftCards()
     const loyalties = getLoyalties()
-    const [top] = useState(new Animated.Value(2000))
+    const [top] = useState(new Animated.Value(-2000))
     const {setUser} = useContext<{user: boolean, setUser: (value: boolean) => void}>(RootContext)
+   
+  
     const handleAvatarPressed = () => {
         Animated
         .spring(top, {toValue: 0, useNativeDriver: false})
@@ -25,7 +30,7 @@ function HomeScreen() {
 
     const closeMenu = () => {
         Animated
-        .spring(top, {toValue: 2000, useNativeDriver: false})
+        .spring(top, {toValue: -2000, useNativeDriver: false})
         .start()
     }
 
@@ -35,6 +40,7 @@ function HomeScreen() {
  
     return (
        <Root>
+        <DiscountModa/>
       <AnimatedMenu
       style={{
         top: top
@@ -90,7 +96,7 @@ function HomeScreen() {
       </AnimatedMenu>
         <Header>
           <Pressable onPress={handleAvatarPressed} >
-          <MaterialIcons name="account-circle"  size={40} color={Colors.deep_green}/>
+          <MaterialIcons name="account-circle"  size={40} color={Colors.dark_grey}/>
           </Pressable>
             <Home>Home</Home>
         </Header>

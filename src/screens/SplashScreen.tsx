@@ -6,7 +6,8 @@ import {useNavigation} from "@react-navigation/native"
 import Colors from '../config/Colors';
 import { getSplashContent } from '../models/StaticContent';
 import Screens from '../navigation/Screens';
-
+import { selectDiscount } from '../store/entities/DiscountSlice';
+import { DiscountInterface } from '../models/DTOS';
 const contents = getSplashContent()
 
 function SplashScreen() {
@@ -14,13 +15,17 @@ function SplashScreen() {
     const [secondLeftOffset] = useState(new Animated.Value(0))
     const [thirdLeftOffset] = useState(new Animated.Value(0))
     const navigation = useNavigation()
-    
+
+
     const handleNext = () => {
         Animated.timing(leftOffset, {
             toValue: -1000,
             duration: 1000,
             useNativeDriver: false
         }).start()
+   
+       
+        
     }
 
     const handleSecondNext = () => {

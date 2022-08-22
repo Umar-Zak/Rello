@@ -24,7 +24,7 @@ const splashContents = [
 const discounts: DiscountInterface[] = [
  {
   address: "Test address",
-  companyname:"Melcome Ghana",
+  companyname:"Melcom Ghana",
   count:2,
   createdAt: new Date(),
   discountype: "test type",
@@ -118,6 +118,17 @@ export const getLoyalties = () => {
 }
 export const getSplashContent = () => {
     return splashContents
+}
+
+const loyaltyBackgrounds = [
+  require("../assets/geo.png"),
+  require("../assets/geo2.png"),
+  require("../assets/geo3.png"),
+  require("../assets/geo4.png"),
+]
+
+export const getLoyaltyBackground = () => {
+  return loyaltyBackgrounds[ Math.floor(Math.random() * (loyaltyBackgrounds.length))]
 }
 
 
