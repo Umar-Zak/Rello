@@ -2,11 +2,13 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {AntDesign, MaterialIcons} from "@expo/vector-icons"
 import Screens from './Screens';
-import HomeScreen from '../screens/HomeScreen';
 import LoyaltyScreen from '../screens/LoyaltyScreen';
 import DiscountScreen from '../screens/DiscountScreen';
 import WalletScreen from '../screens/WalletScreen';
 import Colors from '../config/Colors';
+import GiftCardScreen from '../screens/GiftCardScreen';
+import FeedNavigation from './FeedNavigation';
+import GiftNavigation from './GiftNavigation';
 
 const Tab = createBottomTabNavigator();
 function AppNavigation() {
@@ -18,10 +20,11 @@ function AppNavigation() {
        >
         <Tab.Screen 
         name={Screens.home} 
-        component={HomeScreen} 
+        component={FeedNavigation} 
         options={{
             tabBarIcon: ({size, color}) => <AntDesign size={size} color={color} name='home' />,
             headerShown: false
+            
         }}
         />
         <Tab.Screen 
@@ -37,6 +40,14 @@ function AppNavigation() {
         component={DiscountScreen}
         options={{
             tabBarIcon: ({size, color}) => <AntDesign size={size} color={color} name='shoppingcart' />
+        }}
+         />
+         <Tab.Screen 
+        name={Screens.gifts} 
+        component={GiftNavigation}
+        options={{
+            tabBarIcon: ({size, color}) => <AntDesign size={size} color={color} name='gift' />,
+            headerShown: false
         }}
          />
         <Tab.Screen 

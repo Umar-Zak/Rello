@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react';
 import { Animated } from 'react-native'
 import "styled-components"
 import styled from 'styled-components/native';
-
+import {useDispatch} from "react-redux"
 import {MaterialIcons, AntDesign} from "@expo/vector-icons"
 import { BlurView } from 'expo-blur'
 import DiscountCard from '../components/DiscountCard';
@@ -11,16 +11,14 @@ import LoyaltyCard from '../components/LoyaltyCard';
 import Screen from '../components/Screen';
 import Colors from '../config/Colors';
 import { getDiscounts, getGiftCards, getLoyalties } from '../models/StaticContent';
-import RootContext from '../context/RootContext';
 import DiscountModa from '../components/DiscountModal';
-
+import {logoutUser} from "../store/auth/AuthSlice"
 function HomeScreen() {
     const discounts = getDiscounts()
     const giftCards = getGiftCards()
     const loyalties = getLoyalties()
     const [top] = useState(new Animated.Value(-2000))
-    const {setUser} = useContext<{user: boolean, setUser: (value: boolean) => void}>(RootContext)
-   
+   const dispatch = useDispatch()
   
     const handleAvatarPressed = () => {
         Animated
@@ -35,7 +33,7 @@ function HomeScreen() {
     }
 
     const handleLogout = () => {
-        setUser(false)
+        dispatch(logoutUser())
     }
  
     return (
@@ -144,6 +142,7 @@ function HomeScreen() {
             </Screen>
         </Container>
        </Root>
+ 
     );
 }
 

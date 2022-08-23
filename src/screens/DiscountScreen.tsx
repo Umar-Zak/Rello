@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState} from 'react';
 import { Alert } from 'react-native';
 import "styled-components"
 import styled from 'styled-components/native';
@@ -7,18 +7,22 @@ import DiscountCard from '../components/DiscountCard';
 import SearchField from '../components/SearchField';
 import { getDiscounts } from '../models/StaticContent';
 import DiscountModa from '../components/DiscountModal';
+import NoSearchResult from '../components/NoSearchResult';
 
 
 function DiscountScreen() {
-    const discounts = getDiscounts()
-
+    let discounts = getDiscounts()
+    const [searchText, setSearchText] = useState("")
+    
+    discounts = discounts.filter((discount) => discount.companyname.toLowerCase().startsWith(searchText.toLowerCase()))
+    
     return (
        <Root>
         <DiscountModa/>
         <Container>
         <SearchField 
         placeholder="Search discount cards"
-        handleSearch={(text: string) => Alert.alert(text)}
+        handleSearch={(text: string) => setSearchText(text)}
         />
         {
             discounts.map((discount, index) => (
@@ -26,6 +30,11 @@ function DiscountScreen() {
                   <DiscountCard  {...discount} />
               </DiscountContainer>
             ))
+
+            
+        }
+        {
+           (discounts.length === 0) && <NoSearchResult/>
         }
         </Container>
        </Root>

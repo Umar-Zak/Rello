@@ -5,5 +5,9 @@ export default {
     home: "HOME",
     loyalty: "LOYALTY",
     discount: "DISCOUNTS",
-    wallet: "WALLET"
+    wallet: "WALLET",
+    gifts: "GIFTS",
+    giftDetail: "GIFTCARD DETAILS",
+    feed: "FEED",
+    giftFeed: "GIFT CARDS"
 }
