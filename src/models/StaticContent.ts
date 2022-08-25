@@ -28,7 +28,7 @@ const discounts: DiscountInterface[] = [
   count:2,
   createdAt: new Date(),
   discountype: "test type",
-  id: "testid",
+  id: "testid1",
   merchantcode: "code",
   percentage: 15,
   updatedAt: new Date()
@@ -39,7 +39,7 @@ const discounts: DiscountInterface[] = [
   count:2,
   createdAt: new Date(),
   discountype: "test type",
-  id: "testid",
+  id: "testid2",
   merchantcode: "code",
   percentage: 20,
   updatedAt: new Date()
@@ -50,7 +50,7 @@ const discounts: DiscountInterface[] = [
   count:2,
   createdAt: new Date(),
   discountype: "test type",
-  id: "testid",
+  id: "testid3",
   merchantcode: "code",
   percentage: 13,
   updatedAt: new Date()
@@ -95,7 +95,7 @@ const loyalties: LoyaltyInterface[] = [
     companyname:"Agape Supermarket",
     count: 4,
     createdAt: new Date(),
-    id:"testid",
+    id:"testid1",
     merchantcode: "Test code",
     point: 20,
     updatedAt: new Date()
@@ -106,7 +106,7 @@ const loyalties: LoyaltyInterface[] = [
     companyname:"Tiens Mart",
     count: 4,
     createdAt: new Date(),
-    id:"testid",
+    id:"testid2",
     merchantcode: "Test code",
     point: 20,
     updatedAt: new Date()

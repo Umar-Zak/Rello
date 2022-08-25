@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import { Alert, Animated} from 'react-native'
+import {Animated} from 'react-native'
 import  "styled-components"
 import { useSelector, useDispatch } from 'react-redux';
-import {AntDesign, Entypo} from "@expo/vector-icons"
+import {AntDesign} from "@expo/vector-icons"
+import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import {closeDiscountModal} from "../store/ui/UI"
 import Colors from '../config/Colors';
@@ -11,11 +12,17 @@ import Map from './Map';
 import SubscribeButton from './SubscribeButton';
 import CardDetailsHeader from './CardDetailsHeader';
 import CardDetailsLocation from './CardDetailsLocation';
+import {subribeToDiscountCard} from "../store/entities/DiscountSlice"
+import {startLoader, stopLoader} from "../store/ui/UI"
+import Screens from '../navigation/Screens';
+import Activity from './Activity';
 
 function DiscountModa() {
     const showDiscountModal = useSelector((state: any) => state.ui.showDiscountModal)
     const selectedDiscount = useSelector<any, DiscountInterface>((state: any) => state.entities.discount.selectedDiscount)
-   
+    const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
+
+    const navigation = useNavigation()
     
     const dispatch = useDispatch()
     const [discountModalTopOffset] = useState(new Animated.Value(1000))
@@ -38,7 +45,16 @@ function DiscountModa() {
        }, [showDiscountModal])
    
        
-       
+       const handleDiscountSubscribtion = () => {
+        dispatch(startLoader())
+        
+        setTimeout(() => {
+        dispatch(subribeToDiscountCard(selectedDiscount))
+        dispatch(stopLoader())
+        dispatch(closeDiscountModal())
+        navigation.navigate(Screens.wallet)
+        }, 2000)
+       }
 
 
     return (
@@ -47,8 +63,9 @@ function DiscountModa() {
             top: discountModalTopOffset
         }}
         >
+           {isLoading && <Activity/>}
             <Background source={require("../assets/geo.png")} >
-            <SubscribeButton handleSubscribe={() => Alert.alert("Subscribing")} />
+            <SubscribeButton handleSubscribe={handleDiscountSubscribtion} />
             <CardDetailsLocation/>
             <CardDetailsHeader 
             title="Discount offered by" 
@@ -73,7 +90,7 @@ const Background = styled.ImageBackground`
     width: 100%;
     height: 380px;
 `
-const DiscountModal = styled.ScrollView`
+const DiscountModal = styled.View`
     width: 100%;
     height: 100%;
     background: white;

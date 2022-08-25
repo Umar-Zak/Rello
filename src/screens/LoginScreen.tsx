@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import "styled-components"
 import styled from "styled-components/native"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import * as Yup from "yup"
 import {useNavigation} from "@react-navigation/native"
 import InputMask from '../components/InputMask';
@@ -15,6 +15,9 @@ import Auth, { SiginInPayload } from '../services/Auth';
 import { Alert } from 'react-native';
 import Activity from '../components/Activity';
 import {activateUser} from "../store/auth/AuthSlice"
+import {startLoader, stopLoader} from "../store/ui/UI"
+
+
 const validationSchema = Yup.object().shape({
     contact: Yup.string()
     .matches(/[0-9]{10}/,"Phone number must be a 10 digit number")
@@ -28,17 +31,17 @@ const validationSchema = Yup.object().shape({
 })
 
 function LoginScreen() {
-    const navigation = useNavigation()
-    const [isLoading, setIsLoading] = useState(false)
+    const navigation =useNavigation()
+    // const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch()
-  
+    const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
     
     const handleSignupPress = () => {
         navigation.navigate(Screens.signup)
     }
 
     const handleLogin = async(body: SiginInPayload) => {
-        setIsLoading(true)
+        dispatch(startLoader())
         // try {
         //     await Auth.signin(body)
         //     setIsLoading(false)
@@ -50,6 +53,7 @@ function LoginScreen() {
             
         // }
         setTimeout(() => {
+            dispatch(stopLoader())
            dispatch(activateUser())
         }, 100)
     }

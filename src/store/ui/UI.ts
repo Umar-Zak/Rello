@@ -2,12 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 type UIInterface = {
-    showDiscountModal: boolean
+    showDiscountModal: boolean,
+    isLoading: boolean
 }
 
 const slice =  createSlice({
     initialState: {
-        showDiscountModal: false
+        showDiscountModal: false,
+        isLoading: false
     },
     name: "ui",
     reducers: {
@@ -16,9 +18,17 @@ const slice =  createSlice({
         },
         closeDiscountModal: (state: UIInterface) => {
             state.showDiscountModal = false
+        },
+
+        startLoader: (state: UIInterface) => {
+            state.isLoading = true
+        },
+
+        stopLoader: (state: UIInterface) => {
+            state.isLoading = false
         }
     }
 })
 
 export default slice.reducer
-export const {closeDiscountModal, openDiscountModal} = slice.actions
+export const {closeDiscountModal, openDiscountModal, startLoader, stopLoader} = slice.actions

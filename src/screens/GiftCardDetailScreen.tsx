@@ -1,6 +1,7 @@
 import React from 'react';
 import { Alert } from 'react-native';
-import {useSelector} from "react-redux"
+import {useSelector, useDispatch} from "react-redux"
+import { useNavigation } from '@react-navigation/native';
 import "styled-components"
 import styled from "styled-components/native"
 import CardDetailsHeader from '../components/CardDetailsHeader';
@@ -9,12 +10,30 @@ import Map from '../components/Map';
 import SubscribeButton from '../components/SubscribeButton';
 import { GiftCardInterface } from '../models/DTOS';
 import Colors from '../config/Colors';
+import {subscribeToGiftCard} from "../store/entities/GiftSlice"
+import {startLoader, stopLoader} from "../store/ui/UI"
+import Screens from '../navigation/Screens';
+import Activity from '../components/Activity';
 
 function GiftCardDetailScreen() {
     const selectedGiftCard = useSelector<any, GiftCardInterface>((state: any) => state.entities.gift.selectedGiftCard)
-    
+    const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
+    const dispatch = useDispatch()
+    const navigation = useNavigation()
+
+    const handleSubcribeButtonPressed = () => {
+        dispatch(startLoader())
+        
+        setTimeout(() => {
+        dispatch(subscribeToGiftCard(selectedGiftCard))
+        dispatch(stopLoader())
+        navigation.navigate(Screens.wallet)
+        }, 2000)
+    }
+
     return (
        <Container>
+       {isLoading && <Activity/>}
         <Background source={require("../assets/gift-bg.jpg")} >
             <OverFlow/>
         <CardDetailsHeader 
@@ -26,7 +45,7 @@ function GiftCardDetailScreen() {
             <GiftAmount>Ghc {selectedGiftCard.count}.00</GiftAmount>
             <Gift>Gift worth</Gift>
          </GiftAmountContainer>
-        <SubscribeButton handleSubscribe={() => Alert.alert("subscribing")} />
+        <SubscribeButton handleSubscribe={handleSubcribeButtonPressed} />
         </Background>
         <Map/>
        </Container>

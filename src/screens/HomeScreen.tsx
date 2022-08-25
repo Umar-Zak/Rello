@@ -1,8 +1,8 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 import { Animated } from 'react-native'
 import "styled-components"
 import styled from 'styled-components/native';
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {MaterialIcons, AntDesign} from "@expo/vector-icons"
 import { BlurView } from 'expo-blur'
 import DiscountCard from '../components/DiscountCard';
@@ -10,15 +10,16 @@ import GiftCard from '../components/GiftCard';
 import LoyaltyCard from '../components/LoyaltyCard';
 import Screen from '../components/Screen';
 import Colors from '../config/Colors';
-import { getDiscounts, getGiftCards, getLoyalties } from '../models/StaticContent';
 import DiscountModa from '../components/DiscountModal';
 import {logoutUser} from "../store/auth/AuthSlice"
+import { DiscountInterface, GiftCardInterface, LoyaltyInterface } from '../models/DTOS';
 function HomeScreen() {
-    const discounts = getDiscounts()
-    const giftCards = getGiftCards()
-    const loyalties = getLoyalties()
+
+    const discounts = useSelector<any, DiscountInterface[]>((state: any) => state.entities.discount.discounts)
+    const giftCards = useSelector<any, GiftCardInterface[]>((state: any) => state.entities.gift.gifts)
+    const loyalties = useSelector<any, LoyaltyInterface[]>((state: any) => state.entities.loyalty.loyalties)
     const [top] = useState(new Animated.Value(-2000))
-   const dispatch = useDispatch()
+    const dispatch = useDispatch()
   
     const handleAvatarPressed = () => {
         Animated

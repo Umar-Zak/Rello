@@ -9,6 +9,7 @@ import Colors from '../config/Colors';
 import GiftCardScreen from '../screens/GiftCardScreen';
 import FeedNavigation from './FeedNavigation';
 import GiftNavigation from './GiftNavigation';
+import LoyaltyNavigation from './LoyaltyNavigation';
 
 const Tab = createBottomTabNavigator();
 function AppNavigation() {
@@ -29,9 +30,10 @@ function AppNavigation() {
         />
         <Tab.Screen 
         name={Screens.loyalty} 
-        component={LoyaltyScreen}
+        component={LoyaltyNavigation}
         options={{
             tabBarIcon: ({size, color}) => <MaterialIcons size={size} color={color} name='loyalty' />,
+            headerShown: false
             
         }}
          />

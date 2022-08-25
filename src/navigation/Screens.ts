@@ -9,5 +9,7 @@ export default {
     gifts: "GIFTS",
     giftDetail: "GIFTCARD DETAILS",
     feed: "FEED",
-    giftFeed: "GIFT CARDS"
+    giftFeed: "GIFT CARDS",
+    loyaltyDetail: "LOYALTYCARD DETAILS",
+    loyaltyFeed: "LOYALTYCARDS FEED"
 }

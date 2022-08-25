@@ -1,15 +1,25 @@
 import React from 'react';
 import "styled-components"
 import styled from "styled-components/native"
+import {useDispatch} from "react-redux"
+import { useNavigation } from '@react-navigation/native';
 import Colors from '../config/Colors';
 import { LoyaltyInterface } from '../models/DTOS';
 import { getLoyaltyBackground } from '../models/StaticContent';
-
-
+import {selectLoyalty} from "../store/entities/LoyaltySlice"
+import Screens from '../navigation/Screens';
 
 function LoyaltyCard(card: LoyaltyInterface) {
+    const dispatch = useDispatch()
+    const navigation  = useNavigation()
+
+    const handleLoyaltyCardPressed = () => {
+        dispatch(selectLoyalty(card))
+        navigation.navigate(Screens.loyaltyDetail)
+    }
+
     return (
-    <Container>
+    <Container onPress={handleLoyaltyCardPressed} >
          <Image resizeMode="cover" source={getLoyaltyBackground()} />
          <Overflow/>
         <ContentContainer>
