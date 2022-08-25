@@ -27,7 +27,7 @@ function GiftCardDetailScreen() {
         setTimeout(() => {
         dispatch(subscribeToGiftCard(selectedGiftCard))
         dispatch(stopLoader())
-        navigation.navigate(Screens.wallet)
+        navigation.navigate(Screens.wallet as never)
         }, 2000)
     }
 

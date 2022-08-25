@@ -1,5 +1,7 @@
 import Https from "./Https";
 import jwtDecode from "jwt-decode";
+import SecureStore from "../models/SecureStore";
+
 export interface SignUpPayload {
     email: string
     firstname: string
@@ -7,11 +9,13 @@ export interface SignUpPayload {
     contact: string
     phone: string
     password: string
+    name?: string
 }
 
 
+
 export interface SiginInPayload {
-    email: string
+    contact: string
     password: string
 }
 
@@ -26,10 +30,10 @@ class Auth extends Https {
    async signup(body:SignUpPayload){
        try {
         const {data} = await this.post<SignUpPayload & {token: string}>("userscustomer", body)
-        console.log(data.token);
+        await SecureStore.storeToken(data.token)
         
        } catch (error ) {
-     throw error
+            throw error
        }
 
     }
@@ -37,7 +41,7 @@ class Auth extends Https {
     async signin(body:SiginInPayload){
         try {
          const {data} = await this.post<SiginInPayload & {token: string}>("userscustomer/login", body)
-         this.decodeToken(data.token)
+        await SecureStore.storeToken(data.token)
          
         } catch (error ) {
        throw error

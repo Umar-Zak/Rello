@@ -37,25 +37,19 @@ function LoginScreen() {
     const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
     
     const handleSignupPress = () => {
-        navigation.navigate(Screens.signup)
+        navigation.navigate(Screens.signup as never)
     }
 
     const handleLogin = async(body: SiginInPayload) => {
         dispatch(startLoader())
-        // try {
-        //     await Auth.signin(body)
-        //     setIsLoading(false)
-        //     Alert.alert("Success", "Login successful")
-        // } catch (error: any) {
-        //     setIsLoading(false)
-        //     console.log("Error", error);
-        //     Alert.alert(error.response.data.message)
-            
-        // }
-        setTimeout(() => {
+        try {
+            await Auth.signin(body)
             dispatch(stopLoader())
-           dispatch(activateUser())
-        }, 100)
+            dispatch(activateUser())
+        } catch (error: any) {
+            dispatch(stopLoader())
+            Alert.alert(error.response.data.message)
+        }
     }
 
     return (

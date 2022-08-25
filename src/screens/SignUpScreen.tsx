@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import "styled-components"
 import styled from "styled-components/native"
 import * as Yup from "yup"
+import {useSelector, useDispatch} from "react-redux"
 import {useNavigation} from "@react-navigation/native"
 import InputMask from '../components/InputMask';
 import Screen from '../components/Screen';
@@ -13,7 +14,9 @@ import Screens from '../navigation/Screens';
 import Auth, { SignUpPayload } from '../services/Auth';
 import Activity from '../components/Activity';
 import { Alert } from 'react-native';
-
+import { sendOTP } from '../utils/SmsUtil';
+import {startLoader, stopLoader} from "../store/ui/UI"
+import {activateUser} from "../store/auth/AuthSlice"
 
 const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -37,24 +40,56 @@ const validationSchema = Yup.object().shape({
     .label("Phone number")
 })
 
+const validateOtp = Yup.object().shape({
+    otp: Yup.string().required("OTP is required").label("OTP")
+})
+
 function SignUpScreen() {
     const navigation = useNavigation()
-    const [isLoading, setIsLoading] = useState(false)
+    const dispatch = useDispatch()
+    const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
+    const [otp, setOtp] = useState("")
+    const [isAuth, setIsAuth] = useState(false)
+    const [signUpInfo, setSignUpInfo] = useState<SignUpPayload>()
+
     const handleSignInPress = () => {
-        navigation.navigate(Screens.login)
+        navigation.navigate(Screens.login as never)
     }
 
     const handleSignUp = async (body: SignUpPayload) => {
-        setIsLoading(true)
+        dispatch(startLoader())
+        setSignUpInfo(body)
+        const number = body.contact.substring(1)
+        const code = Date.now().toString().substring(9)
+        const message = `Your Rello sign up verification code is ${code}`
+        setOtp(code)
+
         try {
-        await Auth.signup(body)
-       } catch (error: any) {
-        setIsLoading(false)
-        console.log("Error", error);
+            await sendOTP(message, number)
+            dispatch(stopLoader())
+            setIsAuth(true)
+        } catch (error) {
+            dispatch(stopLoader())
+            Alert.alert("Error", "Please enter a valid number")
+        }
         
-        Alert.alert(error.response.data.message)
-       }
     }
+
+    const handleVerification = async(body: {otp: string}) => {
+        if(body.otp !== otp) return Alert.alert("Error", "Invalid OTP")
+        
+        dispatch(startLoader())
+
+        try {
+            await Auth.signup({...signUpInfo as SignUpPayload, name: `${signUpInfo?.firstname}  ${signUpInfo?.lastname}`})
+            dispatch(stopLoader())
+            dispatch(activateUser())
+           } catch (error: any) {
+            dispatch(startLoader())
+            Alert.alert(error.response.data.message)
+           }
+    }
+
 
     return (
      <Container>
@@ -68,8 +103,8 @@ function SignUpScreen() {
         
         </>
       </Screen>
-      <InputMask>
-     <Form
+     {!isAuth && <InputMask>
+   <Form
      initialValues={{
         email: "",
         password: "",
@@ -81,6 +116,7 @@ function SignUpScreen() {
      onSubmit={(values: SignUpPayload) => handleSignUp(values)
      }
      >
+        <>
      <AppTextInput 
         autoCapitalize='none'
             autoCorrect={false}
@@ -119,8 +155,29 @@ function SignUpScreen() {
             <LoginText>Sign In</LoginText>
             </Login>
             </LoginTextContainer>
+            </>
      </Form>
-      </InputMask>
+      </InputMask>}
+     {isAuth && <InputMask>
+      <Form
+      initialValues={{
+        otp: ""
+      }}
+      validationSchema={validateOtp}
+      onSubmit={(values: {otp: string}) => handleVerification(values)
+      }
+      >
+       <>
+       <AppTextInput 
+        autoCapitalize='none'
+            autoCorrect={false}
+            label='OTP*'  
+            name='otp'
+        />
+        <SubmitButton text='Verify' />
+       </>
+      </Form>
+      </InputMask>}
      </Container>
     );
 }
