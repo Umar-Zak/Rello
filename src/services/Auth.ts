@@ -41,12 +41,16 @@ class Auth extends Https {
     async signin(body:SiginInPayload){
         try {
          const {data} = await this.post<SiginInPayload & {token: string}>("userscustomer/login", body)
-        await SecureStore.storeToken(data.token)
+         await SecureStore.storeToken(data.token)
          
         } catch (error ) {
-       throw error
+            throw error
         }
  
+     }
+
+     async logout() {
+       await SecureStore.removeToken()
      }
 
      private decodeToken(token: string): {_id: string, exp: number, iat: number}{

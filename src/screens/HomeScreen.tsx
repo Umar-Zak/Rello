@@ -13,8 +13,9 @@ import Colors from '../config/Colors';
 import DiscountModa from '../components/DiscountModal';
 import {logoutUser} from "../store/auth/AuthSlice"
 import { DiscountInterface, GiftCardInterface, LoyaltyInterface } from '../models/DTOS';
-function HomeScreen() {
+import Auth from '../services/Auth';
 
+function HomeScreen() {
     const discounts = useSelector<any, DiscountInterface[]>((state: any) => state.entities.discount.discounts)
     const giftCards = useSelector<any, GiftCardInterface[]>((state: any) => state.entities.gift.gifts)
     const loyalties = useSelector<any, LoyaltyInterface[]>((state: any) => state.entities.loyalty.loyalties)
@@ -33,7 +34,8 @@ function HomeScreen() {
         .start()
     }
 
-    const handleLogout = () => {
+    const handleLogout = async() => {
+        await Auth.logout()
         dispatch(logoutUser())
     }
  

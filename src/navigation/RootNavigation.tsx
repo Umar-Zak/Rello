@@ -6,8 +6,9 @@ import AppNavigation from './AppNavigation';
 import {getDiscounts} from "../store/entities/DiscountSlice"
 import {getGiftCards} from "../store/entities/GiftSlice"
 import {getLoyalty} from "../store/entities/LoyaltySlice"
+import {activateUser} from "../store/auth/AuthSlice"
 import {getDiscounts as allDiscount, getGiftCards as allGiftCards, getLoyalties as allLoyalties} from "../models/StaticContent"
-
+import SecureStore from '../models/SecureStore';
 
 function RootNavigation() {
      const dispatch = useDispatch()
@@ -15,10 +16,18 @@ function RootNavigation() {
     
     
      useEffect(() => {
+        initializeAuth()
         dispatch(getDiscounts(allDiscount()))
         dispatch(getGiftCards(allGiftCards()))
         dispatch(getLoyalty(allLoyalties()))
      }, [user])
+
+
+     const initializeAuth = async() => {
+        const token = await SecureStore.getToken()
+        if(token) dispatch(activateUser())
+     }
+
     return (
         <NavigationContainer>
            {!user && <OnboardingNavigation/>}

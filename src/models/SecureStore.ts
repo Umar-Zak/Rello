@@ -10,6 +10,10 @@ private TOKEN = "user_token"
     return await SecureStore.getItemAsync(this.TOKEN)
  }
 
+ async removeToken() {
+   await SecureStore.deleteItemAsync(this.TOKEN)
+ }
+
 }
 
 export default new SecureStorage

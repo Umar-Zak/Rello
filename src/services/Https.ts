@@ -1,4 +1,5 @@
 import axios from "axios"
+import SecureStore from "../models/SecureStore"
 
 
 class Https {
@@ -8,8 +9,14 @@ class Https {
    protected patch = axios.patch
    protected delete = axios.delete
 
-    constructor() {
+   constructor() {
         axios.defaults.baseURL = "https://coralappmtech.herokuapp.com/api/"
+        this.initAxios()
+    }
+
+    async initAxios(){
+        const token = await SecureStore.getToken() as unknown as string
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
     }
 }
 

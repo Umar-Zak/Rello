@@ -32,7 +32,6 @@ const validationSchema = Yup.object().shape({
 
 function LoginScreen() {
     const navigation =useNavigation()
-    // const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch()
     const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
     

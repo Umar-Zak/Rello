@@ -52,7 +52,7 @@ function DiscountModa() {
         dispatch(subribeToDiscountCard(selectedDiscount))
         dispatch(stopLoader())
         dispatch(closeDiscountModal())
-        navigation.navigate(Screens.wallet)
+        navigation.navigate(Screens.wallet as never)
         }, 2000)
        }
 

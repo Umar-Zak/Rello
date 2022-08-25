@@ -44,6 +44,8 @@ const slice = createSlice({
         subscribeToLoyaltyCard: (state: LoyaltySlice, action: LoyaltyAction) => {
             const loyaltyCard = state.subscribedLoyalties.find((loy) => loy.id)
             if(!loyaltyCard) state.subscribedLoyalties.push(action.payload)
+
+            state.loyalties = state.loyalties.filter(loyalty => loyalty.id !== action.payload.id)
         },
 
         getLoyalty: (state: LoyaltySlice, action: GetLoyaltyAction) => {
