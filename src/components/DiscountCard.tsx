@@ -23,7 +23,7 @@ function DiscountCard(discount: DiscountInterface) {
             </SimpleFlex>
             <Flex>
                 <LastUpate>Last Updated</LastUpate>
-                <DateValue>{discount.updatedAt.getMonth()}/{discount.updatedAt.getFullYear()}</DateValue>
+                <DateValue>{new Date(discount.updatedAt).getMonth()}/{new Date(discount.updatedAt).getFullYear()}</DateValue>
             </Flex>
         </Container>
     );

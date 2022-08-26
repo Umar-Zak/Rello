@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { GiftCardInterface } from "../../models/DTOS";
- 
+import GiftService from "../../services/GiftService";
+import {startLoader, stopLoader} from "../ui/UI"
 type GiftSlice = {
     gifts: GiftCardInterface[],
     selectedGiftCard: GiftCardInterface | null,
@@ -43,6 +44,14 @@ const slice = createSlice({
     
     }
 })
+
+
+export const loadGiftCards = () => async (dispatch: any, getState: any) => {
+  dispatch(startLoader())
+  const giftCards = await GiftService.getAllGiftCards()
+  dispatch(getGiftCards(giftCards))
+  dispatch(stopLoader())
+}
 
 export default slice.reducer
 export const {addGiftCard, selectGiftCard, subscribeToGiftCard, getGiftCards} = slice.actions

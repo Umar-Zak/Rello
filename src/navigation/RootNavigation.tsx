@@ -3,12 +3,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import {useSelector, useDispatch} from "react-redux"
 import OnboardingNavigation from './OnboardingNavigation';
 import AppNavigation from './AppNavigation';
-import {getDiscounts} from "../store/entities/DiscountSlice"
-import {getGiftCards} from "../store/entities/GiftSlice"
-import {getLoyalty} from "../store/entities/LoyaltySlice"
+import {loadDiscountCards} from "../store/entities/DiscountSlice"
+import {loadGiftCards} from "../store/entities/GiftSlice"
+import {loadLoyaltyCards} from "../store/entities/LoyaltySlice"
 import {activateUser} from "../store/auth/AuthSlice"
-import {getDiscounts as allDiscount, getGiftCards as allGiftCards, getLoyalties as allLoyalties} from "../models/StaticContent"
 import SecureStore from '../models/SecureStore';
+import { AnyAction } from 'redux';
 
 function RootNavigation() {
      const dispatch = useDispatch()
@@ -17,9 +17,9 @@ function RootNavigation() {
     
      useEffect(() => {
         initializeAuth()
-        dispatch(getDiscounts(allDiscount()))
-        dispatch(getGiftCards(allGiftCards()))
-        dispatch(getLoyalty(allLoyalties()))
+        dispatch(loadDiscountCards() as unknown as AnyAction)
+        dispatch(loadGiftCards() as unknown as AnyAction)
+        dispatch(loadLoyaltyCards() as unknown as AnyAction)
      }, [user])
 
 

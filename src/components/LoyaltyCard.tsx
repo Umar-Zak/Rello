@@ -15,7 +15,7 @@ function LoyaltyCard(card: LoyaltyInterface) {
 
     const handleLoyaltyCardPressed = () => {
         dispatch(selectLoyalty(card))
-        navigation.navigate(Screens.loyaltyDetail)
+        navigation.navigate(Screens.loyaltyDetail as never)
     }
 
     return (
@@ -28,7 +28,7 @@ function LoyaltyCard(card: LoyaltyInterface) {
         <Amount>{card.amount}.00 Ghc</Amount>
         <Flex>
             <LastUpdate>Last Upated</LastUpdate>
-            <DateValue>{card.updatedAt.getMonth()}/{card.updatedAt.getFullYear()}</DateValue>
+            <DateValue>{new Date(card.updatedAt).getMonth()}/{new Date(card.updatedAt).getFullYear()}</DateValue>
         </Flex>
         </ContentContainer>
     </Container>
@@ -43,7 +43,7 @@ height: 150px;
 border-radius: 15px;
 background: #6ec0d6;
 box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-margin-bottom: 40px;
+margin-bottom: 30px;
 
 overflow: hidden;
 margin-right: 20px;

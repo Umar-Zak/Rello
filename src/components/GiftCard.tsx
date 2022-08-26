@@ -15,7 +15,7 @@ function GiftCard(giftCard: GiftCardInterface) {
 
     const handleCardPress = () => {
         dispatch(selectGiftCard(giftCard))
-        navigation.navigate(Screens.giftDetail)
+        navigation.navigate(Screens.giftDetail as never)
     }
 
     return (
@@ -30,7 +30,7 @@ function GiftCard(giftCard: GiftCardInterface) {
             <Value>{giftCard.count}.00 Ghc</Value>
         </SimpleFlex>
         <LastUpdated>Last Updated</LastUpdated>
-        <DateValue>{giftCard.updatedAt.getUTCMonth()}/{giftCard.updatedAt.getFullYear()}</DateValue>
+        <DateValue>{new Date(giftCard.updatedAt).getUTCMonth()}/{new Date(giftCard.updatedAt).getFullYear()}</DateValue>
       </LinearGradient>
        </Container>
     );

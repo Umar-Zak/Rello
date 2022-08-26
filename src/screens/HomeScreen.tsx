@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Animated } from 'react-native'
 import "styled-components"
 import styled from 'styled-components/native';
@@ -14,18 +14,30 @@ import DiscountModa from '../components/DiscountModal';
 import {logoutUser} from "../store/auth/AuthSlice"
 import { DiscountInterface, GiftCardInterface, LoyaltyInterface } from '../models/DTOS';
 import Auth from '../services/Auth';
+import DiscountService from '../services/DiscountService';
+import Activity from '../components/Activity';
 
 function HomeScreen() {
     const discounts = useSelector<any, DiscountInterface[]>((state: any) => state.entities.discount.discounts)
     const giftCards = useSelector<any, GiftCardInterface[]>((state: any) => state.entities.gift.gifts)
     const loyalties = useSelector<any, LoyaltyInterface[]>((state: any) => state.entities.loyalty.loyalties)
+    const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
     const [top] = useState(new Animated.Value(-2000))
     const dispatch = useDispatch()
   
+
+    useEffect(() => {
+        test()
+    }, [])
+
     const handleAvatarPressed = () => {
         Animated
         .spring(top, {toValue: 0, useNativeDriver: false})
         .start()
+    }
+
+    const test = async() => {
+        await DiscountService.getAllDiscountCards()
     }
 
     const closeMenu = () => {
@@ -41,6 +53,7 @@ function HomeScreen() {
  
     return (
        <Root>
+        {isLoading && <Activity/>}
         <DiscountModa/>
       <AnimatedMenu
       style={{
@@ -101,7 +114,7 @@ function HomeScreen() {
           </Pressable>
             <Home>Home</Home>
         </Header>
-         <Container
+        {!isLoading && <Container
         showsVerticalScrollIndicator={false} 
         >
             <Screen>
@@ -143,7 +156,7 @@ function HomeScreen() {
             </Section>
             </>
             </Screen>
-        </Container>
+        </Container>}
        </Root>
  
     );

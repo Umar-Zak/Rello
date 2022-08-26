@@ -2,16 +2,16 @@ import React, {useState} from 'react';
 import { Alert } from 'react-native';
 import "styled-components"
 import styled from 'styled-components/native';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector} from 'react-redux';
 import DiscountCard from '../components/DiscountCard';
 import SearchField from '../components/SearchField';
-import { getDiscounts } from '../models/StaticContent';
 import DiscountModa from '../components/DiscountModal';
 import NoSearchResult from '../components/NoSearchResult';
+import { DiscountInterface } from '../models/DTOS';
 
 
 function DiscountScreen() {
-    let discounts = getDiscounts()
+    let discounts = useSelector<any, DiscountInterface[]>((state: any) => state.entities.discount.discounts)
     const [searchText, setSearchText] = useState("")
     
     discounts = discounts.filter((discount) => discount.companyname.toLowerCase().startsWith(searchText.toLowerCase()))

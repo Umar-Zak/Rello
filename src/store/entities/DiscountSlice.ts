@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {DiscountInterface} from "../../models/DTOS"
- 
+import DiscountService from "../../services/DiscountService";
+import {startLoader, stopLoader} from "../ui/UI"
 type AddDiscount = {
     type: string
     payload: DiscountInterface
@@ -47,6 +48,17 @@ type DiscountSlice = {
         }
     }
 })
+
+export const loadDiscountCards = () => async(dispatch: any, getState: any) => {
+    dispatch(startLoader())
+    
+    const discountCards = await DiscountService.getAllDiscountCards()
+    
+    dispatch(getDiscounts(discountCards))
+
+    dispatch(stopLoader())
+
+}
 
 export default slice.reducer
 

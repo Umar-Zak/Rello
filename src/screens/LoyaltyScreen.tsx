@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
 import "styled-components"
 import styled from 'styled-components/native';
+import {useSelector} from "react-redux"
 import LoyaltyCard from '../components/LoyaltyCard';
 import NoSearchResult from '../components/NoSearchResult';
 import SearchField from '../components/SearchField';
-import { getLoyalties } from '../models/StaticContent';
+import { LoyaltyInterface } from '../models/DTOS';
 
 
 function LoyaltyScreen() {
-    let loyalties = getLoyalties()
+    let loyalties = useSelector<any, LoyaltyInterface[]>((state: any) => state.entities.loyalty.loyalties)
     const [searchText, setSearchText] = useState("")
     
     loyalties = loyalties.filter(loyalty => loyalty.companyname.toLowerCase().startsWith(searchText.toLowerCase()))

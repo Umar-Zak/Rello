@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { LoyaltyInterface } from "../../models/DTOS";
-
+import LoyaltyService from "../../services/LoyaltyService";
+import { startLoader, stopLoader } from "../ui/UI";
 
 type LoyaltySlice = {
     loyalties: LoyaltyInterface[],
@@ -54,7 +55,13 @@ const slice = createSlice({
     }
 })
 
+export const loadLoyaltyCards = () => async(dispatch: any, getState: any) => {
+    dispatch(startLoader())
+    const loyaltyCards = await LoyaltyService.getAllLoyaltyCards()
+    dispatch(getLoyalty(loyaltyCards))
 
+    dispatch(stopLoader())
+}
 
 export default  slice.reducer
 
