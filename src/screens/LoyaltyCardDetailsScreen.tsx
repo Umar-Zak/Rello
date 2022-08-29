@@ -27,6 +27,7 @@ function LoyaltyCardDetailsScreen() {
     setTimeout(() => {
         dispatch(subscribeToLoyaltyCard(selectedLoyalty))
         dispatch(stopLoader())
+        navigation.goBack()
         navigation.navigate(Screens.wallet as never)
     }, 2000)
     }

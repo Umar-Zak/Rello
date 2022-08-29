@@ -39,14 +39,13 @@ const slice = createSlice({
         selectLoyalty: (state: LoyaltySlice, action: LoyaltyAction) => {
             state.selectedLoyalty = action.payload
             
-            
         },
 
         subscribeToLoyaltyCard: (state: LoyaltySlice, action: LoyaltyAction) => {
-            const loyaltyCard = state.subscribedLoyalties.find((loy) => loy.id)
+            const loyaltyCard = state.subscribedLoyalties.find((loy) => loy._id === action.payload._id)
             if(!loyaltyCard) state.subscribedLoyalties.push(action.payload)
 
-            state.loyalties = state.loyalties.filter(loyalty => loyalty.id !== action.payload.id)
+            state.loyalties = state.loyalties.filter(loyalty => loyalty._id !== action.payload._id)
         },
 
         getLoyalty: (state: LoyaltySlice, action: GetLoyaltyAction) => {

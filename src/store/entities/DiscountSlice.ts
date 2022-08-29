@@ -38,9 +38,9 @@ type DiscountSlice = {
         },
 
         subribeToDiscountCard: (state: DiscountSlice, action: AddDiscount) => {
-            const discountCard = state.subscribedDiscounts.find((dis) => dis.id)
+            const discountCard = state.subscribedDiscounts.find((dis) => dis._id === action.payload._id)
             if(!discountCard)   state.subscribedDiscounts.push(action.payload)
-            state.discounts = state.discounts.filter(discount => discount.id !== action.payload.id)
+            state.discounts = state.discounts.filter(discount => discount._id !== action.payload._id)
         },
 
         getDiscounts: (state: DiscountSlice, action: GetDiscountsAction) => {

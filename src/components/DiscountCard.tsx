@@ -44,7 +44,7 @@ margin-right: 20px;
 `
 
 const CompanyName = styled.Text`
-    color: ${Colors.light};
+    color: #fd4957;
     font-weight: 600;
     font-size: 16px;
     letter-spacing: 1px;

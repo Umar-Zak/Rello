@@ -1,5 +1,4 @@
 import React from 'react';
-import { Alert } from 'react-native';
 import {useSelector, useDispatch} from "react-redux"
 import { useNavigation } from '@react-navigation/native';
 import "styled-components"
@@ -27,7 +26,9 @@ function GiftCardDetailScreen() {
         setTimeout(() => {
         dispatch(subscribeToGiftCard(selectedGiftCard))
         dispatch(stopLoader())
+        navigation.goBack()
         navigation.navigate(Screens.wallet as never)
+
         }, 2000)
     }
 

@@ -35,7 +35,13 @@ const slice = createSlice({
         
       },
       subscribeToGiftCard: (state: GiftSlice, action: GiftCardAction) => {
-        state.subscribedGiftCards.push(action.payload)
+        const giftCard = state.subscribedGiftCards.find(card => card._id === action.payload._id)
+        if(!giftCard) {
+          state.subscribedGiftCards.push(action.payload)
+          state.gifts = state.gifts.filter(gift => gift._id !== action.payload._id)
+        }
+
+        
       },
 
       getGiftCards: (state: GiftSlice, action: GetGiftsAction) => {

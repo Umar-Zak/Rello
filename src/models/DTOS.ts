@@ -7,7 +7,7 @@ export interface DiscountInterface {
     count: number 
     createdAt: Date
     updatedAt: Date 
-    id: string
+    _id: string
 }
 
 export interface LoyaltyInterface {
@@ -19,7 +19,7 @@ export interface LoyaltyInterface {
     count:number 
     createdAt: Date 
     updatedAt: Date
-    id: string
+    _id: string
 }
 
 export interface GiftCardInterface {
@@ -30,5 +30,5 @@ export interface GiftCardInterface {
     count: number
     createdAt: Date
     updatedAt: Date
-
+    _id: string
 }

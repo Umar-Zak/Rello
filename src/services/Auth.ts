@@ -13,6 +13,15 @@ export interface SignUpPayload {
 }
 
 
+export type UserProfile = {
+    email: string
+    firstname: string
+    lastname: string
+    contact: string
+    phone: string
+    name: string
+}
+
 
 export interface SiginInPayload {
     contact: string
@@ -56,6 +65,15 @@ class Auth extends Https {
      private decodeToken(token: string): {_id: string, exp: number, iat: number}{
         const decodedToken = jwtDecode<{_id: string, exp: number, iat: number}>(token)
         return decodedToken
+     }
+
+     async getUserProfile(){
+        try {
+            const {data} = await this.get<UserProfile>("users/me")
+            return data
+        } catch (error) {
+            throw error
+        }
      }
 }
 
