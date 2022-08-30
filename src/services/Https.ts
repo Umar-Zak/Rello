@@ -8,10 +8,14 @@ class Https {
    protected put = axios.put
    protected patch = axios.patch
    protected delete = axios.delete
-
+   
    constructor() {
         axios.defaults.baseURL = "https://coralappmtech.herokuapp.com/api/"
         this.initAxios()
+    }
+
+    protected setHeader(token: string){
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
     }
 
     async initAxios(){

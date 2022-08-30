@@ -37,7 +37,7 @@ function SplashScreen() {
     }
 
     const handleSignIn = () => {
-        navigation.navigate(Screens.login)
+        navigation.navigate(Screens.login as never)
     }
 
     return (
@@ -181,8 +181,9 @@ const Tagline = styled.Text`
 font-weight: 500;
 font-size: 15px;
 line-height: 25px;
-text-align: center;
+margin-left: 30px;
 color: #acacac;
+width: 300px;
 `
 
 const AnimatedContent = Animated.createAnimatedComponent(ContentContainer)

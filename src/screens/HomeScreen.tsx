@@ -1,43 +1,47 @@
 import React, {useState, useEffect} from 'react';
-import { Animated } from 'react-native'
+import { Animated, Platform} from 'react-native'
 import "styled-components"
 import styled from 'styled-components/native';
 import {useDispatch, useSelector} from "react-redux"
 import {MaterialIcons, AntDesign} from "@expo/vector-icons"
 import { BlurView } from 'expo-blur'
+import { AnyAction } from 'redux';
 import DiscountCard from '../components/DiscountCard';
 import GiftCard from '../components/GiftCard';
 import LoyaltyCard from '../components/LoyaltyCard';
 import Screen from '../components/Screen';
 import Colors from '../config/Colors';
 import DiscountModa from '../components/DiscountModal';
-import {logoutUser} from "../store/auth/AuthSlice"
+import {loadUserProfile, logoutUser} from "../store/auth/AuthSlice"
 import { DiscountInterface, GiftCardInterface, LoyaltyInterface } from '../models/DTOS';
-import Auth from '../services/Auth';
-import DiscountService from '../services/DiscountService';
+import Auth, { UserProfile } from '../services/Auth';
 import Activity from '../components/Activity';
+import {loadDiscountCards} from "../store/entities/DiscountSlice"
+import {loadGiftCards} from "../store/entities/GiftSlice"
+import {loadLoyaltyCards} from "../store/entities/LoyaltySlice"
 
 function HomeScreen() {
     const discounts = useSelector<any, DiscountInterface[]>((state: any) => state.entities.discount.discounts)
     const giftCards = useSelector<any, GiftCardInterface[]>((state: any) => state.entities.gift.gifts)
     const loyalties = useSelector<any, LoyaltyInterface[]>((state: any) => state.entities.loyalty.loyalties)
     const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
+    const userProfile = useSelector<any, UserProfile>((state: any) => state.auth.userProfile)
+    
     const [top] = useState(new Animated.Value(-2000))
     const dispatch = useDispatch()
   
 
     useEffect(() => {
-        test()
+        dispatch(loadDiscountCards() as unknown as AnyAction)
+        dispatch(loadGiftCards() as unknown as AnyAction)
+        dispatch(loadLoyaltyCards() as unknown as AnyAction)
+        dispatch(loadUserProfile() as unknown as AnyAction)
     }, [])
 
     const handleAvatarPressed = () => {
         Animated
         .spring(top, {toValue: 0, useNativeDriver: false})
         .start()
-    }
-
-    const test = async() => {
-        await DiscountService.getAllDiscountCards()
     }
 
     const closeMenu = () => {
@@ -60,7 +64,43 @@ function HomeScreen() {
         top: top
       }}
       >
-      <BlurView
+        {Platform.OS === "android" && <AndroidOverlay>
+        <MenuScroll>
+           <PersonalSettings>Personal Info</PersonalSettings>
+            <InfoContainer>
+                <InfoLabel>First name</InfoLabel>
+                <InfoView>
+                    <Info>{userProfile?.firstname}</Info>
+                </InfoView>
+            </InfoContainer>
+            <InfoContainer>
+                <InfoLabel>Last name</InfoLabel>
+                <InfoView>
+                    <Info>{userProfile?.lastname}</Info>
+                </InfoView>
+            </InfoContainer>
+            <InfoContainer>
+                <InfoLabel>Phone number</InfoLabel>
+                <InfoView>
+                    <Info>{userProfile?.contact}</Info>
+                </InfoView>
+            </InfoContainer>
+            <InfoContainer>
+            <InfoLabel>Email</InfoLabel>
+            <InfoView>
+            <Info>{userProfile?.email}</Info>
+            </InfoView>
+            </InfoContainer>
+      <LogoutContainer onPress={handleLogout} >
+        <AntDesign name="logout" color={Colors.green} size={25} />
+      <Logout>Logout</Logout>
+      </LogoutContainer>
+         <Pressable onPress={closeMenu} >
+         <AntDesign color={Colors.deep_green} name="closecircle" size={50} />
+         </Pressable>
+           </MenuScroll>
+        </AndroidOverlay>}
+      {Platform.OS === "ios" && <BlurView
         tint='light'
         intensity={100}
         style={{
@@ -76,25 +116,25 @@ function HomeScreen() {
             <InfoContainer>
                 <InfoLabel>First name</InfoLabel>
                 <InfoView>
-                    <Info>Umar</Info>
+                    <Info>{userProfile?.firstname}</Info>
                 </InfoView>
             </InfoContainer>
             <InfoContainer>
                 <InfoLabel>Last name</InfoLabel>
                 <InfoView>
-                    <Info>Zakaria</Info>
+                    <Info>{userProfile?.lastname}</Info>
                 </InfoView>
             </InfoContainer>
             <InfoContainer>
                 <InfoLabel>Phone number</InfoLabel>
                 <InfoView>
-                    <Info>0201348856</Info>
+                    <Info>{userProfile?.contact}</Info>
                 </InfoView>
             </InfoContainer>
             <InfoContainer>
                 <InfoLabel>Email</InfoLabel>
                 <InfoView>
-                    <Info>umarabanga78@gmail.com</Info>
+                    <Info>{userProfile?.email}</Info>
                 </InfoView>
             </InfoContainer>
       <LogoutContainer onPress={handleLogout} >
@@ -107,6 +147,7 @@ function HomeScreen() {
            </MenuScroll>
         
         </BlurView>
+        }
       </AnimatedMenu>
         <Header>
           <Pressable onPress={handleAvatarPressed} >
@@ -234,6 +275,21 @@ const Menu = styled.View`
     left: 0;
     z-index: 100;
 `
+
+const AndroidOverlay = styled.View`
+     width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    z-index: 80;
+    background: white;
+    padding-top: 100px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+`
+
+
 const MenuScroll = styled.ScrollView``
 
 const PersonalSettings = styled.Text`

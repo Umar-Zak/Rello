@@ -14,6 +14,7 @@ export interface SignUpPayload {
 
 
 export type UserProfile = {
+    _id: string
     email: string
     firstname: string
     lastname: string
@@ -39,8 +40,8 @@ class Auth extends Https {
    async signup(body:SignUpPayload){
        try {
         const {data} = await this.post<SignUpPayload & {token: string}>("userscustomer", body)
+        this.setHeader(data.token)
         await SecureStore.storeToken(data.token)
-        
        } catch (error ) {
             throw error
        }
@@ -50,6 +51,7 @@ class Auth extends Https {
     async signin(body:SiginInPayload){
         try {
          const {data} = await this.post<SiginInPayload & {token: string}>("userscustomer/login", body)
+         this.setHeader(data.token)
          await SecureStore.storeToken(data.token)
          
         } catch (error ) {
@@ -62,14 +64,16 @@ class Auth extends Https {
        await SecureStore.removeToken()
      }
 
-     private decodeToken(token: string): {_id: string, exp: number, iat: number}{
-        const decodedToken = jwtDecode<{_id: string, exp: number, iat: number}>(token)
+     private decodeToken(token: string): {id: string, exp: number, iat: number}{
+        const decodedToken = jwtDecode<{id: string, exp: number, iat: number}>(token)
         return decodedToken
      }
 
      async getUserProfile(){
         try {
-            const {data} = await this.get<UserProfile>("users/me")
+            const token = await SecureStore.getToken() as string
+            const user = this.decodeToken(token)
+            const {data} = await this.get<UserProfile>(`userscustomer/${user.id}`)
             return data
         } catch (error) {
             throw error

@@ -1,7 +1,7 @@
 import * as Location from "expo-location"
 import { Alert } from "react-native"
 
-const ERROR_MESSAGE = "Allow access to your location to enjoy all features of this app"
+const ERROR_MESSAGE = "Allow access to your location to access all features of this app"
 
 
 

@@ -11,9 +11,8 @@ interface SearchFieldInterface {
 
 function SearchField(props: SearchFieldInterface) {
     return (
-        <SearchInputField 
+    <SearchInputField 
       autoCapitalize={false} 
-      autoCorrect="none" 
       placeholder={props.placeholder}
       onChangeText={(text: string) => props.handleSearch(text)}
        />
