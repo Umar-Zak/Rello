@@ -7,8 +7,31 @@ export interface DiscountInterface {
     count: number 
     createdAt: Date
     updatedAt: Date 
-    _id: string
+    _id: string,
+    clientcode?: string
 }
+
+export type SubscribedDiscount = {
+    _id?: string
+    merchantcode: string 
+    companyname: string
+    address: string 
+    discountype: string
+    percentage: number ,
+    clientcode: string
+}
+
+
+export type SubsribedLoyalty = {
+    _id?: string,
+    merchantcode: string,
+    clientcode: string,
+    companyname: string,
+   address: string,
+   amount: number,
+   point: number 
+}
+
 
 export interface LoyaltyInterface {
     merchantcode: string 

@@ -52,7 +52,7 @@ function WalletScreen() {
            {
             currentTab === tabs[0].id && subscribedDiscount.map((discount, index) => (
                 <CardContainer key={index}>
-                    <DiscountCard {...discount} />
+                    <DiscountCard isInWallet={true} {...discount} />
                 </CardContainer>
             ))
            }

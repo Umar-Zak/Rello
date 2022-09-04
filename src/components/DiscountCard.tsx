@@ -1,15 +1,21 @@
 import React from 'react';
 import "styled-components"
 import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import Colors from '../config/Colors';
 import { DiscountInterface } from '../models/DTOS';
 import {selectDiscount} from "../store/entities/DiscountSlice"
 import {openDiscountModal} from "../store/ui/UI"
-function DiscountCard(discount: DiscountInterface) {
-    const dispatch = useDispatch()
+import { Alert } from 'react-native';
+import Screens from '../navigation/Screens';
 
+function DiscountCard(discount: DiscountInterface & {isInWallet?: boolean}) {
+    const dispatch = useDispatch()
+    const navigation = useNavigation()
     const handleDiscountPressed = () => {
+        if(discount.isInWallet) return navigation.navigate(Screens.walletDetail as never)
+
         dispatch(selectDiscount(discount))
         dispatch(openDiscountModal())
     }

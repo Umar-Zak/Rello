@@ -7,25 +7,27 @@ import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import {closeDiscountModal} from "../store/ui/UI"
 import Colors from '../config/Colors';
-import { DiscountInterface } from '../models/DTOS';
+import { DiscountInterface, SubscribedDiscount } from '../models/DTOS';
 import Map from './Map';
 import SubscribeButton from './SubscribeButton';
 import CardDetailsHeader from './CardDetailsHeader';
 import CardDetailsLocation from './CardDetailsLocation';
-import {subribeToDiscountCard} from "../store/entities/DiscountSlice"
-import {startLoader, stopLoader} from "../store/ui/UI"
+import {subscribeDiscount} from "../store/entities/DiscountSlice"
 import Screens from '../navigation/Screens';
 import Activity from './Activity';
+import { UserProfile } from '../services/Auth';
+import { AnyAction } from 'redux';
 
 function DiscountModa() {
     const showDiscountModal = useSelector((state: any) => state.ui.showDiscountModal)
     const selectedDiscount = useSelector<any, DiscountInterface>((state: any) => state.entities.discount.selectedDiscount)
     const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
-
+    const userProfile = useSelector<any, UserProfile>((state: any) => state.auth.userProfile)
     const navigation = useNavigation()
     
     const dispatch = useDispatch()
     const [discountModalTopOffset] = useState(new Animated.Value(1000))
+
 
     useEffect(() => {
         if(showDiscountModal){
@@ -44,16 +46,28 @@ function DiscountModa() {
            
        }, [showDiscountModal])
    
+
        
-       const handleDiscountSubscribtion = () => {
-        dispatch(startLoader())
-        
-        setTimeout(() => {
-        dispatch(subribeToDiscountCard(selectedDiscount))
-        dispatch(stopLoader())
+       const handleDiscountSubscribtion = async () => {
+
+
+       const payload: SubscribedDiscount = {
+        _id: selectedDiscount._id,
+        merchantcode: selectedDiscount.merchantcode,
+        clientcode: userProfile.contact,
+        companyname: selectedDiscount.companyname,
+        address: selectedDiscount.address,
+        discountype:selectedDiscount.discountype,
+        percentage: selectedDiscount.percentage 
+       }
+
+
+        dispatch(subscribeDiscount(payload) as unknown as AnyAction)
         dispatch(closeDiscountModal())
-        navigation.navigate(Screens.wallet as never)
-        }, 2000)
+        setTimeout(() => {
+            navigation.navigate(Screens.wallets as never)
+        }, 1000)
+       
        }
 
 

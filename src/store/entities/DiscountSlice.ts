@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {DiscountInterface} from "../../models/DTOS"
+import {DiscountInterface, SubscribedDiscount} from "../../models/DTOS"
 import DiscountService from "../../services/DiscountService";
 import {startLoader, stopLoader} from "../ui/UI"
 type AddDiscount = {
@@ -59,6 +59,21 @@ export const loadDiscountCards = () => async(dispatch: any, getState: any) => {
     dispatch(stopLoader())
 
 }
+
+
+export const subscribeDiscount = (body: SubscribedDiscount) => async( dispatch: any, getState: any) => {
+   const subscribedDiscounts = getState().entities.discount.subscribedDiscounts as DiscountInterface[]
+   const selelectedDiscount = subscribedDiscounts.find(discount => discount._id === body._id)
+   if(selelectedDiscount) return
+
+    dispatch(startLoader())
+    const subscribedDiscount = await DiscountService.createDiscount(body)
+    if(!subscribedDiscount) return dispatch(stopLoader())
+    
+    dispatch(subribeToDiscountCard(subscribedDiscount))
+    dispatch(stopLoader())
+}
+
 
 export default slice.reducer
 

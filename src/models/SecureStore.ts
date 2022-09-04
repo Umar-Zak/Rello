@@ -1,4 +1,5 @@
 import * as SecureStore from 'expo-secure-store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DiscountInterface, GiftCardInterface, LoyaltyInterface } from './DTOS';
 
 
@@ -22,33 +23,35 @@ private GIFT = "gift_cards"
 
 
  async saveDiscountCards(discountCards: DiscountInterface[]) {
-   await SecureStore.setItemAsync(this.DISCOUNT, JSON.stringify(discountCards))
+   await AsyncStorage.setItem(this.DISCOUNT, JSON.stringify(discountCards))
  }
 
 
  async getSaveDiscountCards(){
-   const savedDiscountsCards = await SecureStore.getItemAsync(this.DISCOUNT) as string
+   const savedDiscountsCards = await AsyncStorage.getItem(this.DISCOUNT) as string
    const discountCards = JSON.parse(savedDiscountsCards) as DiscountInterface[]
    return discountCards? discountCards : []
  }
 
+ 
  async saveLoyaltyCards(loyaltyCards: LoyaltyInterface[]) {
-   await SecureStore.setItemAsync(this.LOYALTY, JSON.stringify(loyaltyCards))
+   await AsyncStorage.setItem(this.LOYALTY, JSON.stringify(loyaltyCards))
  }
 
+
  async getSavedLoyaltyCards() {
-   const savedLoyaltyCards = await SecureStore.getItemAsync(this.LOYALTY) as string
+   const savedLoyaltyCards = await AsyncStorage.getItem(this.LOYALTY) as string
    const loyaltyCards = JSON.parse(savedLoyaltyCards) as LoyaltyInterface[]
    return loyaltyCards? loyaltyCards : []
  }
 
  async saveGiftCards(giftCards: GiftCardInterface[]) {
-   await SecureStore.setItemAsync(this.GIFT, JSON.stringify(giftCards))
+   await AsyncStorage.setItem(this.GIFT, JSON.stringify(giftCards))
  }
 
 
  async getSavedGiftCards() {
-   const savedGiftCards = await SecureStore.getItemAsync(this.GIFT) as string
+   const savedGiftCards = await AsyncStorage.getItem(this.GIFT) as string
    const giftCards = JSON.parse(savedGiftCards) as GiftCardInterface[]
    return giftCards? giftCards : []
  }

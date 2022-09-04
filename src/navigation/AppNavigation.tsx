@@ -10,6 +10,7 @@ import GiftCardScreen from '../screens/GiftCardScreen';
 import FeedNavigation from './FeedNavigation';
 import GiftNavigation from './GiftNavigation';
 import LoyaltyNavigation from './LoyaltyNavigation';
+import WalletActivityNavigation from './WalletActivityNavigation';
 
 const Tab = createBottomTabNavigator();
 function AppNavigation() {
@@ -53,10 +54,11 @@ function AppNavigation() {
         }}
          />
         <Tab.Screen 
-        name={Screens.wallet} 
-        component={WalletScreen} 
+        name={Screens.wallets} 
+        component={WalletActivityNavigation} 
         options={{
-            tabBarIcon: ({size, color, focused}) => <AntDesign size={size} color={color} name='wallet' />
+            tabBarIcon: ({size, color, focused}) => <AntDesign size={size} color={color} name='wallet' />,
+            headerShown: false
         }}
         />
        </Tab.Navigator>

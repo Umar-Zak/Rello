@@ -6,6 +6,7 @@ import AppNavigation from './AppNavigation';
 import {activateUser} from "../store/auth/AuthSlice"
 import SecureStore from '../models/SecureStore';
 import Activity from '../components/Activity';
+import OfflineNotification from '../components/OfflineNotification';
 
 function RootNavigation() {
      const dispatch = useDispatch()
@@ -28,10 +29,13 @@ function RootNavigation() {
      if(!isAppReady) return <Activity/>
 
     return (
+       <>
+       <OfflineNotification/>
         <NavigationContainer>
            {!user && <OnboardingNavigation/>}
            {user && <AppNavigation/>}
         </NavigationContainer>
+       </>
     );
 }
 

@@ -8,28 +8,37 @@ import CardDetailsHeader from '../components/CardDetailsHeader';
 import CardDetailsLocation from '../components/CardDetailsLocation';
 import Map from '../components/Map';
 import SubscribeButton from '../components/SubscribeButton';
-import { LoyaltyInterface } from '../models/DTOS';
+import { LoyaltyInterface, SubsribedLoyalty } from '../models/DTOS';
 import Colors from '../config/Colors';
-import {subscribeToLoyaltyCard} from "../store/entities/LoyaltySlice"
+import {createSubscription} from "../store/entities/LoyaltySlice"
 import {startLoader, stopLoader} from "../store/ui/UI"
 import Screens from '../navigation/Screens';
 import Activity from '../components/Activity';
+import { UserProfile } from '../services/Auth';
+import { AnyAction } from 'redux';
 
 function LoyaltyCardDetailsScreen() {
     const selectedLoyalty = useSelector<any, LoyaltyInterface>((state: any) => state.entities.loyalty.selectedLoyalty)
     const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
+    const userProfile = useSelector<any, UserProfile>((state: any) => state.auth.userProfile)
     const dispatch = useDispatch()
     const navigation = useNavigation()
 
    const handleSubscribeButtonPressed = () => {
-    dispatch(startLoader())
+    const payload = {
+     merchantcode: selectedLoyalty.merchantcode,
+     clientcode: userProfile.contact,
+     companyname: selectedLoyalty.companyname,
+     address: selectedLoyalty.address,
+     amount: selectedLoyalty.amount,
+     point: selectedLoyalty.point 
+    }
     
+    dispatch(createSubscription(payload) as unknown as AnyAction)
     setTimeout(() => {
-        dispatch(subscribeToLoyaltyCard(selectedLoyalty))
-        dispatch(stopLoader())
         navigation.goBack()
         navigation.navigate(Screens.wallet as never)
-    }, 2000)
+    }, 1000)
     }
    
     
