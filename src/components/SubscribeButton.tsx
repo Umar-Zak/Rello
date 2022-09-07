@@ -1,22 +1,30 @@
 import React from 'react';
+import {TouchableOpacity} from "react-native"
 import "styled-components"
 import styled from "styled-components/native"
 import Colors from "../config/Colors"
 interface SubsribeButtonInterface {
     handleSubscribe:() => void
+    isSubscribed?:boolean
 }
 
-function SubscribeButton({handleSubscribe}: SubsribeButtonInterface) {
-    return (
-        <Subscribe onPress={handleSubscribe}>
-                <SubcribeText>Subscribe</SubcribeText>
+function SubscribeButton({handleSubscribe, isSubscribed}: SubsribeButtonInterface) {
+    return (!isSubscribed ?
+        <TouchableOpacity onPress={handleSubscribe}>
+            <Subscribe>
+       <SubcribeText>Subscribe</SubcribeText>
       </Subscribe>
+        </TouchableOpacity>
+         :
+         <Subscribe>
+         <SubcribeText>Subscribed</SubcribeText>
+        </Subscribe>
     );
 }
 
 export default SubscribeButton;
 
-const Subscribe = styled.TouchableOpacity`
+const Subscribe = styled.View`
     width: 130px;
     height: 50px;
     background: ${Colors.green};

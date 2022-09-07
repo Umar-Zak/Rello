@@ -1,5 +1,6 @@
 import { LoyaltyInterface, SubsribedLoyalty } from "../models/DTOS";
 import SecureStore from "../models/SecureStore";
+import Auth from "./Auth";
 import Https from "./Https";
 
 class LoyaltyService extends Https {
@@ -10,8 +11,9 @@ class LoyaltyService extends Https {
 
    async getAllLoyaltyCards(){
         try {
-           const {data} = await this.get<LoyaltyInterface[]>("loyalty_customer")
+           const {data} = await this.get<LoyaltyInterface[]>("loyalty_merchant")
            await SecureStore.saveLoyaltyCards(data)
+           
            return data
         } catch (error) {
             const savedLoyaltyCards = await SecureStore.getSavedLoyaltyCards()
@@ -22,13 +24,22 @@ class LoyaltyService extends Https {
 
     async createLoyalty(body: SubsribedLoyalty){
         try {
-           const {data} = await this.post<LoyaltyInterface>("loyalty_customer", body)
+           const {data} = await this.post<SubsribedLoyalty>("loyalty_customer", body)
            return data
         } catch (error) {
             throw error
         }
     }
     
+    async getSubscriptions(){
+        try {
+           const user = await Auth.getUserProfile()
+           const {data} = await this.get<SubsribedLoyalty[]>(`loyalty_customer/clientfind/${user.contact}`)
+          return data
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 

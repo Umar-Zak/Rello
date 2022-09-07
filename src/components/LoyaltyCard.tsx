@@ -9,11 +9,14 @@ import { getLoyaltyBackground } from '../models/StaticContent';
 import {selectLoyalty} from "../store/entities/LoyaltySlice"
 import Screens from '../navigation/Screens';
 
-function LoyaltyCard(card: LoyaltyInterface) {
+function LoyaltyCard(card: LoyaltyInterface & {isInWallet?: boolean}) {
     const dispatch = useDispatch()
     const navigation  = useNavigation()
 
     const handleLoyaltyCardPressed = () => {
+        const params = {...card, type: "loyalty"}
+        if(card.isInWallet) return navigation.navigate(Screens.walletDetail as never, params as never)
+        
         dispatch(selectLoyalty(card))
         navigation.navigate(Screens.loyaltyDetail as never)
     }

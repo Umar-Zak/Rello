@@ -8,6 +8,7 @@ import { DiscountInterface, GiftCardInterface, LoyaltyInterface } from '../model
 import DiscountCard from '../components/DiscountCard';
 import LoyaltyCard from '../components/LoyaltyCard';
 import GiftCard from '../components/GiftCard';
+import Activity from '../components/Activity';
 
 
 const tabs = [
@@ -29,12 +30,15 @@ function WalletScreen() {
     const subscribedDiscount = useSelector<any, DiscountInterface[]>((state: any) => state.entities.discount.subscribedDiscounts)
     const subscribedGiftCards = useSelector<any, GiftCardInterface[]>((state: any) => state.entities.gift.subscribedGiftCards)
     const subscribedLoyaltyCards = useSelector<any, LoyaltyInterface[]>((state: any) => state.entities.loyalty.subscribedLoyalties)
-   
+    const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
     
     const [searchText, setSearchText] = useState("")
     const [currentTab, setCurrentTab] = useState(tabs[0].id)
 
+
     return (
+        <RootView>
+        {isLoading && <Activity/>}
       <Container>
         <SearchField 
         placeholder="Search through your wallet" 
@@ -60,7 +64,7 @@ function WalletScreen() {
            {
             currentTab === tabs[1].id && subscribedLoyaltyCards.map((loyalty,index) => (
                 <CardContainer key={index}>
-                    <LoyaltyCard {...loyalty} />
+                    <LoyaltyCard isInWallet={true} {...loyalty} />
                 </CardContainer>
             ))
            }
@@ -72,6 +76,7 @@ function WalletScreen() {
             ))
            }
       </Container>
+      </RootView>
     );
 }
 
@@ -103,4 +108,8 @@ const Touchable = styled.TouchableOpacity`
 const CardContainer = styled.View`
     padding-left: 30px;
     margin-bottom: 30px;
+`
+
+const RootView = styled.View`
+flex: 1
 `

@@ -10,7 +10,7 @@ class GiftService extends Https {
 
     async getAllGiftCards(){
         try {
-           const {data} = await this.get<GiftCardInterface[]>("giftcard_customer")
+           const {data} = await this.get<GiftCardInterface[]>("giftcard_merchant")
            await SecureStore.saveGiftCards(data)
            return data
         } catch (error) {

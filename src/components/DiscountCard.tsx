@@ -14,7 +14,8 @@ function DiscountCard(discount: DiscountInterface & {isInWallet?: boolean}) {
     const dispatch = useDispatch()
     const navigation = useNavigation()
     const handleDiscountPressed = () => {
-        if(discount.isInWallet) return navigation.navigate(Screens.walletDetail as never)
+        const transformedDiscount = {...discount, type: "discount"}
+        if(discount.isInWallet) return navigation.navigate(Screens.walletDetail as never, transformedDiscount as never)
 
         dispatch(selectDiscount(discount))
         dispatch(openDiscountModal())

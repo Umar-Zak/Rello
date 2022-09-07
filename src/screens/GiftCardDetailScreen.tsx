@@ -35,7 +35,7 @@ function GiftCardDetailScreen() {
     return (
        <Container>
        {isLoading && <Activity/>}
-        <Background source={require("../assets/gift-bg.jpg")} >
+        <Background>
             <OverFlow/>
         <CardDetailsHeader 
         title="Gift card by"
@@ -59,9 +59,10 @@ const Container = styled.View`
     flex: 1;
 `
 
-const Background = styled.ImageBackground`
+const Background = styled.View`
     width: 100%;
     height: 380px;
+    background: ${Colors.deep_green}
 `
 const OverFlow = styled.View`
     width: 100%;

@@ -21,13 +21,18 @@ import { AnyAction } from 'redux';
 function DiscountModa() {
     const showDiscountModal = useSelector((state: any) => state.ui.showDiscountModal)
     const selectedDiscount = useSelector<any, DiscountInterface>((state: any) => state.entities.discount.selectedDiscount)
+    const subscribedDiscount = useSelector<any, SubscribedDiscount[]>((state: any) => state.entities.discount.subscribedDiscounts)
     const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
     const userProfile = useSelector<any, UserProfile>((state: any) => state.auth.userProfile)
     const navigation = useNavigation()
     
     const dispatch = useDispatch()
     const [discountModalTopOffset] = useState(new Animated.Value(1000))
-
+    
+    let isFoundInSubscriptions: undefined | SubscribedDiscount = undefined
+    if(subscribeDiscount && subscribeDiscount.length > 0){
+         isFoundInSubscriptions = subscribedDiscount?.find(discount => discount.discountid === selectedDiscount?.id)
+    }
 
     useEffect(() => {
         if(showDiscountModal){
@@ -46,27 +51,25 @@ function DiscountModa() {
            
        }, [showDiscountModal])
    
-
        
        const handleDiscountSubscribtion = async () => {
 
 
        const payload: SubscribedDiscount = {
-        _id: selectedDiscount._id,
         merchantcode: selectedDiscount.merchantcode,
         clientcode: userProfile.contact,
         companyname: selectedDiscount.companyname,
         address: selectedDiscount.address,
         discountype:selectedDiscount.discountype,
-        percentage: selectedDiscount.percentage 
+        percentage: selectedDiscount.percentage,
+        discountid: selectedDiscount.id
        }
 
-
+       
+       
         dispatch(subscribeDiscount(payload) as unknown as AnyAction)
         dispatch(closeDiscountModal())
-        setTimeout(() => {
-            navigation.navigate(Screens.wallets as never)
-        }, 1000)
+        navigation.navigate(Screens.wallets as never)
        
        }
 
@@ -78,8 +81,8 @@ function DiscountModa() {
         }}
         >
            {isLoading && <Activity/>}
-            <Background source={require("../assets/geo.png")} >
-            <SubscribeButton handleSubscribe={handleDiscountSubscribtion} />
+            <Background>
+          <SubscribeButton handleSubscribe={handleDiscountSubscribtion} isSubscribed={isFoundInSubscriptions? true : false} />
             <CardDetailsLocation/>
             <CardDetailsHeader 
             title="Discount offered by" 
@@ -100,9 +103,10 @@ function DiscountModa() {
 
 export default DiscountModa;
 
-const Background = styled.ImageBackground`
+const Background = styled.View`
     width: 100%;
     height: 380px;
+    background: ${Colors.deep_green}
 `
 const DiscountModal = styled.View`
     width: 100%;

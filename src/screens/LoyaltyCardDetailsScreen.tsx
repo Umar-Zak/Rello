@@ -8,10 +8,9 @@ import CardDetailsHeader from '../components/CardDetailsHeader';
 import CardDetailsLocation from '../components/CardDetailsLocation';
 import Map from '../components/Map';
 import SubscribeButton from '../components/SubscribeButton';
-import { LoyaltyInterface, SubsribedLoyalty } from '../models/DTOS';
+import { LoyaltyInterface, SubsribedLoyalty} from '../models/DTOS';
 import Colors from '../config/Colors';
 import {createSubscription} from "../store/entities/LoyaltySlice"
-import {startLoader, stopLoader} from "../store/ui/UI"
 import Screens from '../navigation/Screens';
 import Activity from '../components/Activity';
 import { UserProfile } from '../services/Auth';
@@ -19,10 +18,13 @@ import { AnyAction } from 'redux';
 
 function LoyaltyCardDetailsScreen() {
     const selectedLoyalty = useSelector<any, LoyaltyInterface>((state: any) => state.entities.loyalty.selectedLoyalty)
+    const subscribedLoyaltyCards = useSelector<any, SubsribedLoyalty[]>((state: any) => state.entities.loyalty.subscribedLoyalties)
     const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
     const userProfile = useSelector<any, UserProfile>((state: any) => state.auth.userProfile)
     const dispatch = useDispatch()
     const navigation = useNavigation()
+
+    const isFoundInSubscription = subscribedLoyaltyCards.find(subs => subs.loyaltyid === selectedLoyalty.id)
 
    const handleSubscribeButtonPressed = () => {
     const payload = {
@@ -31,14 +33,14 @@ function LoyaltyCardDetailsScreen() {
      companyname: selectedLoyalty.companyname,
      address: selectedLoyalty.address,
      amount: selectedLoyalty.amount,
-     point: selectedLoyalty.point 
+     point: selectedLoyalty.point,
+     loyaltyid: selectedLoyalty.id
     }
     
+    
     dispatch(createSubscription(payload) as unknown as AnyAction)
-    setTimeout(() => {
-        navigation.goBack()
-        navigation.navigate(Screens.wallet as never)
-    }, 1000)
+    navigation.goBack()
+    navigation.navigate(Screens.wallets as never)
     }
    
     
@@ -52,7 +54,8 @@ function LoyaltyCardDetailsScreen() {
             <LoyaltyAmount>Ghc {selectedLoyalty.amount}.00</LoyaltyAmount>
             <Loyalty>Loyalty worth</Loyalty>
          </LoyaltyAmountContainer>
-        <SubscribeButton 
+       <SubscribeButton 
+       isSubscribed={isFoundInSubscription? true: false}
         handleSubscribe={handleSubscribeButtonPressed
         } 
         />

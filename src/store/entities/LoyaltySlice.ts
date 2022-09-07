@@ -7,7 +7,7 @@ import { startLoader, stopLoader } from "../ui/UI";
 type LoyaltySlice = {
     loyalties: LoyaltyInterface[],
     selectedLoyalty: LoyaltyInterface | null,
-    subscribedLoyalties: LoyaltyInterface[]
+    subscribedLoyalties: SubsribedLoyalty[]
 }
 
 
@@ -42,44 +42,66 @@ const slice = createSlice({
             
         },
 
-        subscribeToLoyaltyCard: (state: LoyaltySlice, action: LoyaltyAction) => {
-            const loyaltyCard = state.subscribedLoyalties.find((loy) => loy._id === action.payload._id)
-            if(!loyaltyCard) state.subscribedLoyalties.push(action.payload)
-
-            state.loyalties = state.loyalties.filter(loyalty => loyalty._id !== action.payload._id)
-       
-            
+        subscribeToLoyaltyCard: (state: LoyaltySlice, action: {type: string, payload: SubsribedLoyalty}) => {
+            state.subscribedLoyalties.push(action.payload)
         },
 
         getLoyalty: (state: LoyaltySlice, action: GetLoyaltyAction) => {
             state.loyalties = action.payload
+        },
+
+        getSubscriptions: (state: LoyaltySlice, action: {type: string, payload: SubsribedLoyalty[]}) => {
+            state.subscribedLoyalties = action.payload
         }
     }
 })
 
 export const loadLoyaltyCards = () => async(dispatch: any, getState: any) => {
-    dispatch(startLoader())
+    try {
+        dispatch(startLoader())
     const loyaltyCards = await LoyaltyService.getAllLoyaltyCards()
     dispatch(getLoyalty(loyaltyCards))
 
     dispatch(stopLoader())
+    } catch (error) {
+        dispatch(stopLoader())
+    }
 }
 
 
 export const createSubscription = (body: SubsribedLoyalty) => async (dispatch: any, getState: any) => {
-    const subscribedLoyalties = getState().entities.loyalty.subscribedLoyalties as LoyaltyInterface[]
-    const selectedLoyalty = subscribedLoyalties.find(loyalty => loyalty._id === body._id)
+  
+    const subscribedLoyalties = getState().entities.loyalty.subscribedLoyalties as SubsribedLoyalty[]
+    
+    let selectedLoyalty = subscribedLoyalties.find(loyalty => loyalty.loyaltyid === body.loyaltyid)
     if(selectedLoyalty) return
 
-    dispatch(startLoader())
-    const subscription = await LoyaltyService.createLoyalty(body)
-    if(!subscription) return dispatch(stopLoader())
+    selectedLoyalty = subscribedLoyalties.find(loyalty => loyalty.merchantcode === body.merchantcode)
+    if(selectedLoyalty) return
 
-    dispatch(subscribeToLoyaltyCard(subscription))
-    dispatch(stopLoader())
+    try {
+        dispatch(startLoader())
+        const subscription = await LoyaltyService.createLoyalty(body)
+        dispatch(subscribeToLoyaltyCard(subscription))
+        dispatch(stopLoader())
+    } catch (error) {
+        dispatch(stopLoader())
+    }
 
+}
+
+
+export const loadSubscribedLoyalties = () => async(dispatch: any, getState: any) => {
+    try {
+        dispatch(startLoader())
+        const subscriptions = await LoyaltyService.getSubscriptions()
+        dispatch(getSubscriptions(subscriptions))
+        dispatch(stopLoader())
+    } catch (error) {
+        dispatch(stopLoader())
+    }
 }
 
 export default  slice.reducer
 
-export const {addLoyalty, selectLoyalty, subscribeToLoyaltyCard, getLoyalty} = slice.actions
+export const {addLoyalty, selectLoyalty, subscribeToLoyaltyCard, getLoyalty, getSubscriptions} = slice.actions
