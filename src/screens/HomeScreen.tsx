@@ -19,7 +19,8 @@ import Activity from '../components/Activity';
 import {loadDiscountCards, loadSubscribedDiscounts} from "../store/entities/DiscountSlice"
 import {loadGiftCards} from "../store/entities/GiftSlice"
 import {loadLoyaltyCards, loadSubscribedLoyalties} from "../store/entities/LoyaltySlice"
-
+import {showTransModal} from "../store/ui/UI"
+import { TransactionsModal } from '../components/TransactionsModal';
 function HomeScreen() {
     const discounts = useSelector<any, DiscountInterface[]>((state: any) => state.entities.discount.discounts)
     const giftCards = useSelector<any, GiftCardInterface[]>((state: any) => state.entities.gift.gifts)
@@ -59,6 +60,7 @@ function HomeScreen() {
  
     return (
        <Root>
+         <TransactionsModal/>
         {isLoading && <Activity/>}
         <DiscountModa/>
       <AnimatedMenu
@@ -156,11 +158,14 @@ function HomeScreen() {
           <MaterialIcons name="account-circle"  size={40} color={Colors.dark_grey}/>
           </Pressable>
             <Home>Home</Home>
+            <MenuIcon onPress={() => dispatch(showTransModal())} >
+            <MaterialIcons name="menu"  size={40} color={Colors.dark_grey}/>
+            </MenuIcon>
         </Header>
         {!isLoading && <Container
         showsVerticalScrollIndicator={false} 
         >
-            <Screen>
+        <Screen>
             <>
             <Title>Discount Offers</Title>
             <Section 
@@ -227,7 +232,7 @@ const Title = styled.Text`
  margin-top: 30px;
  color: ${Colors.deep_green};
  font-weight: 700;
- font-size: 25px;
+ font-size: 20px;
  letter-spacing: 1px;
  margin-bottom: 20px;
 `
@@ -291,6 +296,11 @@ const AndroidOverlay = styled.View`
     padding-right: 20px;
 `
 
+const MenuIcon = styled.TouchableOpacity`
+ position: absolute;
+ top: 50px;
+ right: 20px
+`
 
 const MenuScroll = styled.ScrollView``
 

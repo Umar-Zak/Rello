@@ -4,7 +4,7 @@ import Auth, { UserProfile } from "../../services/Auth";
 
 type AuthSlice = {
     user: boolean,
-    userProfile: UserProfile | null
+    userProfile: UserProfile | null | {}
 }
 
 type SeedProfileAction = {
@@ -16,7 +16,7 @@ const slice = createSlice({
     name: "auth",
     initialState: {
         user: false,
-        userProfile: null
+        userProfile: {}
 
     },
     reducers: {
@@ -37,6 +37,7 @@ export default slice.reducer
 
 export const loadUserProfile = () => async (dispatch: any, getState: any) => {
     const userProfile = await Auth.getUserProfile()
+    
     dispatch(seedUserProfile(userProfile))
 }
 export const {logoutUser, activateUser, seedUserProfile} = slice.actions

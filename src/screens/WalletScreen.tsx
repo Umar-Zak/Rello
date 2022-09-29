@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import "styled-components"
 import {useSelector} from "react-redux"
+import {AntDesign, MaterialIcons} from "@expo/vector-icons"
 import styled from 'styled-components/native';
 import SearchField from '../components/SearchField';
 import Colors from '../config/Colors';
@@ -33,7 +34,7 @@ function WalletScreen() {
     const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
     
     const [searchText, setSearchText] = useState("")
-    const [currentTab, setCurrentTab] = useState(tabs[0].id)
+    const [activeIcon, setActiveIcon] = useState(0)
 
 
     return (
@@ -44,17 +45,24 @@ function WalletScreen() {
         placeholder="Search through your wallet" 
         handleSearch={(text: string) => setSearchText(text)} 
         />
-        <TabsContainer>
-           {
-            tabs.map((tab, index) => (
-                <Touchable onPress={() => setCurrentTab(tab.id)} key={index} >
-                <Tab style={{color: tab.id === currentTab ? Colors.green : Colors.dark_grey}} >{tab.value}</Tab>
-                </Touchable>
+        <FlexContainer>
+        {
+            icons.map((icon, index) => (
+                <TransactionIcon 
+                onPress={() => setActiveIcon(index)}
+                key={index} 
+                style={{
+                    borderColor: activeIcon === index? "#fd4957": "",
+                    borderWidth: activeIcon === index? 1: 0
+                }}>
+                {icon.icon}
+                <TransactionText>{icon.text}</TransactionText>
+                </TransactionIcon>
             ))
-           }
-        </TabsContainer>
+        }
+    </FlexContainer>
            {
-            currentTab === tabs[0].id && subscribedDiscount.map((discount, index) => (
+            activeIcon === 2 && subscribedDiscount.map((discount, index) => (
                 <CardContainer key={index}>
                     <DiscountCard isInWallet={true} {...discount} />
                 </CardContainer>
@@ -62,16 +70,16 @@ function WalletScreen() {
            }
 
            {
-            currentTab === tabs[1].id && subscribedLoyaltyCards.map((loyalty,index) => (
+            activeIcon === 0 && subscribedLoyaltyCards.map((loyalty,index) => (
                 <CardContainer key={index}>
                     <LoyaltyCard isInWallet={true} {...loyalty} />
                 </CardContainer>
             ))
            }
            {
-            currentTab === tabs[2].id && subscribedGiftCards.map((giftCard, index) => (
+            activeIcon === 1 && subscribedGiftCards.map((giftCard, index) => (
                 <CardContainer key={index} >
-                    <GiftCard {...giftCard} />
+                <GiftCard {...giftCard} />
                 </CardContainer>
             ))
            }
@@ -113,3 +121,40 @@ const CardContainer = styled.View`
 const RootView = styled.View`
 flex: 1
 `
+const FlexContainer = styled.View`
+ flex-direction: row;
+ align-items: center;
+ justify-content: space-around;
+ margin-top: 5px;
+ margin-bottom: 30px
+`
+
+const TransactionIcon = styled.TouchableOpacity`
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.10)
+    align-items: center;
+    justify-content: center;
+    `
+
+    const TransactionText = styled.Text`
+    margin-top: 5px;
+    font-size: 12px
+    `
+
+const icons = [
+    {
+        text: "Loyalties",
+        icon: <MaterialIcons size={35} color={Colors.green} name='loyalty' />
+    },
+    {
+        text: "Gifts",
+        icon: <AntDesign size={35} color={Colors.green} name='gift' />
+    },
+    {
+        text: "Discounts",
+        icon: <AntDesign size={35} color={Colors.green} name='shoppingcart' />
+    }
+]

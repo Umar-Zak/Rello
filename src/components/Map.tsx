@@ -3,20 +3,22 @@ import { StyleSheet, Dimensions} from 'react-native'
 import MapView from 'react-native-maps';
 function Map() {
     const [coords, setCoords] = useState({
-        latitude: 37.78825,
-        longitude: -122.4324,
+        latitude: 5.564832975531661,
+        longitude: -0.13826995767079248,
     })
     return (
         <MapView
-             style={styles.map}
-             initialRegion={{
-                latitude: coords.latitude,
-                longitude: coords.longitude,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}
-              />
+        style={styles.map}
+        initialRegion={{
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+        }}
+        />
     );
+
+    
 }
 
 export default Map;

@@ -22,7 +22,7 @@ export default CardDetailsHeader;
 
 const CompanyContainer = styled.View`
     position: absolute;
-    top: 70px;
+    top: 40px;
     padding-left: 15px;
     z-index: 100;
 `

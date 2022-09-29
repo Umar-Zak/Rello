@@ -31,7 +31,7 @@ const Subscribe = styled.View`
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 315px;
+    top: 430px;
     right: 10px;
     border-radius: 7px;
     z-index: 100;

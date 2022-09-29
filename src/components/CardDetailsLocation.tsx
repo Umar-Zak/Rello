@@ -17,7 +17,7 @@ const LocationContainer = styled.View`
     flex-direction: row;
     align-items: center;
     position: absolute;
-    top: 330px;
+    top: 440px;
     left: 10px;
     z-index: 100;
 `

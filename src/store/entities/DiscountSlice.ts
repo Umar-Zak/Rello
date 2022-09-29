@@ -16,7 +16,7 @@ type GetDiscountsAction = {
 
 type DiscountSlice = {
     discounts: DiscountInterface[],
-    selectedDiscount: DiscountInterface | null,
+    selectedDiscount: DiscountInterface | null | {},
     subscribedDiscounts: SubscribedDiscount[]
 }
 
@@ -24,7 +24,7 @@ type DiscountSlice = {
  const slice = createSlice({
     initialState: {
         discounts: [],
-        selectedDiscount: null,
+        selectedDiscount: {},
         subscribedDiscounts: []
     },
     name: "bugs",

@@ -60,7 +60,7 @@ function SignUpScreen() {
         dispatch(startLoader())
         setSignUpInfo(body)
         const number = body.contact.substring(1)
-        const code = Date.now().toString().substring(9)
+        const code = Date.now().toString().substring(7)
         const message = `Your Rello sign up verification code is ${code}`
         setOtp(code)
 

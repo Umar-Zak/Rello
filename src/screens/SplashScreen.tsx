@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Animated} from 'react-native'
 import "styled-components"
+import * as Sentry from "sentry-expo"
 import styled from 'styled-components/native';
 import {useNavigation} from "@react-navigation/native"
 import Colors from '../config/Colors';
@@ -18,14 +19,12 @@ function SplashScreen() {
 
 
     const handleNext = () => {
-        Animated.timing(leftOffset, {
-            toValue: -1000,
-            duration: 1000,
-            useNativeDriver: false
-        }).start()
-   
+            Animated.timing(leftOffset, {
+                toValue: -1000,
+                duration: 1000,
+                useNativeDriver: false
+            }).start()
        
-        
     }
 
     const handleSecondNext = () => {
@@ -184,6 +183,7 @@ line-height: 25px;
 margin-left: 30px;
 color: #acacac;
 width: 300px;
+text-align:center
 `
 
 const AnimatedContent = Animated.createAnimatedComponent(ContentContainer)

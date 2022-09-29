@@ -1,8 +1,20 @@
 {
   "expo": {
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "umar-zakaria",
+            "project": "correl",
+            "authToken": "ea1f44ac6b4c48ec9ff95917fc6875122b18cf9a7e3048c7908128ec1aa9f418"
+          }
+        }
+      ]
+    },
     "name": "Correl",
-    "slug": "Rello",
-    "version": "1.0.1",
+    "slug": "mCorrel",
+    "version": "1.1.1",
     "orientation": "portrait",
     "icon": "./assets/app-icon.png",
     "userInterfaceStyle": "light",
@@ -22,13 +34,21 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/app-splash.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.umarzak.Rello"
+      "package": "com.mcorrel.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "sentry-expo"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "210422cc-371e-4843-9197-26d3892c2c1a"
+      }
     }
   }
 }

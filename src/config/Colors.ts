@@ -1,5 +1,5 @@
 export default {
-    green: "#00fcaa",
+    green: "#135d48",
     deep_green: "#2c2a50",
     light: "#fbfbfb",
     grey:"#f2f2f4",

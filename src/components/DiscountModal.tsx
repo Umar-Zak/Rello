@@ -10,29 +10,34 @@ import Colors from '../config/Colors';
 import { DiscountInterface, SubscribedDiscount } from '../models/DTOS';
 import Map from './Map';
 import SubscribeButton from './SubscribeButton';
-import CardDetailsHeader from './CardDetailsHeader';
 import CardDetailsLocation from './CardDetailsLocation';
 import {subscribeDiscount} from "../store/entities/DiscountSlice"
 import Screens from '../navigation/Screens';
 import Activity from './Activity';
 import { UserProfile } from '../services/Auth';
 import { AnyAction } from 'redux';
+import DiscountCard from './DiscountCard';
 
 function DiscountModa() {
     const showDiscountModal = useSelector((state: any) => state.ui.showDiscountModal)
     const selectedDiscount = useSelector<any, DiscountInterface>((state: any) => state.entities.discount.selectedDiscount)
-    const subscribedDiscount = useSelector<any, SubscribedDiscount[]>((state: any) => state.entities.discount.subscribedDiscounts)
+    const subscribedDiscounts = useSelector<any, SubscribedDiscount[]>((state: any) => state.entities.discount.subscribedDiscounts)
     const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
     const userProfile = useSelector<any, UserProfile>((state: any) => state.auth.userProfile)
     const navigation = useNavigation()
+    const [isModalVisible, setIsModalVisible] = useState(false)
     
     const dispatch = useDispatch()
     const [discountModalTopOffset] = useState(new Animated.Value(1000))
     
+    
     let isFoundInSubscriptions: undefined | SubscribedDiscount = undefined
-    if(subscribeDiscount && subscribeDiscount.length > 0){
-         isFoundInSubscriptions = subscribedDiscount?.find(discount => discount.discountid === selectedDiscount?.id)
+  
+    if(subscribedDiscounts && subscribedDiscounts.length > 0){
+        isFoundInSubscriptions = subscribedDiscounts?.find(discount => discount.discountid === selectedDiscount?.id)
     }
+    const detailsText = `This card offers you 20% discount on all food and drinks purchased at the hotel except on public holidays. Terms & conditions apply
+    `
 
     useEffect(() => {
         if(showDiscountModal){
@@ -53,20 +58,16 @@ function DiscountModa() {
    
        
        const handleDiscountSubscribtion = async () => {
-
-
        const payload: SubscribedDiscount = {
         merchantcode: selectedDiscount.merchantcode,
-        clientcode: userProfile.contact,
-        companyname: selectedDiscount.companyname,
-        address: selectedDiscount.address,
-        discountype:selectedDiscount.discountype,
-        percentage: selectedDiscount.percentage,
-        discountid: selectedDiscount.id
+        clientcode:   userProfile.contact,
+        companyname:  selectedDiscount.companyname,
+        address:      selectedDiscount.address,
+        discountype:  selectedDiscount.discountype,
+        percentage:   selectedDiscount.percentage,
+        discountid:   selectedDiscount.id
        }
 
-       
-       
         dispatch(subscribeDiscount(payload) as unknown as AnyAction)
         dispatch(closeDiscountModal())
         navigation.navigate(Screens.wallets as never)
@@ -81,17 +82,28 @@ function DiscountModa() {
         }}
         >
            {isLoading && <Activity/>}
+           {isModalVisible && 
+           <Modal>
+          <ModalCancel onPress={() => setIsModalVisible(false)} >
+             <AntDesign name="closecircle" size={30} color="white" />
+            </ModalCancel>
+            <DetailedText>{detailsText}</DetailedText>
+           </Modal>}
             <Background>
           <SubscribeButton handleSubscribe={handleDiscountSubscribtion} isSubscribed={isFoundInSubscriptions? true : false} />
             <CardDetailsLocation/>
-            <CardDetailsHeader 
-            title="Discount offered by" 
-            name={selectedDiscount?.companyname || ""}
-            />
-            <DiscountPercentageContainer>
-                <DiscountPercentage>{selectedDiscount?.percentage}%</DiscountPercentage>
-                <Off>Off</Off>
-            </DiscountPercentageContainer>
+            <SubContainer>
+                <DiscountCard {...selectedDiscount} />
+            </SubContainer>
+            <CompanyName>{selectedDiscount.companyname}</CompanyName>
+        <Contact>Address: {selectedDiscount.address}</Contact>
+        <DetailHeader>Details</DetailHeader>
+        <DetailContainer>
+        <Details>{detailsText.substring(0, 40)}...</Details>
+        <Pressable onPress={() => setIsModalVisible(true)}>
+            {detailsText.length > 40 && <ReadMore>Read more</ReadMore>}
+            </Pressable>
+        </DetailContainer>
             </Background>
             <ModalCancel onPress={() => dispatch(closeDiscountModal())} >
              <AntDesign name="closecircle" size={30} color="white" />
@@ -103,10 +115,50 @@ function DiscountModa() {
 
 export default DiscountModa;
 
+
 const Background = styled.View`
     width: 100%;
-    height: 380px;
+    height: 490px;
     background: ${Colors.deep_green}
+`
+
+const CompanyName = styled.Text`
+margin-top: 20px;
+margin-left: 20px;
+font-size: 20px;
+color: ${Colors.green};
+font-weight: 700;
+margin-bottom: 15px
+
+`
+
+const Contact = styled.Text`
+    margin-left: 20px;
+    color: white;
+    font-weight: 500;
+    font-size: 17px
+`
+const DetailHeader = styled.Text`
+    color: ${Colors.green};
+    margin-left: 20px;
+    margin-top: 30px;
+    font-size: 18px;
+    font-weight: 600
+`
+
+const DetailedText = styled.Text`
+line-height: 25px;
+font-size: 16px;
+width: 85%
+`
+
+const Details = styled.Text`
+    font-weight: 300;
+    color: white;
+    margin-left: 20px;
+    margin-top: 10px;
+    width: 210px;
+    font-size: 14px
 `
 const DiscountModal = styled.View`
     width: 100%;
@@ -117,6 +169,32 @@ const DiscountModal = styled.View`
     left: 0;
 `
 
+const DetailContainer = styled.View`
+flex-direction: column;
+width: 210px
+
+`
+
+const ReadMore = styled.Text`
+margin-top: 10px;
+margin-left: 20px
+color: #fd4957
+`
+const Pressable = styled.TouchableOpacity`
+`
+
+const Modal = styled.View`
+width: 100%;
+height: 490px
+background: white;
+position: absolute;
+left: 0;
+top: 0;
+z-index: 200;
+padding: 20px;
+padding-top: 70px
+`
+
 const ModalCancel = styled.TouchableOpacity`
     width: 40px;
     height: 40px;
@@ -125,32 +203,21 @@ const ModalCancel = styled.TouchableOpacity`
     justify-content: center;
     background: ${Colors.deep_green};
     position: absolute;
-    top: 50px;
-    right: 20px;
+    top: 30px;
+    right: 10px;
 `
 
 
+const SubContainer = styled.View`
+align-items: center;
+justify-content: center;
+padding-top: 60px
+`
 const AnimatedDiscountModal = Animated.createAnimatedComponent(DiscountModal)
 
 
-const DiscountPercentageContainer = styled.View`
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-top: 190px;
-`
 
-const DiscountPercentage = styled.Text`
-    color: ${Colors.green};
-    margin-right: 10px;
-    font-size: 35px;
-    font-weight: 700;
-`
 
-const Off = styled.Text`
-    color: white;
-    font-weight: 500;
-    font-size: 19px;
-`
+
 
 

@@ -7,6 +7,8 @@ import {activateUser} from "../store/auth/AuthSlice"
 import SecureStore from '../models/SecureStore';
 import Activity from '../components/Activity';
 import OfflineNotification from '../components/OfflineNotification';
+import FeedNavigation from './FeedNavigation';
+import LoyaltyNavigation from './LoyaltyNavigation';
 
 function RootNavigation() {
      const dispatch = useDispatch()

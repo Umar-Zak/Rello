@@ -20,25 +20,19 @@ function DiscountCard(discount: DiscountInterface & {isInWallet?: boolean}) {
         dispatch(selectDiscount(discount))
         dispatch(openDiscountModal())
     }
-
+    const imagesUrl = discount?.companyname?.startsWith("la") ? require("../assets/labadi-discount.png") : require("../assets/coral-discount.png")
+    
     return (
-        <Container onPress={handleDiscountPressed} >
-            <CompanyName>{discount.companyname}</CompanyName>
-            <SimpleFlex>
-               <Percentage>{discount.percentage}%</Percentage>
-               <PercentageText>Off</PercentageText>
-            </SimpleFlex>
-            <Flex>
-                <LastUpate>Last Updated</LastUpate>
-                <DateValue>{new Date(discount.updatedAt).getMonth()}/{new Date(discount.updatedAt).getFullYear()}</DateValue>
-            </Flex>
+       <Pressable onPress={handleDiscountPressed}>
+         <Container source={imagesUrl} >
         </Container>
+       </Pressable>
     );
 }
 
 export default DiscountCard;
 
-const Container = styled.TouchableOpacity`
+const Container = styled.ImageBackground`
 width: 300px;
 border-radius: 15px;
 background: ${Colors.deep_green};
@@ -48,6 +42,11 @@ padding-left: 25px;
 padding-right: 25px;
 padding-bottom: 20px;
 margin-right: 20px;
+overflow: hidden;
+min-height: 160px
+`
+
+const Pressable = styled.TouchableOpacity`
 `
 
 const CompanyName = styled.Text`
@@ -81,7 +80,7 @@ const Flex = styled.View`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin-top: 10px;
+    margin-top: 20px;
 `
 
 const LastUpate = styled.Text`

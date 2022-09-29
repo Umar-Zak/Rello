@@ -21,10 +21,42 @@ function LoyaltyCard(card: LoyaltyInterface & {isInWallet?: boolean}) {
         navigation.navigate(Screens.loyaltyDetail as never)
     }
 
+    let imageUrl  = ""
+    const flag = card.companyname.toLowerCase().substring(0, 3)
+    switch (flag){
+        case "ama":
+            imageUrl = require("../assets/amari-loyalty.jpg")
+            break
+            
+        case "all":
+            imageUrl =  require("../assets/allied-loyalty.png")
+            break
+
+        case "goi":
+            imageUrl = require("../assets/goil-loyalty.png")
+            break
+        
+        case "max":
+            imageUrl = require("../assets/maxmart-loyalty.png")
+            break
+
+        case "mel":
+            imageUrl = require("../assets/melcom-loyalty.png")
+            break
+
+        case "she":
+            imageUrl = require("../assets/shell-loyalty.png")
+            break
+        default:
+            imageUrl = getLoyaltyBackground()
+    }
+   
+    
+
     return (
     <Container onPress={handleLoyaltyCardPressed} >
-         <Image resizeMode="cover" source={getLoyaltyBackground()} />
-         <Overflow/>
+         <Image resizeMode="cover" source={imageUrl} />
+         {/* <Overflow/>
         <ContentContainer>
         <CompanyName>{card.companyname}</CompanyName>
         <LoyaltyText>Loyalty Amount</LoyaltyText>
@@ -33,7 +65,7 @@ function LoyaltyCard(card: LoyaltyInterface & {isInWallet?: boolean}) {
             <LastUpdate>Last Upated</LastUpdate>
             <DateValue>{new Date(card.updatedAt).getMonth()}/{new Date(card.updatedAt).getFullYear()}</DateValue>
         </Flex>
-        </ContentContainer>
+        </ContentContainer> */}
     </Container>
     );
 }
