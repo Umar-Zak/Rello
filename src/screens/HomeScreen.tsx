@@ -16,7 +16,7 @@ import {loadUserProfile, logoutUser} from "../store/auth/AuthSlice"
 import { DiscountInterface, GiftCardInterface, LoyaltyInterface } from '../models/DTOS';
 import Auth, { UserProfile } from '../services/Auth';
 import Activity from '../components/Activity';
-import {loadDiscountCards, loadSubscribedDiscounts} from "../store/entities/DiscountSlice"
+import {loadDiscountCards, loadSubscribedDiscounts, loadDiscountTransactions} from "../store/entities/DiscountSlice"
 import {loadGiftCards} from "../store/entities/GiftSlice"
 import {loadLoyaltyCards, loadSubscribedLoyalties} from "../store/entities/LoyaltySlice"
 import {showTransModal} from "../store/ui/UI"
@@ -39,6 +39,7 @@ function HomeScreen() {
         dispatch(loadLoyaltyCards() as unknown as AnyAction)
         dispatch(loadSubscribedDiscounts() as unknown as AnyAction)
         dispatch(loadSubscribedLoyalties() as unknown as AnyAction)
+        dispatch(loadDiscountTransactions() as unknown as AnyAction)
     }, [])
 
     const handleAvatarPressed = () => {

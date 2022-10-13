@@ -59,7 +59,7 @@ function LoyaltyCardDetailsScreen() {
             </ModalCancel>
             <DetailedText>{detailsText}</DetailedText>
            </Modal>}
-        <Background source={require("../assets/geo4.png")}>
+        <Background>
         <CardDetailsLocation/>
        <SubscribeButton 
        isSubscribed={isFoundInSubscription? true: false}
@@ -96,9 +96,10 @@ const SubContainer = styled.View`
     padding-top: 20px;
 `
 
-const Background = styled.ImageBackground`
+const Background = styled.View`
     width: 100%;
     height: 490px;
+    background: ${Colors.deep_green}
 `
 
 const CompanyName = styled.Text`

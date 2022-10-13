@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {DiscountInterface, SubscribedDiscount} from "../../models/DTOS"
+import {DiscountInterface, DiscountTransaction, SubscribedDiscount} from "../../models/DTOS"
 import { UserProfile } from "../../services/Auth";
 import DiscountService from "../../services/DiscountService";
 import {startLoader, stopLoader} from "../ui/UI"
@@ -14,10 +14,16 @@ type GetDiscountsAction = {
     payload: DiscountInterface[]
 }
 
+type InitialiaseDiscountTransactions = {
+    type: string,
+    payload: DiscountTransaction[]
+}
+
 type DiscountSlice = {
     discounts: DiscountInterface[],
     selectedDiscount: DiscountInterface | null | {},
-    subscribedDiscounts: SubscribedDiscount[]
+    subscribedDiscounts: SubscribedDiscount[],
+    discountTransactions: DiscountTransaction[]
 }
 
 
@@ -25,7 +31,8 @@ type DiscountSlice = {
     initialState: {
         discounts: [],
         selectedDiscount: {},
-        subscribedDiscounts: []
+        subscribedDiscounts: [],
+        discountTransactions: []
     },
     name: "bugs",
     reducers:  {
@@ -48,6 +55,10 @@ type DiscountSlice = {
 
         getDiscounts: (state: DiscountSlice, action: GetDiscountsAction) => {
             state.discounts = action.payload
+        },
+
+        initializeDiscountTransaction: (state: DiscountSlice, action: InitialiaseDiscountTransactions) => {
+            state.discountTransactions = action.payload
         }
     }
 })
@@ -92,6 +103,17 @@ export const loadSubscribedDiscounts = () => async (dispatch: any, getState: any
 }
 
 
+export const loadDiscountTransactions = () => async(dispatch: any, getState: any) => {
+    try {
+        const transactions = await DiscountService.getCustomerDiscountTransactions()
+        console.log("Trans", transactions);
+        dispatch(initializeDiscountTransaction(transactions))
+    } catch (error) {
+        console.log("Error", error);
+        
+    }
+}
+
 export default slice.reducer
 
-export const {selectDiscount, addBugs, subribeToDiscountCard, getDiscounts, getSubscriptions} = slice.actions
+export const {selectDiscount, addBugs, subribeToDiscountCard, getDiscounts, getSubscriptions, initializeDiscountTransaction} = slice.actions

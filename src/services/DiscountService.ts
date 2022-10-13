@@ -1,3 +1,4 @@
+import { DiscountTransaction } from './../models/DTOS';
 import { Alert } from "react-native";
 import { DiscountInterface, SubscribedDiscount } from "../models/DTOS";
 import SecureStore from "../models/SecureStore";
@@ -40,6 +41,16 @@ class DiscountService  extends Https {
       } catch (error) {
         throw error
       }
+    }
+
+    async getCustomerDiscountTransactions(){
+        try {
+          const user = await Auth.getUserProfile()
+         const {data} = await this.get<DiscountTransaction[]>(`discount_transaction/clientfind/${user.contact}`)
+         return data
+        } catch (error) {
+          throw error
+        }
     }
 }
 

@@ -2,11 +2,8 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {AntDesign, MaterialIcons} from "@expo/vector-icons"
 import Screens from './Screens';
-import LoyaltyScreen from '../screens/LoyaltyScreen';
 import DiscountScreen from '../screens/DiscountScreen';
-import WalletScreen from '../screens/WalletScreen';
 import Colors from '../config/Colors';
-import GiftCardScreen from '../screens/GiftCardScreen';
 import FeedNavigation from './FeedNavigation';
 import GiftNavigation from './GiftNavigation';
 import LoyaltyNavigation from './LoyaltyNavigation';

@@ -10,32 +10,38 @@ import DiscountCard from '../components/DiscountCard';
 import LoyaltyCard from '../components/LoyaltyCard';
 import GiftCard from '../components/GiftCard';
 import Activity from '../components/Activity';
+import NoSearchResult from '../components/NoSearchResult';
 
 
-const tabs = [
-    {
-        id: "1",
-        value: "Discounts"
-    },
-    {
-        id: "2",
-        value: "Loyalties"
-    },
-    {
-        id: "3",
-        value: "Gift Cards"
-    }
-]
+ 
 
 function WalletScreen() {
-    const subscribedDiscount = useSelector<any, DiscountInterface[]>((state: any) => state.entities.discount.subscribedDiscounts)
-    const subscribedGiftCards = useSelector<any, GiftCardInterface[]>((state: any) => state.entities.gift.subscribedGiftCards)
-    const subscribedLoyaltyCards = useSelector<any, LoyaltyInterface[]>((state: any) => state.entities.loyalty.subscribedLoyalties)
+    let subscribedDiscounts = useSelector<any, DiscountInterface[]>((state: any) => state.entities.discount.subscribedDiscounts)
+    let subscribedGiftCards = useSelector<any, GiftCardInterface[]>((state: any) => state.entities.gift.subscribedGiftCards)
+    let subscribedLoyaltyCards = useSelector<any, LoyaltyInterface[]>((state: any) => state.entities.loyalty.subscribedLoyalties)
     const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
     
     const [searchText, setSearchText] = useState("")
     const [activeIcon, setActiveIcon] = useState(0)
-
+    
+    
+    switch (activeIcon) {
+        case 0:
+            subscribedLoyaltyCards = subscribedLoyaltyCards.filter(loyaltyCard => loyaltyCard.companyname.toLowerCase().startsWith(searchText.toLowerCase()))
+            break
+        case 1:
+            subscribedGiftCards = subscribedGiftCards.filter(giftCard => giftCard.companyname.toLowerCase().startsWith(searchText.toLowerCase()))
+            break
+        
+        case 2:
+            subscribedDiscounts = subscribedDiscounts.filter(discountCard => discountCard.companyname.toLowerCase().startsWith(searchText.toLowerCase()))
+            break
+        
+        default:
+            subscribedLoyaltyCards = subscribedLoyaltyCards.filter(loyaltyCard => loyaltyCard.companyname.toLowerCase().startsWith(searchText.toLowerCase()))
+            
+    }
+    
 
     return (
         <RootView>
@@ -61,20 +67,34 @@ function WalletScreen() {
             ))
         }
     </FlexContainer>
+           <>
            {
-            activeIcon === 2 && subscribedDiscount.map((discount, index) => (
+            activeIcon === 2 && subscribedDiscounts.length === 0 && <NoSearchResult/>
+           }
+           {
+            activeIcon === 2 && subscribedDiscounts.map((discount, index) => (
                 <CardContainer key={index}>
                     <DiscountCard isInWallet={true} {...discount} />
                 </CardContainer>
             ))
            }
+           </>
 
-           {
+          <>
+          {
+            activeIcon === 0 && subscribedLoyaltyCards.length === 0 && <NoSearchResult/>
+          }
+          {
             activeIcon === 0 && subscribedLoyaltyCards.map((loyalty,index) => (
                 <CardContainer key={index}>
                     <LoyaltyCard isInWallet={true} {...loyalty} />
                 </CardContainer>
             ))
+           }
+          </>
+           <>
+           {
+            activeIcon === 1 && subscribedGiftCards.length === 0 && <NoSearchResult/>
            }
            {
             activeIcon === 1 && subscribedGiftCards.map((giftCard, index) => (
@@ -83,6 +103,7 @@ function WalletScreen() {
                 </CardContainer>
             ))
            }
+           </>
       </Container>
       </RootView>
     );

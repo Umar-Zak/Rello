@@ -56,3 +56,15 @@ export interface GiftCardInterface {
     updatedAt: Date
     _id: string
 }
+
+export interface DiscountTransaction {
+    _id: string
+    companyname: string
+    merchantcode: string
+    clientcode: string
+    discountype: string
+    percentage: number
+    total: number
+    description: string
+    discountapplied: number
+}

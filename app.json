@@ -14,7 +14,7 @@
     },
     "name": "Correl",
     "slug": "mCorrel",
-    "version": "1.1.1",
+    "version": "1.1.7",
     "orientation": "portrait",
     "icon": "./assets/app-icon.png",
     "userInterfaceStyle": "light",
@@ -33,11 +33,17 @@
       "supportsTablet": true
     },
     "android": {
+      "versionCode": 4,
       "adaptiveIcon": {
         "foregroundImage": "./assets/app-splash.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.mcorrel.app"
+      "package": "com.mcorrel.app",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyC_AfXIFASx_A-kyuALHWZxZF_DcXp3M4U"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
