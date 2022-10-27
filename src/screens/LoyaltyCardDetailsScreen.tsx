@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import "styled-components"
 import styled from 'styled-components/native';
 import {AntDesign} from "@expo/vector-icons"
@@ -16,6 +16,8 @@ import Activity from '../components/Activity';
 import { UserProfile } from '../services/Auth';
 import { AnyAction } from 'redux';
 import LoyaltyCard from '../components/LoyaltyCard';
+import LocationService from '../services/LocationService';
+import { Alert } from 'react-native';
 
 function LoyaltyCardDetailsScreen() {
     const selectedLoyalty = useSelector<any, LoyaltyInterface>((state: any) => state.entities.loyalty.selectedLoyalty)
@@ -25,10 +27,26 @@ function LoyaltyCardDetailsScreen() {
     const dispatch = useDispatch()
     const navigation = useNavigation()
     const [isModalVisible, setIsModalVisible] = useState(false)
-    
+    const [coordinates, setCoordinates] = useState<{latitude: string, longitude: string}>()
     const isFoundInSubscription = subscribedLoyaltyCards.find(subs => subs.loyaltyid === selectedLoyalty.id)
 
-   const handleSubscribeButtonPressed = () => {
+    useEffect(() => {
+        loadCoordinates()
+    }, [])
+  
+  
+    const loadCoordinates = async () => {
+        try {
+            if(selectedLoyalty){
+              const result = await LocationService.getMerchantCoordinate(selectedLoyalty.companyname)
+              setCoordinates(result[0])
+            }
+        } catch (error) {
+            Alert.alert("ERROR", "Error loading location coordinates")
+        }
+    }
+
+    const handleSubscribeButtonPressed = () => {
     const payload = {
      merchantcode: selectedLoyalty.merchantcode,
      clientcode: userProfile.contact,
@@ -81,7 +99,10 @@ function LoyaltyCardDetailsScreen() {
             </Pressable>
         </DetailContainer>
         </Background>
-        <Map/>
+        { coordinates && <Map 
+        latitude={coordinates?.latitude} 
+        longitude={coordinates?.longitude} 
+        />}
        </Container>
     );
 }

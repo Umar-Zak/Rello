@@ -45,6 +45,7 @@ export interface LoyaltyInterface {
     updatedAt: Date
     id: string
     _id: string
+    description: string
 }
 
 export interface GiftCardInterface {

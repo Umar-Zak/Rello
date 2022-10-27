@@ -1,22 +1,25 @@
 import React, {useState, useEffect} from 'react';
 import {Animated} from 'react-native'
 import  "styled-components"
+import { AnyAction } from 'redux';
 import { useSelector, useDispatch } from 'react-redux';
 import {AntDesign} from "@expo/vector-icons"
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import {closeDiscountModal} from "../store/ui/UI"
-import Colors from '../config/Colors';
+import { UserProfile } from '../services/Auth';
 import { DiscountInterface, SubscribedDiscount } from '../models/DTOS';
+import {subscribeDiscount} from "../store/entities/DiscountSlice"
 import Map from './Map';
 import SubscribeButton from './SubscribeButton';
 import CardDetailsLocation from './CardDetailsLocation';
-import {subscribeDiscount} from "../store/entities/DiscountSlice"
 import Screens from '../navigation/Screens';
 import Activity from './Activity';
-import { UserProfile } from '../services/Auth';
-import { AnyAction } from 'redux';
+import Colors from '../config/Colors';
 import DiscountCard from './DiscountCard';
+import LocationService from '../services/LocationService';
+
+
 
 function DiscountModa() {
     const showDiscountModal = useSelector((state: any) => state.ui.showDiscountModal)
@@ -26,7 +29,7 @@ function DiscountModa() {
     const userProfile = useSelector<any, UserProfile>((state: any) => state.auth.userProfile)
     const navigation = useNavigation()
     const [isModalVisible, setIsModalVisible] = useState(false)
-    
+    const [coordinates, setCoordinates] = useState<{latitude: string, longitude: string}>()
     const dispatch = useDispatch()
     const [discountModalTopOffset] = useState(new Animated.Value(1000))
     
@@ -40,6 +43,7 @@ function DiscountModa() {
     `
 
     useEffect(() => {
+        loadMerchantLocation()
         if(showDiscountModal){
            Animated.spring(discountModalTopOffset, {
                toValue: 0,
@@ -75,6 +79,18 @@ function DiscountModa() {
        }
 
 
+       const loadMerchantLocation = async () => {
+         if(selectedDiscount){
+            try {
+                const result = await LocationService.getMerchantCoordinate(selectedDiscount?.companyname)
+                setCoordinates(result[0])
+            } catch (error) {
+                console.log(error)
+            }
+         }
+            
+       }
+
     return (
         <AnimatedDiscountModal 
         style={{
@@ -108,7 +124,7 @@ function DiscountModa() {
             <ModalCancel onPress={() => dispatch(closeDiscountModal())} >
              <AntDesign name="closecircle" size={30} color="white" />
             </ModalCancel>
-           <Map/>
+          {coordinates && <Map latitude={coordinates?.latitude} longitude={coordinates?.longitude}  />}
         </AnimatedDiscountModal>
     );
 }
@@ -175,13 +191,6 @@ width: 210px
 
 `
 
-const ReadMore = styled.Text`
-margin-top: 10px;
-margin-left: 20px
-color: #fd4957
-`
-const Pressable = styled.TouchableOpacity`
-`
 
 const Modal = styled.View`
 width: 100%;
@@ -208,6 +217,13 @@ const ModalCancel = styled.TouchableOpacity`
 `
 
 
+const Pressable = styled.TouchableOpacity`
+`
+const ReadMore = styled.Text`
+margin-top: 10px;
+margin-left: 20px
+color: #fd4957
+`
 const SubContainer = styled.View`
 align-items: center;
 justify-content: center;

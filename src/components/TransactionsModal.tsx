@@ -7,6 +7,8 @@ import Colors from '../config/Colors'
 import {closeTransModal} from "../store/ui/UI"
 import { DiscountTransaction, LoyaltyTransaction } from '../models/DTOS'
 import NoSearchResult from './NoSearchResult'
+import DiscountTransactionComponent from './DiscountTransaction'
+import LoyaltyTransactionComponent from './LoyaltyTransactionComponent'
 
 
 export const TransactionsModal = () => {
@@ -59,16 +61,7 @@ export const TransactionsModal = () => {
    {discountTransactions.length == 0 && <NoSearchResult text="You haven't made any transactions yet" />}
         {
             discountTransactions.map((trans, index) => (
-            <TransactionTray key={index}>
-          <SimpleFlex>
-          <CompanyName>{trans.companyname}</CompanyName>
-          <DateText>{new Date(trans.createdAt).getDate()}/{new Date(trans.createdAt).getFullYear()}</DateText>
-          </SimpleFlex>
-          <SimpleFlex>
-            <TransactionId>Transaction ID</TransactionId>
-            <Id>{trans.id}</Id>
-          </SimpleFlex>
-        </TransactionTray>
+           <DiscountTransactionComponent key={index} {...trans} />
             ))
         }
     </TransactionContainer>}
@@ -89,6 +82,7 @@ export const TransactionsModal = () => {
         </TransactionTray>
             ))
         } */}
+        <LoyaltyTransactionComponent/>
     </TransactionContainer>}
    </RootView>
    </AnimatedContainer>
@@ -121,13 +115,6 @@ const Container = styled.View`
   z-index: 100;
   padding: 20px;
 `
-
-const CompanyName = styled.Text`
-color: ${Colors.green}
-font-weight: 500;
-font-size: 17px
-`
-
 const CloseIcon = styled.TouchableOpacity`
  position: absolute;
  top: 40px;
@@ -138,12 +125,6 @@ const CloseIcon = styled.TouchableOpacity`
  background: ${Colors.deep_green}
  justify-content: center;
  align-items: center;
-`
-
-const DateText = styled.Text`
-font-weight: 400
-font-size: 15px;
-color: ${Colors.deep_green}
 `
 const FlexContainer = styled.View`
  flex-direction: row;
@@ -169,12 +150,6 @@ const TransactionIcon = styled.TouchableOpacity`
 
 const AnimatedContainer = Animated.createAnimatedComponent(Container)
 
-const SimpleFlex = styled.View`
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-
-`
 
 const Title = styled.Text`
     margin-top: 90px;
@@ -187,26 +162,6 @@ const Title = styled.Text`
 
 const TransactionContainer = styled.View`
  margin-top: 50px
-`
-const TransactionTray = styled.View`
- width: 100%;
- height: 70px;
- border-radius: 10px;
- background: white;
- box-shadow: 0 5px 10px rgba(0, 0, 0, 0.10);
- padding: 10px;
- margin-bottom: 20px
-`
-
-const TransactionId = styled.Text`
-margin-top: 12px;
-font-size: 14px
-`
-
-const Id = styled.Text`
-margin-top: 12px;
-color: #fd4957;
-font-size: 12px
 `
 
 

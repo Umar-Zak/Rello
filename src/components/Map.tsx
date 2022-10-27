@@ -1,17 +1,24 @@
 import React, {useState} from 'react';
 import { StyleSheet, Dimensions} from 'react-native'
 import MapView from 'react-native-maps';
-function Map() {
+
+interface MapInterface {
+    latitude?: string
+    longitude?: string
+}
+
+function Map({latitude, longitude}: MapInterface) {
     const [coords, setCoords] = useState({
         latitude: 5.564832975531661,
         longitude: -0.13826995767079248,
     })
+    
     return (
         <MapView
         style={styles.map}
         initialRegion={{
-        latitude: coords.latitude,
-        longitude: coords.longitude,
+        latitude: latitude? Number(latitude) : coords.latitude,
+        longitude: longitude? Number(longitude) : coords.longitude,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
         }}
