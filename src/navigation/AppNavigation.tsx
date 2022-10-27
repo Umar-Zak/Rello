@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {AntDesign, MaterialIcons} from "@expo/vector-icons"
+import {AntDesign, MaterialIcons} from "@expo/vector-icons";
 import Screens from './Screens';
 import DiscountScreen from '../screens/DiscountScreen';
 import Colors from '../config/Colors';
@@ -42,14 +42,14 @@ function AppNavigation() {
             tabBarIcon: ({size, color}) => <AntDesign size={size} color={color} name='shoppingcart' />
         }}
          />
-         <Tab.Screen 
+         {/* <Tab.Screen 
         name={Screens.gifts} 
         component={GiftNavigation}
         options={{
             tabBarIcon: ({size, color}) => <AntDesign size={size} color={color} name='gift' />,
             headerShown: false
         }}
-         />
+         /> */}
         <Tab.Screen 
         name={Screens.wallets} 
         component={WalletActivityNavigation} 

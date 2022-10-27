@@ -10,6 +10,7 @@ export interface SignUpPayload {
     phone: string
     password: string
     name?: string
+    deviceID: string
 }
 
 
@@ -21,12 +22,15 @@ export type UserProfile = {
     contact: string
     phone: string
     name: string
+    deviceID: string
+    
 }
 
 
 export interface SiginInPayload {
     contact: string
     password: string
+    deviceID: string
 }
 
 
@@ -79,6 +83,36 @@ class Auth extends Https {
             throw error
         }
      }
+    
+     async verifyDevice() {
+        try {
+           const deviceID = await SecureStore.getDeviceToken() as string
+           const res = await this.get<UserProfile>(`userscustomer/me/${deviceID}`)
+        } catch (error: any) {
+            await this.logout()
+            throw error
+        }
+     }
+
+     async findUserByContact(body: {contact: string}) {
+        try {
+           const {data} =  await this.post<UserProfile>("userscustomer/auth/finduser", body)
+           return data
+        } catch (error) {
+            throw error
+        }
+     }
+
+     async resetUserPassword(body: SiginInPayload){
+        try {
+          const {data} =  await this.post<UserProfile & {token: string}>("userscustomer/auth/resetpassword", body)
+          this.setHeader(data.token)
+          await SecureStore.storeToken(data.token)
+        } catch (error) {
+            throw error
+        }
+     }
+     
 }
 
 

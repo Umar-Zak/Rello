@@ -8,6 +8,15 @@ private TOKEN = "user_token"
 private DISCOUNT = "discount_cards"
 private LOYALTY = "loyalty_cards"
 private GIFT = "gift_cards"
+private DEVICE = "expo_token"
+
+async storeDeviceToken(token: string) {
+  await SecureStore.setItemAsync(this.DEVICE, token)
+}
+
+async getDeviceToken(){
+  return await SecureStore.getItemAsync(this.DEVICE)
+}
 
  async storeToken(token: string){
     await SecureStore.setItemAsync(this.TOKEN, token)

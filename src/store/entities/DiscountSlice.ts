@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {DiscountInterface, DiscountTransaction, SubscribedDiscount} from "../../models/DTOS"
-import { UserProfile } from "../../services/Auth";
 import DiscountService from "../../services/DiscountService";
-import {startLoader, stopLoader} from "../ui/UI"
+import {hideErrorModal, showErrorModal, startLoader, stopLoader} from "../ui/UI"
+
+
 type AddDiscount = {
     type: string
     payload: DiscountInterface
@@ -78,7 +79,14 @@ export const loadDiscountCards = () => async(dispatch: any, getState: any) => {
 export const subscribeDiscount = (body: SubscribedDiscount) => async( dispatch: any, getState: any) => {
    const subscribedDiscounts = getState().entities.discount.subscribedDiscounts as DiscountInterface[]
    let selectedDiscount = subscribedDiscounts.find(discount => discount.discountid === body.discountid || discount.merchantcode === body.merchantcode)
-   if(selectedDiscount) return 
+   if(selectedDiscount) {
+     dispatch(showErrorModal("You already have a subscription from this merchant"))
+
+     setTimeout(() => {
+        dispatch(hideErrorModal())
+     }, 1300)
+    return 
+   }
 
     dispatch(startLoader())
     try {
@@ -106,10 +114,14 @@ export const loadSubscribedDiscounts = () => async (dispatch: any, getState: any
 export const loadDiscountTransactions = () => async(dispatch: any, getState: any) => {
     try {
         const transactions = await DiscountService.getCustomerDiscountTransactions()
-        console.log("Trans", transactions);
         dispatch(initializeDiscountTransaction(transactions))
     } catch (error) {
-        console.log("Error", error);
+        
+        dispatch(showErrorModal("An error occured connecting to server"))
+
+        setTimeout(() => {
+        dispatch(hideErrorModal())
+     }, 1300)
         
     }
 }

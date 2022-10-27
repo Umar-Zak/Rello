@@ -44,6 +44,7 @@ export interface LoyaltyInterface {
     createdAt: Date 
     updatedAt: Date
     id: string
+    _id: string
 }
 
 export interface GiftCardInterface {
@@ -67,4 +68,15 @@ export interface DiscountTransaction {
     total: number
     description: string
     discountapplied: number
+}
+
+export interface LoyaltyTransaction {
+    _id: string
+    merchantcode: string
+    clientcode: string
+    companyname: string
+    amount: number
+    points: number
+    description: string
+    toawardedpointstal: number
 }

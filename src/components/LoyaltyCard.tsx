@@ -74,7 +74,7 @@ export default LoyaltyCard;
 
 const Container = styled.TouchableOpacity`
 width: 250px;
-height: 150px;
+height: 160px;
 border-radius: 15px;
 background: #6ec0d6;
 box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);

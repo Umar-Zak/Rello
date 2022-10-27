@@ -6,6 +6,7 @@ import LoyaltyCard from '../components/LoyaltyCard';
 import NoSearchResult from '../components/NoSearchResult';
 import SearchField from '../components/SearchField';
 import { LoyaltyInterface } from '../models/DTOS';
+import Overlay from '../components/Overlay';
 
 
 function LoyaltyScreen() {
@@ -32,6 +33,7 @@ function LoyaltyScreen() {
         {
            ( loyalties.length === 0) && <NoSearchResult/>
         }
+        <Overlay/>
     </Container>
     );
 }

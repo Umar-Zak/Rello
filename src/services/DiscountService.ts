@@ -46,8 +46,8 @@ class DiscountService  extends Https {
     async getCustomerDiscountTransactions(){
         try {
           const user = await Auth.getUserProfile()
-         const {data} = await this.get<DiscountTransaction[]>(`discount_transaction/clientfind/${user.contact}`)
-         return data
+          const {data} = await this.get<DiscountTransaction[]>(`discount_transaction/transactionbyContact/${user.contact}`)
+          return data
         } catch (error) {
           throw error
         }

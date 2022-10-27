@@ -18,12 +18,14 @@ import Auth, { UserProfile } from '../services/Auth';
 import Activity from '../components/Activity';
 import {loadDiscountCards, loadSubscribedDiscounts, loadDiscountTransactions} from "../store/entities/DiscountSlice"
 import {loadGiftCards} from "../store/entities/GiftSlice"
-import {loadLoyaltyCards, loadSubscribedLoyalties} from "../store/entities/LoyaltySlice"
+import {loadLoyaltyCards, loadSubscribedLoyalties, loadLoyaltyTransactions} from "../store/entities/LoyaltySlice"
 import {showTransModal} from "../store/ui/UI"
 import { TransactionsModal } from '../components/TransactionsModal';
+import Overlay from '../components/Overlay';
+import NoSearchResult from '../components/NoSearchResult';
 function HomeScreen() {
     const discounts = useSelector<any, DiscountInterface[]>((state: any) => state.entities.discount.discounts)
-    const giftCards = useSelector<any, GiftCardInterface[]>((state: any) => state.entities.gift.gifts)
+    // const giftCards = useSelector<any, GiftCardInterface[]>((state: any) => state.entities.gift.gifts)
     const loyalties = useSelector<any, LoyaltyInterface[]>((state: any) => state.entities.loyalty.loyalties)
     const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
     const userProfile = useSelector<any, UserProfile>((state: any) => state.auth.userProfile)
@@ -40,6 +42,7 @@ function HomeScreen() {
         dispatch(loadSubscribedDiscounts() as unknown as AnyAction)
         dispatch(loadSubscribedLoyalties() as unknown as AnyAction)
         dispatch(loadDiscountTransactions() as unknown as AnyAction)
+        dispatch(loadLoyaltyTransactions() as unknown as AnyAction)
     }, [])
 
     const handleAvatarPressed = () => {
@@ -168,11 +171,13 @@ function HomeScreen() {
         >
         <Screen>
             <>
+            <Overlay/>
             <Title>Discount Offers</Title>
             <Section 
             horizontal={true}
             showsHorizontalScrollIndicator={false} 
             >
+               {discounts.length === 0 && <NoSearchResult text="No discount cards available" />}
            {
             discounts.map((disc, index) => (
                 <DiscountCard {...disc} key={index}/>
@@ -180,22 +185,24 @@ function HomeScreen() {
            }
            
             </Section>
-            <Title>Giftcards Trending</Title>
+            {/* <Title>Giftcards Trending</Title>
             <Section
             horizontal={true}
             showsHorizontalScrollIndicator={false} 
             >
+                 {giftCards.length === 0 && <NoSearchResult text="No gift cards available" />}
               {
                 giftCards.map((card, index) => (
                     <GiftCard {...card} key={index} />
                 ))
               }
-            </Section>
+            </Section> */}
             <Title>Loyalty Cards</Title>
             <Section
             horizontal={true}
             showsHorizontalScrollIndicator={false} 
             >
+                 {loyalties.length === 0 && <NoSearchResult text="No loyalty cards available" />}
             {
                 loyalties.map((loyalty, index) =>(
                     <LoyaltyCard {...loyalty} key={index} />
@@ -203,6 +210,7 @@ function HomeScreen() {
                 )
             }
             </Section>
+           
             </>
             </Screen>
         </Container>}
@@ -225,6 +233,8 @@ const Container = styled.ScrollView`
     height: 100%;
     margin-top: 50px;
 `
+
+
 const Root = styled.View`
     flex: 1;
 `

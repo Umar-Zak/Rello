@@ -40,6 +40,8 @@ function LoyaltyCardDetailsScreen() {
     }
     
     
+    
+    
     dispatch(createSubscription(payload) as unknown as AnyAction)
     navigation.goBack()
     navigation.navigate(Screens.wallets as never)

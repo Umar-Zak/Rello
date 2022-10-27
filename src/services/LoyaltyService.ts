@@ -1,4 +1,4 @@
-import { LoyaltyInterface, SubsribedLoyalty } from "../models/DTOS";
+import { LoyaltyInterface, LoyaltyTransaction, SubsribedLoyalty } from "../models/DTOS";
 import SecureStore from "../models/SecureStore";
 import Auth from "./Auth";
 import Https from "./Https";
@@ -40,6 +40,20 @@ class LoyaltyService extends Https {
             throw error
         }
     }
+
+
+    async getCustomerLoyaltyTransaction() {
+        try {
+            const user = await Auth.getUserProfile()
+            console.log(`loyalty_customer/transactionbyContact/${user.contact}`);
+            
+            const {data} = await this.get<LoyaltyTransaction[]>(`loyalty_customer/transactionbyContact/${user.contact}`)
+           return data
+        } catch (error) {
+            throw error
+        }
+    }
+
 }
 
 

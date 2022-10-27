@@ -4,6 +4,7 @@ import Screens from './Screens';
 import SplashScreen from '../screens/SplashScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import LoginScreen from '../screens/LoginScreen';
+import ForgotPasswordScreen from '../screens/ForgotPassword';
 
 const Stack = createNativeStackNavigator()
 function OnboardingNavigation() {
@@ -12,6 +13,7 @@ function OnboardingNavigation() {
         <Stack.Screen name={Screens.onboard} component={SplashScreen}  />
         <Stack.Screen name={Screens.signup} component={SignUpScreen} />
         <Stack.Screen name={Screens.login} component={LoginScreen} />
+        <Stack.Screen name={Screens.forgotPassword} component={ForgotPasswordScreen} />
       </Stack.Navigator>
     );
 }

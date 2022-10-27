@@ -1,13 +1,20 @@
+import { LoyaltyTransaction } from './../../models/DTOS';
 import { createSlice } from "@reduxjs/toolkit";
 import { LoyaltyInterface, SubsribedLoyalty } from "../../models/DTOS";
 import LoyaltyService from "../../services/LoyaltyService";
-import { startLoader, stopLoader } from "../ui/UI";
+import {  hideErrorModal, showErrorModal, startLoader, stopLoader } from "../ui/UI";
 
 
 type LoyaltySlice = {
     loyalties: LoyaltyInterface[],
     selectedLoyalty: LoyaltyInterface | null,
-    subscribedLoyalties: SubsribedLoyalty[]
+    subscribedLoyalties: SubsribedLoyalty[],
+    loyaltyTransactions: LoyaltyTransaction[]
+}
+
+type LoyalTransactionAction = {
+    type: string
+    payload: LoyaltyTransaction[]
 }
 
 
@@ -28,7 +35,8 @@ const slice = createSlice({
     initialState: {
         loyalties: [],
         selectedLoyalty: null,
-        subscribedLoyalties: []
+        subscribedLoyalties: [],
+        loyaltyTransactions: []
     },
 
     reducers: {
@@ -46,12 +54,16 @@ const slice = createSlice({
             state.subscribedLoyalties.push(action.payload)
         },
 
-        getLoyalty: (state: LoyaltySlice, action: GetLoyaltyAction) => {
-            state.loyalties = action.payload
+        getLoyalty: (state: LoyaltySlice, action: GetLoyaltyAction) => { 
+            state.loyalties = action.payload.filter(loyalty => !loyalty.companyname.toLowerCase().startsWith("mel"))
         },
 
         getSubscriptions: (state: LoyaltySlice, action: {type: string, payload: SubsribedLoyalty[]}) => {
             state.subscribedLoyalties = action.payload
+        },
+
+        initializeLoyaltyTransaction: (state: LoyaltySlice, action: LoyalTransactionAction) => {
+            state.loyaltyTransactions = action.payload
         }
     }
 })
@@ -70,14 +82,20 @@ export const loadLoyaltyCards = () => async(dispatch: any, getState: any) => {
 
 
 export const createSubscription = (body: SubsribedLoyalty) => async (dispatch: any, getState: any) => {
-  
+   
     const subscribedLoyalties = getState().entities.loyalty.subscribedLoyalties as SubsribedLoyalty[]
     
     let selectedLoyalty = subscribedLoyalties.find(loyalty => loyalty.loyaltyid === body.loyaltyid)
     if(selectedLoyalty) return
 
     selectedLoyalty = subscribedLoyalties.find(loyalty => loyalty.merchantcode === body.merchantcode)
-    if(selectedLoyalty) return
+    if(selectedLoyalty) {
+         dispatch(showErrorModal("You already have a subscription from this merchant"))
+        setTimeout(() => {
+            dispatch(hideErrorModal())
+        }, 1200)
+         return
+    }
 
     try {
         dispatch(startLoader())
@@ -102,6 +120,22 @@ export const loadSubscribedLoyalties = () => async(dispatch: any, getState: any)
     }
 }
 
+export const loadLoyaltyTransactions = () => async(dispatch: any, getState: any) => {
+    try {
+      const transactions = await LoyaltyService.getCustomerLoyaltyTransaction()
+      dispatch(initializeLoyaltyTransaction(transactions))
+      console.log("DA", transactions);
+      
+    } catch (error) {
+        console.log("LO", error);
+        dispatch(showErrorModal("An error occured connecting to the server"))
+        setTimeout(() => {
+            dispatch(hideErrorModal())
+        }, 1200)
+      
+    }
+}
+
 export default  slice.reducer
 
-export const {addLoyalty, selectLoyalty, subscribeToLoyaltyCard, getLoyalty, getSubscriptions} = slice.actions
+export const {addLoyalty, selectLoyalty, subscribeToLoyaltyCard, getLoyalty, getSubscriptions, initializeLoyaltyTransaction} = slice.actions

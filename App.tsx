@@ -1,8 +1,9 @@
 import {useEffect} from 'react'
 import {Provider} from 'react-redux';
 import * as Sentry from "sentry-expo"
+
 import store from './src/store/Store';
-import { useRequireLocationPermisssion } from './src/hooks/UseLocation';
+import { useRequireLocationPermisssion, useNotifications } from './src/hooks/UseLocation';
 import RootNavigation from './src/navigation/RootNavigation';
 
 
@@ -16,8 +17,12 @@ Sentry.init({
 
 
 export default function App() {
+
   useEffect(() => {
     useRequireLocationPermisssion()
+    useNotifications()
+   
+    
   }, [])
   
   return (

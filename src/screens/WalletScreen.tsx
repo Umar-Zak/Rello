@@ -11,6 +11,7 @@ import LoyaltyCard from '../components/LoyaltyCard';
 import GiftCard from '../components/GiftCard';
 import Activity from '../components/Activity';
 import NoSearchResult from '../components/NoSearchResult';
+import Overlay from '../components/Overlay';
 
 
  
@@ -69,10 +70,10 @@ function WalletScreen() {
     </FlexContainer>
            <>
            {
-            activeIcon === 2 && subscribedDiscounts.length === 0 && <NoSearchResult/>
+            activeIcon === 1 && subscribedDiscounts.length === 0 && <NoSearchResult/>
            }
            {
-            activeIcon === 2 && subscribedDiscounts.map((discount, index) => (
+            activeIcon === 1 && subscribedDiscounts.map((discount, index) => (
                 <CardContainer key={index}>
                     <DiscountCard isInWallet={true} {...discount} />
                 </CardContainer>
@@ -94,16 +95,17 @@ function WalletScreen() {
           </>
            <>
            {
-            activeIcon === 1 && subscribedGiftCards.length === 0 && <NoSearchResult/>
+            activeIcon === 2 && subscribedGiftCards.length === 0 && <NoSearchResult/>
            }
            {
-            activeIcon === 1 && subscribedGiftCards.map((giftCard, index) => (
+            activeIcon === 2 && subscribedGiftCards.map((giftCard, index) => (
                 <CardContainer key={index} >
                 <GiftCard {...giftCard} />
                 </CardContainer>
             ))
            }
            </>
+           <Overlay/>
       </Container>
       </RootView>
     );
@@ -170,10 +172,10 @@ const icons = [
         text: "Loyalties",
         icon: <MaterialIcons size={35} color={Colors.green} name='loyalty' />
     },
-    {
-        text: "Gifts",
-        icon: <AntDesign size={35} color={Colors.green} name='gift' />
-    },
+    // {
+    //     text: "Gifts",
+    //     icon: <AntDesign size={35} color={Colors.green} name='gift' />
+    // },
     {
         text: "Discounts",
         icon: <AntDesign size={35} color={Colors.green} name='shoppingcart' />

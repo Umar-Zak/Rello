@@ -6,6 +6,7 @@ import GiftCard from '../components/GiftCard';
 import NoSearchResult from '../components/NoSearchResult';
 import SearchField from '../components/SearchField';
 import { GiftCardInterface } from '../models/DTOS';
+import Overlay from '../components/Overlay';
 function GiftCardScreen() {
     let giftCards = useSelector<any, GiftCardInterface[]>((state: any) => state.entities.gift.gifts)
     const [searchText, setSearchText] = useState("")
@@ -29,6 +30,7 @@ function GiftCardScreen() {
          {
             (giftCards.length === 0) && <NoSearchResult/>
          }
+         <Overlay/>
        </Container>
     );
 }

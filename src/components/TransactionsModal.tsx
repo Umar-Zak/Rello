@@ -5,12 +5,18 @@ import {AntDesign, MaterialIcons} from "@expo/vector-icons"
 import styled from 'styled-components/native'
 import Colors from '../config/Colors'
 import {closeTransModal} from "../store/ui/UI"
+import { DiscountTransaction } from '../models/DTOS'
+import NoSearchResult from './NoSearchResult'
 
 
 export const TransactionsModal = () => {
     const [left] = useState(new Animated.Value(2000))
     const dispatch = useDispatch()
-    const showTransactionsModal = useSelector<any, boolean>((state): any => state.ui.showTransactionsModal)  
+    const showTransactionsModal = useSelector<any, boolean>((state): any => state.ui.showTransactionsModal) 
+    const discountTransactions = useSelector<any, DiscountTransaction[]>((state): any => state.entities.discount.discountTransactions) 
+
+    
+    
     const [activeIcon, setActiveIcon] = useState(0)
     useEffect(() => {
         if(showTransactionsModal){
@@ -27,7 +33,9 @@ export const TransactionsModal = () => {
    <AnimatedContainer style={{
     left: left
    }}>
-    <CloseIcon onPress={() => dispatch(closeTransModal())}>
+    
+   <RootView showsVerticalScrollIndicator={false}>
+   <CloseIcon onPress={() => dispatch(closeTransModal())}>
     <AntDesign name="close" size={30} color="white" />
     </CloseIcon>
     <Title>Your transactions</Title>
@@ -48,11 +56,13 @@ export const TransactionsModal = () => {
         }
     </FlexContainer>
     <TransactionContainer>
+    <NoSearchResult text="You haven't made any transactions yet" />
         {
-            transactions.map((trans, index) => (
+            
+            discountTransactions.map((trans, index) => (
             <TransactionTray key={index}>
           <SimpleFlex>
-          <CompanyName>{trans.company}</CompanyName>
+          <CompanyName>{trans.companyname}</CompanyName>
           <Date>20/09/2023</Date>
           </SimpleFlex>
           <SimpleFlex>
@@ -63,6 +73,7 @@ export const TransactionsModal = () => {
             ))
         }
     </TransactionContainer>
+   </RootView>
    </AnimatedContainer>
   )
  }
@@ -74,37 +85,17 @@ export const TransactionsModal = () => {
         icon: <MaterialIcons size={35} color={Colors.green} name='loyalty' />
     },
     {
-        text: "Gifts",
+        text: "Discounts",
         icon: <AntDesign size={35} color={Colors.green} name='gift' />
     },
-    {
-        text: "Discounts",
-        icon: <AntDesign size={35} color={Colors.green} name='shoppingcart' />
-    }
 ]
 
-const transactions = [
-    {
-        company: "Max Mart"
-    },
-    {
-        company: "Shell"
-    },
-    {
-        company: "Labadi Beach"
-    },
-    {
-        company: "Melcom"
-    },
-    {
-        company: "Allied"
-    },
-    {
-        company: "Tecno"
-    }
-]
 
-const Container = styled.ScrollView`
+const RootView = styled.ScrollView`
+flex: 1
+`
+
+const Container = styled.View`
   width: 100%;
   height: 100%;
   background: white;

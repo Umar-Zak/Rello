@@ -8,6 +8,7 @@ import SearchField from '../components/SearchField';
 import DiscountModa from '../components/DiscountModal';
 import NoSearchResult from '../components/NoSearchResult';
 import { DiscountInterface } from '../models/DTOS';
+import Overlay from '../components/Overlay';
 
 
 function DiscountScreen() {
@@ -36,6 +37,7 @@ function DiscountScreen() {
         {
            (discounts.length === 0) && <NoSearchResult/>
         }
+        <Overlay/>
         </Container>
        </Root>
    

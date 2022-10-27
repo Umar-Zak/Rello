@@ -1,11 +1,11 @@
 import React from 'react';
 import "styled-components"
 import styled from 'styled-components/native';
-function NoSearchResult() {
+function NoSearchResult({text}: {text?: string}) {
     return (
        <Container>
         <Text>
-            No results
+           {text? text : "No results"}
         </Text>
        </Container>
     );

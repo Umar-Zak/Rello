@@ -4,14 +4,19 @@ import { createSlice } from "@reduxjs/toolkit";
 type UIInterface = {
     showDiscountModal: boolean,
     isLoading: boolean,
-    showTransactionsModal: boolean
+    showTransactionsModal: boolean,
+    showErrorModal: boolean,
+    errorMessage: string
 }
+
 
 const slice =  createSlice({
     initialState: {
         showDiscountModal: false,
         isLoading: false,
-        showTransactionsModal: false
+        showTransactionsModal: false,
+        showErrorModal: false,
+        errorMessage: ""
     },
     name: "ui",
     reducers: {
@@ -37,9 +42,19 @@ const slice =  createSlice({
 
         closeTransModal: (state: UIInterface) => {
             state.showTransactionsModal = false
+        },
+
+        showErrorModal: (state: UIInterface, action: {type: string, payload: string}) => {
+            state.showErrorModal = true
+            state.errorMessage = action.payload
+        },
+
+        hideErrorModal: (state: UIInterface) => {
+            state.showErrorModal = false
+            state.errorMessage = ""
         }
     }
 })
 
 export default slice.reducer
-export const {closeDiscountModal, openDiscountModal, startLoader, stopLoader, showTransModal, closeTransModal} = slice.actions
+export const {closeDiscountModal, openDiscountModal, startLoader, stopLoader, showTransModal, closeTransModal, showErrorModal, hideErrorModal} = slice.actions

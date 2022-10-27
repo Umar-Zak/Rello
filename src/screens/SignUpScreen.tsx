@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import "styled-components"
 import styled from "styled-components/native"
 import * as Yup from "yup"
@@ -17,6 +17,7 @@ import { Alert } from 'react-native';
 import { sendOTP } from '../utils/SmsUtil';
 import {startLoader, stopLoader} from "../store/ui/UI"
 import {activateUser} from "../store/auth/AuthSlice"
+import SecureStore from '../models/SecureStore';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -51,6 +52,17 @@ function SignUpScreen() {
     const [otp, setOtp] = useState("")
     const [isAuth, setIsAuth] = useState(false)
     const [signUpInfo, setSignUpInfo] = useState<SignUpPayload>()
+    const [deviceID, setDeviceID] = useState("")
+
+
+    useEffect(() => {
+        loadDeviceID()
+    }, [])
+    
+    const loadDeviceID = async() => {
+        const result = await SecureStore.getDeviceToken() as string
+        setDeviceID(result)
+    }
 
     const handleSignInPress = () => {
         navigation.navigate(Screens.login as never)
@@ -113,7 +125,7 @@ function SignUpScreen() {
         contact:""
      }}
      validationSchema={validationSchema}
-     onSubmit={(values: SignUpPayload) => handleSignUp(values)
+     onSubmit={(values: SignUpPayload) => handleSignUp({...values, deviceID})
      }
      >
         <>
@@ -134,6 +146,7 @@ function SignUpScreen() {
             autoCorrect={false}
             label='Phone number*'  
             name='contact'
+            keyboardType='phone-pad'
         />
       <AppTextInput 
         autoCapitalize='none'

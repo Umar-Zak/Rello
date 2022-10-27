@@ -33,7 +33,8 @@ function DiscountCard(discount: DiscountInterface & {isInWallet?: boolean}) {
 export default DiscountCard;
 
 const Container = styled.ImageBackground`
-width: 300px;
+width: 250px;
+height: 160px;
 border-radius: 15px;
 background: ${Colors.deep_green};
 box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -43,7 +44,7 @@ padding-right: 25px;
 padding-bottom: 20px;
 margin-right: 20px;
 overflow: hidden;
-min-height: 160px
+// min-height: 160px
 `
 
 const Pressable = styled.TouchableOpacity`
