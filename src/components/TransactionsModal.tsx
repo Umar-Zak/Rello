@@ -5,7 +5,7 @@ import {AntDesign, MaterialIcons} from "@expo/vector-icons"
 import styled from 'styled-components/native'
 import Colors from '../config/Colors'
 import {closeTransModal} from "../store/ui/UI"
-import { DiscountTransaction } from '../models/DTOS'
+import { DiscountTransaction, LoyaltyTransaction } from '../models/DTOS'
 import NoSearchResult from './NoSearchResult'
 
 
@@ -14,8 +14,8 @@ export const TransactionsModal = () => {
     const dispatch = useDispatch()
     const showTransactionsModal = useSelector<any, boolean>((state): any => state.ui.showTransactionsModal) 
     const discountTransactions = useSelector<any, DiscountTransaction[]>((state): any => state.entities.discount.discountTransactions) 
-
-    
+    const loyaltyTransactions = useSelector<any, LoyaltyTransaction[]>((state): any => state.entities.loyalty.loyaltyTransactions) 
+   
     
     const [activeIcon, setActiveIcon] = useState(0)
     useEffect(() => {
@@ -55,24 +55,41 @@ export const TransactionsModal = () => {
             ))
         }
     </FlexContainer>
-    <TransactionContainer>
-    <NoSearchResult text="You haven't made any transactions yet" />
+   {activeIcon === 1 && <TransactionContainer>
+   {discountTransactions.length == 0 && <NoSearchResult text="You haven't made any transactions yet" />}
         {
-            
             discountTransactions.map((trans, index) => (
             <TransactionTray key={index}>
           <SimpleFlex>
           <CompanyName>{trans.companyname}</CompanyName>
-          <Date>20/09/2023</Date>
+          <DateText>{new Date(trans.createdAt).getDate()}/{new Date(trans.createdAt).getFullYear()}</DateText>
           </SimpleFlex>
           <SimpleFlex>
             <TransactionId>Transaction ID</TransactionId>
-            <Id>48929GK702</Id>
+            <Id>{trans.id}</Id>
           </SimpleFlex>
         </TransactionTray>
             ))
         }
-    </TransactionContainer>
+    </TransactionContainer>}
+
+    {activeIcon === 0 && <TransactionContainer>
+   {loyaltyTransactions.length == 0 && <NoSearchResult text="You haven't made any transactions yet" />}
+        {/* {
+            discountTransactions.map((trans, index) => (
+            <TransactionTray key={index}>
+          <SimpleFlex>
+          <CompanyName>{trans.companyname}</CompanyName>
+          <DateText>{new Date(trans.createdAt).getDate()}/{new Date(trans.createdAt).getFullYear()}</DateText>
+          </SimpleFlex>
+          <SimpleFlex>
+            <TransactionId>Transaction ID</TransactionId>
+            <Id>{trans.id}</Id>
+          </SimpleFlex>
+        </TransactionTray>
+            ))
+        } */}
+    </TransactionContainer>}
    </RootView>
    </AnimatedContainer>
   )
@@ -123,7 +140,7 @@ const CloseIcon = styled.TouchableOpacity`
  align-items: center;
 `
 
-const Date = styled.Text`
+const DateText = styled.Text`
 font-weight: 400
 font-size: 15px;
 color: ${Colors.deep_green}

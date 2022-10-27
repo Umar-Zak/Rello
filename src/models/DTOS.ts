@@ -59,7 +59,7 @@ export interface GiftCardInterface {
 }
 
 export interface DiscountTransaction {
-    _id: string
+    id: string
     companyname: string
     merchantcode: string
     clientcode: string
@@ -68,6 +68,7 @@ export interface DiscountTransaction {
     total: number
     description: string
     discountapplied: number
+    createdAt: string
 }
 
 export interface LoyaltyTransaction {
