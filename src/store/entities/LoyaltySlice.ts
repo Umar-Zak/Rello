@@ -1,4 +1,4 @@
-import { LoyaltyTransaction } from './../../models/DTOS';
+import { LoyaltyTransaction, LoyalRedemption } from './../../models/DTOS';
 import { createSlice } from "@reduxjs/toolkit";
 import { LoyaltyInterface, SubsribedLoyalty } from "../../models/DTOS";
 import LoyaltyService from "../../services/LoyaltyService";
@@ -9,7 +9,8 @@ type LoyaltySlice = {
     loyalties: LoyaltyInterface[],
     selectedLoyalty: LoyaltyInterface | null,
     subscribedLoyalties: SubsribedLoyalty[],
-    loyaltyTransactions: LoyaltyTransaction[]
+    loyaltyTransactions: LoyaltyTransaction[],
+    redeemedLoyalties: LoyalRedemption[]
 }
 
 type LoyalTransactionAction = {
@@ -17,6 +18,11 @@ type LoyalTransactionAction = {
     payload: LoyaltyTransaction[]
 }
 
+
+type LoyalRedemptionAction = {
+    type: string
+    payload: LoyalRedemption[]
+}
 
 type LoyaltyAction = {
     type: string
@@ -36,7 +42,8 @@ const slice = createSlice({
         loyalties: [],
         selectedLoyalty: null,
         subscribedLoyalties: [],
-        loyaltyTransactions: []
+        loyaltyTransactions: [],
+        redeemedLoyalties: []
     },
 
     reducers: {
@@ -64,9 +71,24 @@ const slice = createSlice({
 
         initializeLoyaltyTransaction: (state: LoyaltySlice, action: LoyalTransactionAction) => {
             state.loyaltyTransactions = action.payload
+        },
+
+        initializeRedeemedLoyalties: (state: LoyaltySlice, action: LoyalRedemptionAction) => {
+            state.redeemedLoyalties = action.payload
         }
     }
 })
+
+export const loadRedeemedLoyalties = () => async(dispatch: any, getState: any) => {
+
+    try {
+       // Implementation coming soon: Reason is, endpoint isn't built yet. An oversight.
+        
+    } catch (error) {
+        
+    }
+}
+
 
 export const loadLoyaltyCards = () => async(dispatch: any, getState: any) => {
     try {
@@ -124,10 +146,8 @@ export const loadLoyaltyTransactions = () => async(dispatch: any, getState: any)
     try {
       const transactions = await LoyaltyService.getCustomerLoyaltyTransaction()
       dispatch(initializeLoyaltyTransaction(transactions))
-      console.log("DA", transactions);
       
     } catch (error) {
-        console.log("LO", error);
         dispatch(showErrorModal("An error occured connecting to the server"))
         setTimeout(() => {
             dispatch(hideErrorModal())
@@ -138,4 +158,4 @@ export const loadLoyaltyTransactions = () => async(dispatch: any, getState: any)
 
 export default  slice.reducer
 
-export const {addLoyalty, selectLoyalty, subscribeToLoyaltyCard, getLoyalty, getSubscriptions, initializeLoyaltyTransaction} = slice.actions
+export const {addLoyalty, selectLoyalty, subscribeToLoyaltyCard, getLoyalty, getSubscriptions, initializeLoyaltyTransaction, initializeRedeemedLoyalties} = slice.actions

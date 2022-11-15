@@ -34,6 +34,7 @@
     },
     "android": {
       "versionCode": 4,
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/app-splash.png",
         "backgroundColor": "#FFFFFF"
@@ -49,7 +50,12 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "sentry-expo"
+      "sentry-expo",
+      [
+        "expo-notifications", {
+
+        }
+      ]
     ],
     "extra": {
       "eas": {

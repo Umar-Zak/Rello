@@ -1,16 +1,23 @@
 import React, {useEffect, useState} from 'react';
+import {Alert} from "react-native"
 import * as Notifications from "expo-notifications"
 import { NavigationContainer } from '@react-navigation/native';
 import {useSelector, useDispatch} from "react-redux"
 import OnboardingNavigation from './OnboardingNavigation';
 import AppNavigation from './AppNavigation';
-import {activateUser} from "../store/auth/AuthSlice"
+import {activateUser, logoutUser} from "../store/auth/AuthSlice"
 import SecureStore from '../models/SecureStore';
 import Activity from '../components/Activity';
 import OfflineNotification from '../components/OfflineNotification';
 import ErrorModal from '../components/ErrorModal';
-import {logoutUser} from "../store/auth/AuthSlice"
+import {startLoader, stopLoader} from "../store/ui/UI"
 import Auth from '../services/Auth';
+import LoyaltyService from '../services/LoyaltyService';
+import {initializeRedeemedLoyalties} from "../store/entities/LoyaltySlice"
+import { AnyAction } from 'redux';
+
+
+
 function RootNavigation() {
      const dispatch = useDispatch()
      const user = useSelector<any, boolean>((state: any) => state.auth.user)
@@ -21,7 +28,14 @@ function RootNavigation() {
      useEffect(() => {
         initializeAuth()
         const subscription = Notifications.addNotificationReceivedListener(notification => {
-         dispatch(logoutUser())
+         
+         if(notification.request.content.data.id !== "RD")
+            dispatch(logoutUser())
+         
+           else {
+            const content = notification.request.content
+            handleLoyaltyRedemptionPrompt(content)
+           }
        });
       
        setTimeout(() => {
@@ -31,6 +45,36 @@ function RootNavigation() {
        return () => subscription.remove();
      }, [user])
 
+
+     const handleLoyaltyRedemptionPrompt = (content: Notifications.NotificationContent) => {
+      
+      Alert.alert("Request to redeem points", content.body as string, [
+         {
+            text: "Approve",
+            onPress: async () => {
+               
+               try {
+                  dispatch(startLoader() as unknown as AnyAction)
+                  const results = await LoyaltyService.approveRedemtion(content.data.redemption_id as string)
+                  dispatch(initializeRedeemedLoyalties(results) as unknown as AnyAction)
+                  dispatch(stopLoader() as unknown as AnyAction)
+                  Alert.alert("Success", "Redemption completed successfully")
+
+               } catch (error) {
+                  dispatch(stopLoader() as unknown as AnyAction)
+                  Alert.alert("Error", "Unexpected error approving redemption")
+
+               }
+            }
+         },
+         {
+            text: "Ignore",
+            onPress: () => {
+               console.log("Ignoring this prompt");
+            }
+         }
+      ] )
+     }
     
 
      const initializeAuth = async() => {
@@ -49,9 +93,11 @@ function RootNavigation() {
 
     return (
        <>
+       <Activity/>
        <OfflineNotification/>
        {showErrorModal && <ErrorModal message={errorMessage} />}
         <NavigationContainer>
+        
            {!user && <OnboardingNavigation/>}
            {user && <AppNavigation/>}
         </NavigationContainer>

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 import { DiscountTransaction } from '../models/DTOS';
 import Colors from '../config/Colors';
@@ -45,7 +46,8 @@ const TransactionTray = styled.View`
  background: white;
  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.10);
  padding: 10px;
- margin-bottom: 20px
+ margin-bottom: 20px;
+ border: 1px solid ${Platform.OS === "android"? "#fd4957": "white"}
 `
 
 const TransactionId = styled.Text`

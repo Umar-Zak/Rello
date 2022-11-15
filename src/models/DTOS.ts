@@ -10,6 +10,7 @@ export interface DiscountInterface {
     id: string
     clientcode?: string
     discountid: string
+    image: string
 }
 
 export type SubscribedDiscount = {
@@ -81,4 +82,18 @@ export interface LoyaltyTransaction {
     points: number
     description: string
     toawardedpointstal: number
+    awardedpoint: number
+    createdAt: string
+}
+
+type Merchant = {
+    companyname: string
+    merchantcode: string
+}
+
+export interface LoyalRedemption {
+  merchant: Merchant,
+  clientcode: string,
+  isApproved: boolean,
+  points: number
 }

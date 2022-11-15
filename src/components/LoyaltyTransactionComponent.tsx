@@ -1,16 +1,24 @@
 import * as React from 'react';
+import {Platform} from "react-native"
 import styled from 'styled-components/native';
 import Colors from '../config/Colors';
-const LoyaltyTransactionComponent = () => {
+
+interface LoyaltyTransactionInterface {
+  totalPoints: number
+  merchant: string
+  date: string
+}
+
+const LoyaltyTransactionComponent = ({date,merchant,totalPoints}: LoyaltyTransactionInterface) => {
     return ( 
         <TransactionTray>
         <SimpleFlex>
-        <CompanyName>Melcom</CompanyName>
-        <DateText>27/10/22</DateText>
+        <CompanyName>{merchant}</CompanyName>
+        <DateText>{`${new Date(date).getDate()}/${new Date(date).getMonth() + 1}/${new Date(date).getFullYear()}`}</DateText>
         </SimpleFlex>
         <SimpleFlex>
           <TransactionId>Total points</TransactionId>
-          <Id>20000</Id>
+          <Id>{totalPoints}</Id>
         </SimpleFlex>
       </TransactionTray>
      );
@@ -44,7 +52,8 @@ const TransactionTray = styled.View`
  background: white;
  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.10);
  padding: 10px;
- margin-bottom: 20px
+ margin-bottom: 20px;
+ border: 1px solid ${Platform.OS === "android"? "#fd4957": "white"}
 `
 
 const TransactionId = styled.Text`

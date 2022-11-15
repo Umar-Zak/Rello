@@ -7,8 +7,6 @@ import {useNavigation} from "@react-navigation/native"
 import Colors from '../config/Colors';
 import { getSplashContent } from '../models/StaticContent';
 import Screens from '../navigation/Screens';
-import { selectDiscount } from '../store/entities/DiscountSlice';
-import { DiscountInterface } from '../models/DTOS';
 const contents = getSplashContent()
 
 function SplashScreen() {
@@ -44,7 +42,6 @@ function SplashScreen() {
         <AnimatedContent style={{
             left: leftOffset
         }}>
-            <SafeArea>
                 <Banner source={contents[0].image}  />
                 <Content>
                     <Title>{contents[0].title}</Title>
@@ -58,7 +55,7 @@ function SplashScreen() {
                         <NextText>Next</NextText>
                     </NextButton>
                 </Content>
-            </SafeArea>
+         
         </AnimatedContent>
         <AnimatedContent 
         style={{
@@ -128,10 +125,10 @@ const ActivityContainer = styled.View`
 
 const Banner = styled.Image`
     width: 100%;
-    height: 50%;
+    height: 54%;
     z-index: 100;
-    transform: scale(1.1) translateY(15px);
-    
+    transform: scale(1.0) translateY(15px);
+    margin-top: -65px;
 `
 
 const Container = styled.View`

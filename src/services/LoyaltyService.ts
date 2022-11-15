@@ -1,3 +1,4 @@
+import { LoyalRedemption } from './../models/DTOS';
 import { LoyaltyInterface, LoyaltyTransaction, SubsribedLoyalty } from "../models/DTOS";
 import SecureStore from "../models/SecureStore";
 import Auth from "./Auth";
@@ -45,15 +46,22 @@ class LoyaltyService extends Https {
     async getCustomerLoyaltyTransaction() {
         try {
             const user = await Auth.getUserProfile()
-            console.log(`loyalty_customer/transactionbyContact/${user.contact}`);
-            
-            const {data} = await this.get<LoyaltyTransaction[]>(`loyalty_customer/transactionbyContact/${user.contact}`)
+            const {data} = await this.get<LoyaltyTransaction[]>(`loyalty_transaction/transactionbyContact/${user.contact}`)
            return data
         } catch (error) {
             throw error
         }
     }
 
+    async approveRedemtion(id: string) {
+        try {
+          const {data} =  await this.get<LoyalRedemption[]>(`loyalty_transaction/approve_redemption/${id}`)
+          return data
+        } catch (error) {
+            console.log("Error Redeming", error);
+            throw error
+        }
+    }
 }
 
 

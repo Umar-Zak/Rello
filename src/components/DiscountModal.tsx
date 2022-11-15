@@ -100,11 +100,11 @@ function DiscountModa() {
            {isLoading && <Activity/>}
            {isModalVisible && 
            <Modal>
-          <ModalCancel onPress={() => setIsModalVisible(false)} >
-             <AntDesign name="closecircle" size={30} color="white" />
-            </ModalCancel>
-            <DetailedText>{detailsText}</DetailedText>
-           </Modal>}
+           <ModalCancel onPress={() => setIsModalVisible(false)} >
+           <AntDesign name="closecircle" size={30} color="white" />
+           </ModalCancel>
+           <DetailedText>{detailsText}</DetailedText>
+         </Modal>}
             <Background>
           <SubscribeButton handleSubscribe={handleDiscountSubscribtion} isSubscribed={isFoundInSubscriptions? true : false} />
             <CardDetailsLocation/>
@@ -118,7 +118,7 @@ function DiscountModa() {
         <Details>{detailsText.substring(0, 40)}...</Details>
         <Pressable onPress={() => setIsModalVisible(true)}>
             {detailsText.length > 40 && <ReadMore>Read more</ReadMore>}
-            </Pressable>
+        </Pressable>
         </DetailContainer>
             </Background>
             <ModalCancel onPress={() => dispatch(closeDiscountModal())} >

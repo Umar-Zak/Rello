@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1062514022149",
+    "project_id": "corral-c5bc4",
+    "storage_bucket": "corral-c5bc4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1062514022149:android:d3a20c904f9bab6a83c96c",
+        "android_client_info": {
+          "package_name": "com.mcorrel.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1062514022149-ggfretfsbv9lc5ja5fpu6lelcrbjnn7f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_AfXIFASx_A-kyuALHWZxZF_DcXp3M4U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1062514022149-ggfretfsbv9lc5ja5fpu6lelcrbjnn7f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

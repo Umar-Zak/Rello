@@ -1,14 +1,16 @@
 import React, {useState, useEffect} from 'react'
+import {groupBy} from "lodash"
 import {Animated, } from "react-native"
 import {useDispatch, useSelector} from "react-redux"
 import {AntDesign, MaterialIcons} from "@expo/vector-icons"
 import styled from 'styled-components/native'
 import Colors from '../config/Colors'
 import {closeTransModal} from "../store/ui/UI"
-import { DiscountTransaction, LoyaltyTransaction } from '../models/DTOS'
+import { DiscountTransaction, LoyalRedemption, LoyaltyTransaction } from '../models/DTOS'
 import NoSearchResult from './NoSearchResult'
 import DiscountTransactionComponent from './DiscountTransaction'
 import LoyaltyTransactionComponent from './LoyaltyTransactionComponent'
+import { calculateAccumulatedPointsPerMerchant, calculateRedeemedPointsPerMerchants } from '../utils/Common'
 
 
 export const TransactionsModal = () => {
@@ -17,7 +19,17 @@ export const TransactionsModal = () => {
     const showTransactionsModal = useSelector<any, boolean>((state): any => state.ui.showTransactionsModal) 
     const discountTransactions = useSelector<any, DiscountTransaction[]>((state): any => state.entities.discount.discountTransactions) 
     const loyaltyTransactions = useSelector<any, LoyaltyTransaction[]>((state): any => state.entities.loyalty.loyaltyTransactions) 
-   
+    const redeemedLoyalties = useSelector<any, LoyalRedemption[]>((state): any => state.entities.loyalty.redeemedLoyalties) 
+    
+    
+    const groupedLoyaltyTransactions = groupBy(loyaltyTransactions, (trans) => trans.companyname)
+    const merchants = Object.keys(groupedLoyaltyTransactions)
+    
+
+    const groupedLoyaltyRedemptions = groupBy(redeemedLoyalties || [], (trans) => trans.merchant.companyname)
+    
+    
+
     
     const [activeIcon, setActiveIcon] = useState(0)
     useEffect(() => {
@@ -68,21 +80,18 @@ export const TransactionsModal = () => {
 
     {activeIcon === 0 && <TransactionContainer>
    {loyaltyTransactions.length == 0 && <NoSearchResult text="You haven't made any transactions yet" />}
-        {/* {
-            discountTransactions.map((trans, index) => (
-            <TransactionTray key={index}>
-          <SimpleFlex>
-          <CompanyName>{trans.companyname}</CompanyName>
-          <DateText>{new Date(trans.createdAt).getDate()}/{new Date(trans.createdAt).getFullYear()}</DateText>
-          </SimpleFlex>
-          <SimpleFlex>
-            <TransactionId>Transaction ID</TransactionId>
-            <Id>{trans.id}</Id>
-          </SimpleFlex>
-        </TransactionTray>
-            ))
-        } */}
-        <LoyaltyTransactionComponent/>
+       {
+        merchants.map((merchant, index) => (
+            <LoyaltyTransactionComponent 
+            merchant={merchant} 
+            totalPoints={calculateAccumulatedPointsPerMerchant(groupedLoyaltyTransactions[merchant])} 
+            key={index}
+            date={groupedLoyaltyTransactions[merchant][0].createdAt}
+            redeemedPoints={calculateRedeemedPointsPerMerchants(groupedLoyaltyRedemptions[merchant])}
+             />
+        ))
+       }
+        
     </TransactionContainer>}
    </RootView>
    </AnimatedContainer>

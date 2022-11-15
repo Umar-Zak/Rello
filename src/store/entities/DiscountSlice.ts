@@ -10,10 +10,13 @@ type AddDiscount = {
 }
 
 
+
 type GetDiscountsAction = {
     type: string,
     payload: DiscountInterface[]
 }
+
+
 
 type InitialiaseDiscountTransactions = {
     type: string,
@@ -45,7 +48,7 @@ type DiscountSlice = {
             state.selectedDiscount = action.payload
             
         },
-
+    
         subribeToDiscountCard: (state: DiscountSlice, action: {type: string, payload: SubscribedDiscount}) => {
            state.subscribedDiscounts.push(action.payload)
         },
