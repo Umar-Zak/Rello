@@ -7,7 +7,6 @@ import {MaterialIcons, AntDesign} from "@expo/vector-icons"
 import { BlurView } from 'expo-blur'
 import { AnyAction } from 'redux';
 import DiscountCard from '../components/DiscountCard';
-import GiftCard from '../components/GiftCard';
 import LoyaltyCard from '../components/LoyaltyCard';
 import Screen from '../components/Screen';
 import Colors from '../config/Colors';
@@ -25,9 +24,9 @@ import Overlay from '../components/Overlay';
 import NoSearchResult from '../components/NoSearchResult';
 function HomeScreen() {
     const discounts = useSelector<any, DiscountInterface[]>((state: any) => state.entities.discount.discounts)
-    // const giftCards = useSelector<any, GiftCardInterface[]>((state: any) => state.entities.gift.gifts)
     const loyalties = useSelector<any, LoyaltyInterface[]>((state: any) => state.entities.loyalty.loyalties)
     const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
+    
     const userProfile = useSelector<any, UserProfile>((state: any) => state.auth.userProfile)
     
     const [top] = useState(new Animated.Value(-2000))
@@ -172,6 +171,20 @@ function HomeScreen() {
         <Screen>
             <>
             <Overlay/>
+            <Title>Loyalty Cards</Title>
+            <Section
+            horizontal={true}
+            showsHorizontalScrollIndicator={false} 
+            >
+                 {loyalties.length === 0 && <NoSearchResult text="No loyalty cards available" />}
+            {
+                loyalties.map((loyalty, index) =>(
+                    <LoyaltyCard {...loyalty} key={index} />
+                )
+                )
+            }
+            </Section>
+
             <Title>Discount Offers</Title>
             <Section 
             horizontal={true}
@@ -197,19 +210,7 @@ function HomeScreen() {
                 ))
               }
             </Section> */}
-            <Title>Loyalty Cards</Title>
-            <Section
-            horizontal={true}
-            showsHorizontalScrollIndicator={false} 
-            >
-                 {loyalties.length === 0 && <NoSearchResult text="No loyalty cards available" />}
-            {
-                loyalties.map((loyalty, index) =>(
-                    <LoyaltyCard {...loyalty} key={index} />
-                )
-                )
-            }
-            </Section>
+            
            
             </>
             </Screen>

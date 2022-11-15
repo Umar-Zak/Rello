@@ -31,11 +31,10 @@ function WalletScreen() {
             subscribedLoyaltyCards = subscribedLoyaltyCards.filter(loyaltyCard => loyaltyCard.companyname.toLowerCase().startsWith(searchText.toLowerCase()))
             break
         case 1:
-            subscribedGiftCards = subscribedGiftCards.filter(giftCard => giftCard.companyname.toLowerCase().startsWith(searchText.toLowerCase()))
-            break
-        
-        case 2:
             subscribedDiscounts = subscribedDiscounts.filter(discountCard => discountCard.companyname.toLowerCase().startsWith(searchText.toLowerCase()))
+            break
+        case 2:
+            subscribedGiftCards = subscribedGiftCards.filter(giftCard => giftCard.companyname.toLowerCase().startsWith(searchText.toLowerCase()))
             break
         
         default:
