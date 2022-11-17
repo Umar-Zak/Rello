@@ -93,7 +93,7 @@ function RootNavigation() {
 
     return (
        <>
-       <Activity/>
+       {/* <Activity/> */}
        <OfflineNotification/>
        {showErrorModal && <ErrorModal message={errorMessage} />}
         <NavigationContainer>
