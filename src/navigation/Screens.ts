@@ -12,7 +12,7 @@ export default {
     feed: "FEED",
     giftFeed: "GIFT CARDS",
     loyaltyDetail: "LOYALTYCARD DETAILS",
-    loyaltyFeed: "LOYALTYCARDS FEED",
+    loyaltyFeed: "LOYALTY CARDS",
     walletDetail: "ASSET DETAILS",
     forgotPassword: "FORGOT_PASSWORD"
 }

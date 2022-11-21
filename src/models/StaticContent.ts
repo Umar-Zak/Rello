@@ -3,21 +3,21 @@ import { DiscountInterface, GiftCardInterface, LoyaltyInterface } from "./DTOS"
 const splashContents = [
     {
         image: require("../assets/Corral_Gift_Card.png"),
-        title: 'Buy Digital Gift Card',
+        title: 'A Gift from the Cart!',
         content:
-          'Digital Gift Vouchers. Shop for a gift card for someone with Rello Digital Gift Vouchers.',
+          'Gift a loved one a shopping experience with Gift Cards from partner stores.',
       },
       {
         image: require("../assets/Corral_Discount_.png"),
-        title: 'Discount for your client',
+        title: 'Buy more with less!',
         content:
-          'Design your own digital discount for your customers',
+          'Get massive discounts on purchases with Discount Cards from your preferred stores.',
       },
       {
         image: require("../assets/Corral_Loyalty.png"),
-        title: 'Award Customers with points',
+        title: 'Shop . Earn . Redeem',
         content:
-          'Loyalty is the key. Award clients with points for their service',
+          'Earn and redeem points for exciting rewards as you shop with Loyalty Cards from your favourite stores.',
       },
 ]
  

@@ -25,6 +25,7 @@ function DiscountScreen() {
         placeholder="Search discount cards"
         handleSearch={(text: string) => setSearchText(text)}
         />
+        <SubContainer>
         {
             discounts.map((discount, index) => (
               <DiscountContainer key={index}>
@@ -38,6 +39,7 @@ function DiscountScreen() {
            (discounts.length === 0) && <NoSearchResult/>
         }
         <Overlay/>
+        </SubContainer>
         </Container>
        </Root>
    
@@ -51,10 +53,14 @@ const Root = styled.View`
     color: white;
 `
 
-const Container = styled.ScrollView`
+const Container = styled.View`
     padding-left: 20px;
     padding-right: 20px;
     margin-top: 30px;
+`
+
+const SubContainer = styled.ScrollView`
+ padding-top: 30px;
 `
 
 const DiscountContainer = styled.View`

@@ -67,7 +67,8 @@ function WalletScreen() {
             ))
         }
     </FlexContainer>
-           <>
+          <SubContainer>
+          <>
            {
             activeIcon === 1 && subscribedDiscounts.length === 0 && <NoSearchResult/>
            }
@@ -104,7 +105,8 @@ function WalletScreen() {
             ))
            }
            </>
-           <Overlay/>
+           
+          </SubContainer>
       </Container>
       </RootView>
     );
@@ -112,11 +114,13 @@ function WalletScreen() {
 
 export default WalletScreen;
 
-const Container = styled.ScrollView`
+const Container = styled.View`
     flex: 1;
     padding: 20px;
 `
-
+const SubContainer = styled.ScrollView`
+ padding-top: 30px;
+`
 const TabsContainer = styled.View`
     flex-direction: row;
     align-items: center;
@@ -136,8 +140,9 @@ const Touchable = styled.TouchableOpacity`
 `
 
 const CardContainer = styled.View`
-    padding-left: 30px;
+    align-items: center;
     margin-bottom: 30px;
+    padding-left: 20px;
 `
 
 const RootView = styled.View`

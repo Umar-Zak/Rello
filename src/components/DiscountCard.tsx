@@ -44,7 +44,6 @@ padding-right: 25px;
 padding-bottom: 20px;
 margin-right: 20px;
 overflow: hidden;
-// min-height: 160px
 `
 
 const Pressable = styled.TouchableOpacity`

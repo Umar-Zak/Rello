@@ -21,7 +21,8 @@ function LoyaltyScreen() {
         placeholder="Search loyalty cards" 
         handleSearch={(text: string) => setSearchText(text)} 
         />
-        {
+       <SubContainer>
+       {
             loyalties.map((loyalty, index) => (
                <LoyaltyContainer key={index}>
                  <LoyaltyCard {...loyalty} />
@@ -33,6 +34,7 @@ function LoyaltyScreen() {
         {
            ( loyalties.length === 0) && <NoSearchResult/>
         }
+       </SubContainer>
         <Overlay/>
     </Container>
     );
@@ -40,11 +42,16 @@ function LoyaltyScreen() {
 
 export default LoyaltyScreen;
 
-const Container = styled.ScrollView`
+const Container = styled.View`
     flex: 1;
     padding: 20px;
 `
 
+const SubContainer = styled.ScrollView`
+  padding-top: 30px;
+`
+
 const LoyaltyContainer = styled.View`
-    padding-left: 40px;
+    align-items: center;
+    padding-left: 20px;
 `

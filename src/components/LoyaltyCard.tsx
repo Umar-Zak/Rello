@@ -79,7 +79,6 @@ border-radius: 15px;
 background: #6ec0d6;
 box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 margin-bottom: 30px;
-
 overflow: hidden;
 margin-right: 20px;
 `
