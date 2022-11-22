@@ -4,27 +4,25 @@ import "styled-components"
 import styled from 'styled-components/native';
 import {useDispatch, useSelector} from "react-redux"
 import {MaterialIcons, AntDesign} from "@expo/vector-icons"
-import { BlurView } from 'expo-blur'
 import { AnyAction } from 'redux';
-import DiscountCard from '../components/DiscountCard';
-import LoyaltyCard from '../components/LoyaltyCard';
 import Screen from '../components/Screen';
 import Colors from '../config/Colors';
 import DiscountModa from '../components/DiscountModal';
 import {loadUserProfile, logoutUser} from "../store/auth/AuthSlice"
-import { DiscountInterface, GiftCardInterface, LoyaltyInterface } from '../models/DTOS';
 import Auth, { UserProfile } from '../services/Auth';
 import Activity from '../components/Activity';
 import {loadDiscountCards, loadSubscribedDiscounts, loadDiscountTransactions} from "../store/entities/DiscountSlice"
 import {loadGiftCards} from "../store/entities/GiftSlice"
 import {loadLoyaltyCards, loadSubscribedLoyalties, loadLoyaltyTransactions} from "../store/entities/LoyaltySlice"
-import {showTransModal} from "../store/ui/UI"
+import {showTransModal, showMenu} from "../store/ui/UI"
 import { TransactionsModal } from '../components/TransactionsModal';
-import Overlay from '../components/Overlay';
-import NoSearchResult from '../components/NoSearchResult';
+import Service from '../components/Service';
+import Screens from '../navigation/Screens';
+import MenuComponent from '../components/Menu';
+
 function HomeScreen() {
-    const discounts = useSelector<any, DiscountInterface[]>((state: any) => state.entities.discount.discounts)
-    const loyalties = useSelector<any, LoyaltyInterface[]>((state: any) => state.entities.loyalty.loyalties)
+    // const discounts = useSelector<any, DiscountInterface[]>((state: any) => state.entities.discount.discounts)
+    // const loyalties = useSelector<any, LoyaltyInterface[]>((state: any) => state.entities.loyalty.loyalties)
     const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
     
     const userProfile = useSelector<any, UserProfile>((state: any) => state.auth.userProfile)
@@ -45,9 +43,7 @@ function HomeScreen() {
     }, [])
 
     const handleAvatarPressed = () => {
-        Animated
-        .spring(top, {toValue: 0, useNativeDriver: false})
-        .start()
+        dispatch(showMenu() as unknown as AnyAction)
     }
 
     const closeMenu = () => {
@@ -66,96 +62,7 @@ function HomeScreen() {
          <TransactionsModal/>
         {isLoading && <Activity/>}
         <DiscountModa/>
-      <AnimatedMenu
-      style={{
-        top: top
-      }}
-      >
-        {Platform.OS === "android" && <AndroidOverlay>
-        <MenuScroll>
-           <PersonalSettings>Personal Info</PersonalSettings>
-            <InfoContainer>
-                <InfoLabel>First name</InfoLabel>
-                <InfoView>
-                    <Info>{userProfile?.firstname}</Info>
-                </InfoView>
-            </InfoContainer>
-            <InfoContainer>
-                <InfoLabel>Last name</InfoLabel>
-                <InfoView>
-                    <Info>{userProfile?.lastname}</Info>
-                </InfoView>
-            </InfoContainer>
-            <InfoContainer>
-                <InfoLabel>Phone number</InfoLabel>
-                <InfoView>
-                    <Info>{userProfile?.contact}</Info>
-                </InfoView>
-            </InfoContainer>
-            <InfoContainer>
-            <InfoLabel>Email</InfoLabel>
-            <InfoView>
-            <Info>{userProfile?.email}</Info>
-            </InfoView>
-            </InfoContainer>
-      <LogoutContainer onPress={handleLogout} >
-        <AntDesign name="logout" color={Colors.green} size={25} />
-      <Logout>Logout</Logout>
-      </LogoutContainer>
-         <Pressable onPress={closeMenu} >
-         <AntDesign color={Colors.deep_green} name="closecircle" size={50} />
-         </Pressable>
-           </MenuScroll>
-        </AndroidOverlay>}
-      {Platform.OS === "ios" && <BlurView
-        tint='light'
-        intensity={100}
-        style={{
-            width: "100%",
-            height: "100%",
-            paddingTop: 100,
-            paddingBottom: 20,
-            paddingHorizontal: 20
-        }}
-        >
-           <MenuScroll>
-           <PersonalSettings>Personal Info</PersonalSettings>
-            <InfoContainer>
-                <InfoLabel>First name</InfoLabel>
-                <InfoView>
-                    <Info>{userProfile?.firstname}</Info>
-                </InfoView>
-            </InfoContainer>
-            <InfoContainer>
-                <InfoLabel>Last name</InfoLabel>
-                <InfoView>
-                    <Info>{userProfile?.lastname}</Info>
-                </InfoView>
-            </InfoContainer>
-            <InfoContainer>
-                <InfoLabel>Phone number</InfoLabel>
-                <InfoView>
-                    <Info>{userProfile?.contact}</Info>
-                </InfoView>
-            </InfoContainer>
-            <InfoContainer>
-                <InfoLabel>Email</InfoLabel>
-                <InfoView>
-                    <Info>{userProfile?.email}</Info>
-                </InfoView>
-            </InfoContainer>
-      <LogoutContainer onPress={handleLogout} >
-        <AntDesign name="logout" color={Colors.green} size={25} />
-      <Logout>Logout</Logout>
-      </LogoutContainer>
-         <Pressable onPress={closeMenu} >
-         <AntDesign color="white" name="closecircle" size={50} />
-         </Pressable>
-           </MenuScroll>
-        
-        </BlurView>
-        }
-      </AnimatedMenu>
+        <MenuComponent/>
         <Header>
           <Pressable onPress={handleAvatarPressed} >
           <MaterialIcons name="account-circle"  size={40} color={Colors.dark_grey}/>
@@ -169,50 +76,28 @@ function HomeScreen() {
         showsVerticalScrollIndicator={false} 
         >
         <Screen>
-            <>
-            <Overlay/>
-            <Title>Loyalty Cards</Title>
-            <Section
-            horizontal={true}
-            showsHorizontalScrollIndicator={false} 
-            >
-                 {loyalties.length === 0 && <NoSearchResult text="No loyalty cards available" />}
-            {
-                loyalties.map((loyalty, index) =>(
-                    <LoyaltyCard {...loyalty} key={index} />
-                )
-                )
-            }
-            </Section>
-
-            <Title>Discount Offers</Title>
-            <Section 
-            horizontal={true}
-            showsHorizontalScrollIndicator={false} 
-            >
-               {discounts.length === 0 && <NoSearchResult text="No discount cards available" />}
-           {
-            discounts.map((disc, index) => (
-                <DiscountCard {...disc} key={index}/>
-            ))
-           }
-           
-            </Section>
-            {/* <Title>Giftcards Trending</Title>
-            <Section
-            horizontal={true}
-            showsHorizontalScrollIndicator={false} 
-            >
-                 {giftCards.length === 0 && <NoSearchResult text="No gift cards available" />}
-              {
-                giftCards.map((card, index) => (
-                    <GiftCard {...card} key={index} />
-                ))
-              }
-            </Section> */}
-            
-           
-            </>
+            <SubContainer>
+             <ServiceContainer>
+             <Service 
+             redirectUrl={Screens.discount}
+             title="Discount cards" 
+             image={require("../assets/Corral_Discount_.png")} 
+             />
+             <Service 
+             redirectUrl={Screens.loyalty}
+             title="Loyalty cards" 
+             image={require("../assets/Corral_Loyalty.png")}
+             />
+             </ServiceContainer>
+             <ServiceContainer>
+             <Service 
+             title="Promotions" 
+             image={require("../assets/boy.png")} />
+             <Service 
+             title="Gift cards" 
+             image={require("../assets/Corral_Gift_Card.png")}/>
+             </ServiceContainer>
+            </SubContainer>
             </Screen>
         </Container>}
        </Root>
@@ -235,6 +120,17 @@ const Container = styled.ScrollView`
     margin-top: 50px;
 `
 
+const SubContainer = styled.View`
+ padding-top: 30px
+`
+
+const ServiceContainer = styled.View`
+ flex-direction: row;
+ aign-items: center;
+ justify-content: space-around;
+ margin-top: 15px;
+ margin-bottom: 15px;
+`
 
 const Root = styled.View`
     flex: 1;
@@ -274,82 +170,11 @@ color: ${Colors.deep_green};
 font-weight: 700;
 margin-bottom: 7px;
 `
-const Logout = styled.Text`
-    margin-left: 10px;
-    font-weight: 600;
-    font-size: 18px;
-    color: ${Colors.green};
-`
-const LogoutContainer = styled.TouchableOpacity`
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 30px;
-    justify-content: center;
-    margin-top: 40px;
-`
-const Menu = styled.View`
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    z-index: 100;
-`
 
-const AndroidOverlay = styled.View`
-     width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    z-index: 80;
-    background: white;
-    padding-top: 100px;
-    padding-bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-`
 
 const MenuIcon = styled.TouchableOpacity`
  position: absolute;
  top: 50px;
  right: 20px
 `
-
-const MenuScroll = styled.ScrollView``
-
-const PersonalSettings = styled.Text`
-    color: ${Colors.deep_green};
-    margin-bottom: 30px;
-    font-weight: 600;
-    font-size: 22px;
-    text-align: center;
-`
-const InfoContainer = styled.View`
-margin-bottom: 20px;
-    
-`
-
-const InfoLabel = styled.Text`
-    margin-bottom: 13px;
-    font-weight: 500;
-    font-size: 17px;
-    color: ${Colors.dark_grey};
-`
-
-const InfoView = styled.View`
-width: 100%;
-height: 50px;
-padding-left: 15px;
-padding-right: 15px;
-justify-content: center;
-border: 1px solid ${Colors.dark_grey};
-border-radius: 7px;
-`
-
-const Info = styled.Text`
-color: ${Colors.deep_green};
-font-weight: 400;
-font-size: 16px;
-`
-
-const AnimatedMenu = Animated.createAnimatedComponent(Menu)
 

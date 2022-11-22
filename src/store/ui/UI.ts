@@ -6,7 +6,8 @@ type UIInterface = {
     isLoading: boolean,
     showTransactionsModal: boolean,
     showErrorModal: boolean,
-    errorMessage: string
+    errorMessage: string,
+    menuOffset: number
 }
 
 
@@ -16,7 +17,8 @@ const slice =  createSlice({
         isLoading: false,
         showTransactionsModal: false,
         showErrorModal: false,
-        errorMessage: ""
+        errorMessage: "",
+        menuOffset: -2000
     },
     name: "ui",
     reducers: {
@@ -52,9 +54,17 @@ const slice =  createSlice({
         hideErrorModal: (state: UIInterface) => {
             state.showErrorModal = false
             state.errorMessage = ""
+        },
+
+        showMenu: (state: UIInterface) => {
+            state.menuOffset = 0
+        },
+
+        closeMenu: (state: UIInterface) => {
+            state.menuOffset = -2000
         }
     }
 })
 
 export default slice.reducer
-export const {closeDiscountModal, openDiscountModal, startLoader, stopLoader, showTransModal, closeTransModal, showErrorModal, hideErrorModal} = slice.actions
+export const {closeDiscountModal, openDiscountModal, startLoader, stopLoader, showTransModal, closeTransModal, showErrorModal, hideErrorModal, showMenu, closeMenu} = slice.actions
