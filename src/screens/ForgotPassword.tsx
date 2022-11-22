@@ -77,6 +77,8 @@ function ForgotPasswordScreen() {
             setOtp(code)
             dispatch(stopLoader())
         } catch (error: any) {
+            console.log("ERRor",error.response);
+            
             dispatch(stopLoader())
             if(error.response.status === 400) {
                 Alert.alert("ERROR", "This number is not registered")
