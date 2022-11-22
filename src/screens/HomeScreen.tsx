@@ -91,6 +91,7 @@ function HomeScreen() {
              </ServiceContainer>
              <ServiceContainer>
              <Service 
+             redirectUrl={Screens.promotions}
              title="Promotions" 
              image={require("../assets/boy.png")} />
              <Service 

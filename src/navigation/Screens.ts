@@ -15,5 +15,6 @@ export default {
     loyaltyFeed: "LOYALTY CARDS",
     walletDetail: "ASSET DETAILS",
     forgotPassword: "FORGOT_PASSWORD",
-    settings: "SETTINGS"
+    settings: "SETTINGS",
+    promotions: "PROMOTIONS"
 }
