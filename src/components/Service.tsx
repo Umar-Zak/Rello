@@ -50,5 +50,5 @@ font-weight: 500;
 font-size: 15px;
 letter-spacing: 1px;
 margin-top: 10px;
-margin-left: 10px;
+text-align: center;
 `

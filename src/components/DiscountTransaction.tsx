@@ -21,7 +21,7 @@ const DiscountTransactionComponent = (trans: DiscountTransaction) => {
 export default DiscountTransactionComponent;
 
 const CompanyName = styled.Text`
-color: ${Colors.green}
+color: white;
 font-weight: 500;
 font-size: 17px
 `
@@ -43,16 +43,17 @@ const TransactionTray = styled.View`
  width: 100%;
  height: 70px;
  border-radius: 10px;
- background: white;
+ background: #02203c;
  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.10);
  padding: 10px;
  margin-bottom: 20px;
- border: 1px solid ${Platform.OS === "android"? "#fd4957": "white"}
+ box-shadow: 0 5px 7px rgba(0, 0, 0, 0.25)
 `
 
 const TransactionId = styled.Text`
 margin-top: 12px;
-font-size: 14px
+font-size: 14px;
+color: ${Colors.green}
 `
 
 const Id = styled.Text`

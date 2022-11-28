@@ -8,6 +8,7 @@ import FeedNavigation from './FeedNavigation';
 import LoyaltyNavigation from './LoyaltyNavigation';
 import WalletActivityNavigation from './WalletActivityNavigation';
 import PromotionsScreen from '../screens/PromotionsScreen';
+import TransactionsChart from '../components/TransactionsCharts';
 
 const Tab = createBottomTabNavigator();
 function AppNavigation() {
@@ -54,6 +55,14 @@ function AppNavigation() {
         component={WalletActivityNavigation} 
         options={{
             tabBarIcon: ({size, color, focused}) => <AntDesign size={size} color={color} name='wallet' />,
+            headerShown: false
+        }}
+        />
+        <Tab.Screen 
+        name={Screens.analytics} 
+        component={TransactionsChart} 
+        options={{
+            tabBarIcon: ({size, color, focused}) => <AntDesign size={size} color={color} name='barschart' />,
             headerShown: false
         }}
         />

@@ -16,5 +16,6 @@ export default {
     walletDetail: "ASSET DETAILS",
     forgotPassword: "FORGOT_PASSWORD",
     settings: "SETTINGS",
-    promotions: "PROMOTIONS"
+    promotions: "PROMOTIONS",
+    analytics: "History"
 }
