@@ -7,7 +7,8 @@ type UIInterface = {
     showTransactionsModal: boolean,
     showErrorModal: boolean,
     errorMessage: string,
-    menuOffset: number
+    menuOffset: number,
+    graphOffset: number
 }
 
 
@@ -18,7 +19,8 @@ const slice =  createSlice({
         showTransactionsModal: false,
         showErrorModal: false,
         errorMessage: "",
-        menuOffset: -2000
+        menuOffset: -2000,
+        graphOffset: -1200
     },
     name: "ui",
     reducers: {
@@ -62,9 +64,17 @@ const slice =  createSlice({
 
         closeMenu: (state: UIInterface) => {
             state.menuOffset = -2000
+        },
+
+        showGraph: (state: UIInterface) => {
+            state.graphOffset = 0
+        },
+
+        closeGraph: (state: UIInterface) => {
+            state.graphOffset = -1200
         }
     }
 })
 
 export default slice.reducer
-export const {closeDiscountModal, openDiscountModal, startLoader, stopLoader, showTransModal, closeTransModal, showErrorModal, hideErrorModal, showMenu, closeMenu} = slice.actions
+export const {closeDiscountModal, openDiscountModal, startLoader, stopLoader, showTransModal, closeTransModal, showErrorModal, hideErrorModal, showMenu, closeMenu, showGraph, closeGraph} = slice.actions

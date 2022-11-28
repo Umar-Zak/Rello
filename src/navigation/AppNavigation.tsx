@@ -58,14 +58,6 @@ function AppNavigation() {
             headerShown: false
         }}
         />
-        <Tab.Screen 
-        name={Screens.analytics} 
-        component={TransactionsChart} 
-        options={{
-            tabBarIcon: ({size, color, focused}) => <AntDesign size={size} color={color} name='barschart' />,
-            headerShown: false
-        }}
-        />
        </Tab.Navigator>
     );
 }

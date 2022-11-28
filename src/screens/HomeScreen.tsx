@@ -3,7 +3,7 @@ import { Animated, Platform} from 'react-native'
 import "styled-components"
 import styled from 'styled-components/native';
 import {useDispatch, useSelector} from "react-redux"
-import {MaterialIcons, AntDesign} from "@expo/vector-icons"
+import {MaterialIcons} from "@expo/vector-icons"
 import { AnyAction } from 'redux';
 import Screen from '../components/Screen';
 import Colors from '../config/Colors';
@@ -14,11 +14,12 @@ import Activity from '../components/Activity';
 import {loadDiscountCards, loadSubscribedDiscounts, loadDiscountTransactions} from "../store/entities/DiscountSlice"
 import {loadGiftCards} from "../store/entities/GiftSlice"
 import {loadLoyaltyCards, loadSubscribedLoyalties, loadLoyaltyTransactions} from "../store/entities/LoyaltySlice"
-import {showTransModal, showMenu} from "../store/ui/UI"
+import {showTransModal, showMenu, showGraph} from "../store/ui/UI"
 import { TransactionsModal } from '../components/TransactionsModal';
 import Service from '../components/Service';
 import Screens from '../navigation/Screens';
 import MenuComponent from '../components/Menu';
+import TransactionsChart from '../components/TransactionsCharts';
 
 function HomeScreen() {
     // const discounts = useSelector<any, DiscountInterface[]>((state: any) => state.entities.discount.discounts)
@@ -46,16 +47,9 @@ function HomeScreen() {
         dispatch(showMenu() as unknown as AnyAction)
     }
 
-    const closeMenu = () => {
-        Animated
-        .spring(top, {toValue: -2000, useNativeDriver: false})
-        .start()
-    }
+    
 
-    const handleLogout = async() => {
-        await Auth.logout()
-        dispatch(logoutUser())
-    }
+   
  
     return (
        <Root>
@@ -63,12 +57,13 @@ function HomeScreen() {
         {isLoading && <Activity/>}
         <DiscountModa/>
         <MenuComponent/>
+        <TransactionsChart/>
         <Header>
           <Pressable onPress={handleAvatarPressed} >
           <MaterialIcons name="account-circle"  size={40} color={Colors.dark_grey}/>
           </Pressable>
             <Home>Home</Home>
-            <MenuIcon onPress={() => dispatch(showTransModal())} >
+            <MenuIcon onPress={() => dispatch(showGraph())} >
             <MaterialIcons name="menu"  size={40} color={Colors.dark_grey}/>
             </MenuIcon>
         </Header>
