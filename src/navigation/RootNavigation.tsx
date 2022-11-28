@@ -29,8 +29,11 @@ function RootNavigation() {
         initializeAuth()
         const subscription = Notifications.addNotificationReceivedListener(notification => {
          
-         if(notification.request.content.data.id !== "RD")
+         if(notification.request.content.data.id !== "RD"){
+            Alert.alert("Logging out")
             dispatch(logoutUser())
+         }
+            
          
            else {
             const content = notification.request.content
@@ -97,7 +100,6 @@ function RootNavigation() {
        <OfflineNotification/>
        {showErrorModal && <ErrorModal message={errorMessage} />}
         <NavigationContainer>
-        
            {!user && <OnboardingNavigation/>}
            {user && <AppNavigation/>}
         </NavigationContainer>
