@@ -1,22 +1,37 @@
 import React, {useState} from 'react';
-import { Alert } from 'react-native';
+import { RefreshControl, Dimensions } from 'react-native';
 import "styled-components"
 import styled from 'styled-components/native';
-import { useSelector} from 'react-redux';
+import { AnyAction } from 'redux';
+import { useSelector, useDispatch} from 'react-redux';
 import DiscountCard from '../components/DiscountCard';
 import SearchField from '../components/SearchField';
 import DiscountModa from '../components/DiscountModal';
 import NoSearchResult from '../components/NoSearchResult';
 import { DiscountInterface } from '../models/DTOS';
 import Overlay from '../components/Overlay';
+import {loadDiscountCards} from "../store/entities/DiscountSlice"
 
+const height = Dimensions.get("window").height
 
 function DiscountScreen() {
+    const dispatch = useDispatch()
     let discounts = useSelector<any, DiscountInterface[]>((state: any) => state.entities.discount.discounts)
     const [searchText, setSearchText] = useState("")
-    
+    const [refreshing, setRefreshing] = useState(false)
+
     discounts = discounts.filter((discount) => discount.companyname.toLowerCase().startsWith(searchText.toLowerCase()))
     
+    const handleRefreshing = () => {
+        setRefreshing(true)
+        dispatch(loadDiscountCards() as unknown as AnyAction)
+
+        setTimeout(() => {
+            setRefreshing(false)
+        }, 4000)
+    }
+
+
     return (
        <Root>
         <DiscountModa/>
@@ -25,16 +40,23 @@ function DiscountScreen() {
         placeholder="Search discount cards"
         handleSearch={(text: string) => setSearchText(text)}
         />
-        <SubContainer>
+        <SubContainer
+         
+         refreshControl={
+            <RefreshControl 
+            refreshing={refreshing}
+            onRefresh={handleRefreshing}
+            />
+         }
+         showsVerticalScrollIndicator={false}
+        >
+            <DiscountContainer >
         {
             discounts.map((discount, index) => (
-              <DiscountContainer key={index}>
-                  <DiscountCard  {...discount} />
-              </DiscountContainer>
+                  <DiscountCard key={index} {...discount} />
             ))
-
-            
         }
+        </DiscountContainer>
         {
            (discounts.length === 0) && <NoSearchResult/>
         }
@@ -60,12 +82,14 @@ const Container = styled.View`
 `
 
 const SubContainer = styled.ScrollView`
+ height: ${height}px
  padding-top: 30px;
 `
 
 const DiscountContainer = styled.View`
-    align-items: center;
-    margin-bottom: 30px;
-    padding-left: 10px;
+flex-direction: row;
+align-items: center;
+justify-content: space-around;
+flex-wrap: wrap;
 `
 

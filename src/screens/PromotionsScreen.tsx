@@ -1,14 +1,31 @@
-import * as React from 'react';
+import  React, {useState} from 'react';
+import {RefreshControl} from "react-native"
 import styled from 'styled-components/native';
 import SearchField from '../components/SearchField';
 const PromotionsScreen = () => {
+    const [refreshing, setRefreshing] = useState(false)
+
+    const handleRefresh = () => {
+        setRefreshing(true)
+        setTimeout(() => {
+            setRefreshing(false)
+        }, 4000)
+    }
     return (
         <Container>
             <SearchField
                 handleSearch={() => console.log("searching")}
                 placeholder="Search for promotion"
             />
-            <SubContainer>
+            <SubContainer
+            refreshControl={
+                <RefreshControl
+                refreshing={refreshing}
+                onRefresh={handleRefresh}
+                />
+            }
+            showsVerticalScrollIndicator={false}
+            >
                 <PromotionsContainer>
                 <Pressable>
                 <Promotion source={require("../assets/amari-loyalty.png")}/>

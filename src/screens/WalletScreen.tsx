@@ -71,26 +71,27 @@ function WalletScreen() {
            {
             activeIcon === 1 && subscribedDiscounts.length === 0 && <NoSearchResult/>
            }
+           <CardContainer >
            {
             activeIcon === 1 && subscribedDiscounts.map((discount, index) => (
-                <CardContainer key={index}>
-                    <DiscountCard isInWallet={true} {...discount} />
-                </CardContainer>
+                    <DiscountCard key={index} isInWallet={true} {...discount} />
+                
             ))
            }
+           </CardContainer>
            </>
 
           <>
           {
             activeIcon === 0 && subscribedLoyaltyCards.length === 0 && <NoSearchResult/>
           }
+           <CardContainer >
           {
             activeIcon === 0 && subscribedLoyaltyCards.map((loyalty,index) => (
-                <CardContainer key={index}>
-                    <LoyaltyCard isInWallet={true} {...loyalty} />
-                </CardContainer>
+                    <LoyaltyCard key={index} isInWallet={true} {...loyalty} />
             ))
            }
+             </CardContainer>
           </>
            <>
            {
@@ -125,9 +126,10 @@ const SubContainer = styled.ScrollView`
 
 
 const CardContainer = styled.View`
-    align-items: center;
-    margin-bottom: 30px;
-    padding-left: 20px;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-around;
+   flex-wrap: wrap;
 `
 
 const RootView = styled.View`

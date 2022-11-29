@@ -33,8 +33,8 @@ function DiscountCard(discount: DiscountInterface & {isInWallet?: boolean}) {
 export default DiscountCard;
 
 const Container = styled.ImageBackground`
-width: 250px;
-height: 160px;
+width: 150px;
+height: 100px;
 border-radius: 15px;
 background: ${Colors.deep_green};
 box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -42,7 +42,7 @@ padding-top: 20px;
 padding-left: 25px;
 padding-right: 25px;
 padding-bottom: 20px;
-margin-right: 20px;
+margin-bottom: 20px;
 overflow: hidden;
 `
 
