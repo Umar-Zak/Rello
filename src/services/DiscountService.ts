@@ -14,7 +14,7 @@ class DiscountService  extends Https {
 
    async getAllDiscountCards(){
         try {
-          const {data} =  await this.get<DiscountInterface[]>("discount_merchant")
+          const {data} =  await this.get<DiscountInterface[]>("merchantdiscount/findall")
           await SecureStore.saveDiscountCards(data)
           return data
         } catch (error) {
@@ -25,7 +25,7 @@ class DiscountService  extends Https {
 
     async createDiscount(body: SubscribedDiscount){
       try {
-        const {data} = await this.post<SubscribedDiscount>("discount_customer", body)
+        const {data} = await this.post<SubscribedDiscount>("customerdiscount", body)
         return data
       } catch (error: any) {
         throw error
@@ -36,7 +36,7 @@ class DiscountService  extends Https {
     async getSubscribedDiscounts(){
       try {
          const user = await Auth.getUserProfile()
-        const {data} = await this.get<SubscribedDiscount[]>(`discount_customer/clientfind/${user.contact}`)
+        const {data} = await this.get<SubscribedDiscount[]>(`customerdiscount/findclient/${user.contact}`)
         return data
       } catch (error) {
         throw error
@@ -46,7 +46,7 @@ class DiscountService  extends Https {
     async getCustomerDiscountTransactions(){
         try {
           const user = await Auth.getUserProfile()
-          const {data} = await this.get<DiscountTransaction[]>(`discount_transaction/transactionbyContact/${user.contact}`)
+          const {data} = await this.get<DiscountTransaction[]>(`transactiondiscount/findclient/${user.contact}`)
           return data
         } catch (error) {
           throw error

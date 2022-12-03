@@ -5,9 +5,9 @@ import Screens from './Screens';
 import DiscountScreen from '../screens/DiscountScreen';
 import Colors from '../config/Colors';
 import FeedNavigation from './FeedNavigation';
-import GiftNavigation from './GiftNavigation';
 import LoyaltyNavigation from './LoyaltyNavigation';
 import WalletActivityNavigation from './WalletActivityNavigation';
+import PromotionsNavigation from './PromotionsNavigation';
 
 const Tab = createBottomTabNavigator();
 function AppNavigation() {
@@ -42,14 +42,14 @@ function AppNavigation() {
             tabBarIcon: ({size, color}) => <AntDesign size={size} color={color} name='shoppingcart' />
         }}
          />
-         {/* <Tab.Screen 
-        name={Screens.gifts} 
-        component={GiftNavigation}
+         <Tab.Screen 
+        name={Screens.promo} 
+        component={PromotionsNavigation}
         options={{
-            tabBarIcon: ({size, color}) => <AntDesign size={size} color={color} name='gift' />,
+            tabBarIcon: ({size, color}) => <AntDesign size={size} color={color} name='Trophy' />,
             headerShown: false
         }}
-         /> */}
+         />
         <Tab.Screen 
         name={Screens.wallets} 
         component={WalletActivityNavigation} 

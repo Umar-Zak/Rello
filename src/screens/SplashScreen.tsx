@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Animated} from 'react-native'
 import "styled-components"
+// import {StatusBar} from "expo-status-bar"
 import * as Sentry from "sentry-expo"
 import styled from 'styled-components/native';
 import {useNavigation} from "@react-navigation/native"
@@ -8,6 +9,8 @@ import Colors from '../config/Colors';
 import { getSplashContent } from '../models/StaticContent';
 import Screens from '../navigation/Screens';
 const contents = getSplashContent()
+
+
 
 function SplashScreen() {
     const [leftOffset] = useState(new Animated.Value(0))

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Alert} from "react-native"
 import * as Notifications from "expo-notifications"
 import { NavigationContainer } from '@react-navigation/native';
+import { AnyAction } from 'redux';
 import {useSelector, useDispatch} from "react-redux"
 import OnboardingNavigation from './OnboardingNavigation';
 import AppNavigation from './AppNavigation';
@@ -14,7 +15,7 @@ import {startLoader, stopLoader} from "../store/ui/UI"
 import Auth from '../services/Auth';
 import LoyaltyService from '../services/LoyaltyService';
 import {initializeRedeemedLoyalties} from "../store/entities/LoyaltySlice"
-import { AnyAction } from 'redux';
+
 
 
 
@@ -29,12 +30,9 @@ function RootNavigation() {
         initializeAuth()
         const subscription = Notifications.addNotificationReceivedListener(notification => {
          
-         if(notification.request.content.data.id !== "RD"){
-            Alert.alert("Logging out")
+         if(notification.request.content.data.id !== "RD")
             dispatch(logoutUser())
-         }
             
-         
            else {
             const content = notification.request.content
             handleLoyaltyRedemptionPrompt(content)

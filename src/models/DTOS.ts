@@ -11,6 +11,7 @@ export interface DiscountInterface {
     clientcode?: string
     discountid: string
     image: string
+    details: string
 }
 
 export type SubscribedDiscount = {
@@ -21,6 +22,7 @@ export type SubscribedDiscount = {
     percentage: number 
     clientcode: string
     discountid: string
+    image: string
 }
 
 
@@ -32,6 +34,7 @@ export type SubsribedLoyalty = {
    amount: number,
    point: number,
    loyaltyid: string
+   image: string
 }
 
 
@@ -46,7 +49,8 @@ export interface LoyaltyInterface {
     updatedAt: Date
     id: string
     _id: string
-    description: string
+    details: string
+    image: string
 }
 
 export interface GiftCardInterface {
@@ -96,4 +100,11 @@ export interface LoyalRedemption {
   clientcode: string,
   isApproved: boolean,
   points: number
+}
+
+
+export interface Promotion {
+     imageurl: string
+     merchantcode: string
+     detail: string
 }

@@ -7,7 +7,6 @@ import Colors from '../config/Colors';
 import { DiscountInterface } from '../models/DTOS';
 import {selectDiscount} from "../store/entities/DiscountSlice"
 import {openDiscountModal} from "../store/ui/UI"
-import { Alert } from 'react-native';
 import Screens from '../navigation/Screens';
 
 function DiscountCard(discount: DiscountInterface & {isInWallet?: boolean}) {
@@ -20,11 +19,11 @@ function DiscountCard(discount: DiscountInterface & {isInWallet?: boolean}) {
         dispatch(selectDiscount(discount))
         dispatch(openDiscountModal())
     }
-    const imagesUrl = discount?.companyname?.startsWith("la") ? require("../assets/labadi-discount.png") : require("../assets/coral-discount.png")
+   
     
     return (
        <Pressable onPress={handleDiscountPressed}>
-         <Container source={imagesUrl} >
+         <Container source={{uri: discount.image}} >
         </Container>
        </Pressable>
     );
@@ -33,8 +32,8 @@ function DiscountCard(discount: DiscountInterface & {isInWallet?: boolean}) {
 export default DiscountCard;
 
 const Container = styled.ImageBackground`
-width: 250px;
-height: 160px;
+width: 150px;
+height: 100px;
 border-radius: 15px;
 background: ${Colors.deep_green};
 box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -42,7 +41,7 @@ padding-top: 20px;
 padding-left: 25px;
 padding-right: 25px;
 padding-bottom: 20px;
-margin-right: 20px;
+margin-bottom: 20px;
 overflow: hidden;
 `
 

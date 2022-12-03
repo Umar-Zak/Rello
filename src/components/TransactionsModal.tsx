@@ -10,25 +10,27 @@ import { DiscountTransaction, LoyalRedemption, LoyaltyTransaction } from '../mod
 import NoSearchResult from './NoSearchResult'
 import DiscountTransactionComponent from './DiscountTransaction'
 import LoyaltyTransactionComponent from './LoyaltyTransactionComponent'
-import { calculateAccumulatedPointsPerMerchant, calculateRedeemedPointsPerMerchants } from '../utils/Common'
+import { calculateAccumulatedPointsPerMerchant, calculateRedeemedPointsPerMerchants, groupLoTransaction } from '../utils/Common'
 
 
 export const TransactionsModal = () => {
     const [left] = useState(new Animated.Value(2000))
     const dispatch = useDispatch()
+
     const showTransactionsModal = useSelector<any, boolean>((state): any => state.ui.showTransactionsModal) 
     const discountTransactions = useSelector<any, DiscountTransaction[]>((state): any => state.entities.discount.discountTransactions) 
     const loyaltyTransactions = useSelector<any, LoyaltyTransaction[]>((state): any => state.entities.loyalty.loyaltyTransactions) 
     const redeemedLoyalties = useSelector<any, LoyalRedemption[]>((state): any => state.entities.loyalty.redeemedLoyalties) 
     
     
-    const groupedLoyaltyTransactions = groupBy(loyaltyTransactions, (trans) => trans.companyname)
+    const groupedLoyaltyTransactions = groupLoTransaction(loyaltyTransactions)
+   
     const merchants = Object.keys(groupedLoyaltyTransactions)
     
 
     const groupedLoyaltyRedemptions = groupBy(redeemedLoyalties || [], (trans) => trans.merchant.companyname)
     
-    
+
 
     
     const [activeIcon, setActiveIcon] = useState(0)
@@ -60,8 +62,7 @@ export const TransactionsModal = () => {
                 onPress={() => setActiveIcon(index)}
                 key={index} 
                 style={{
-                    borderColor: activeIcon === index? "#fd4957": "",
-                    borderWidth: activeIcon === index? 1: 0
+                    backgroundColor: activeIcon === index? "#fd4957": "#001528",
                 }}>
                 {icon.icon}
                 <TransactionText>{icon.text}</TransactionText>
@@ -112,13 +113,13 @@ export const TransactionsModal = () => {
 
 
 const RootView = styled.ScrollView`
-flex: 1
+flex: 1;
 `
 
 const Container = styled.View`
   width: 100%;
   height: 100%;
-  background: white;
+  background: #002147;
   position: absolute;
   top: 0;
   z-index: 100;
@@ -140,21 +141,24 @@ const FlexContainer = styled.View`
  align-items: center;
  justify-content: space-around;
  margin-top: 40px;
+ background: #001528;
+ height: 80px;
+ border-radius: 20px
 `
 
 const TransactionIcon = styled.TouchableOpacity`
-    width: 100px;
-    height: 100px;
-    border-radius: 10px;
-    background: white;
+    width: 50%;
+    height: 100%;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.10)
     align-items: center;
     justify-content: center;
+    border-radius: 20px;
     `
 
     const TransactionText = styled.Text`
     margin-top: 5px;
-    font-size: 12px
+    font-size: 12px;
+    color: white;
     `
 
 const AnimatedContainer = Animated.createAnimatedComponent(Container)
@@ -165,12 +169,13 @@ const Title = styled.Text`
     font-size: 19px;
     font-weight: 500;
     letter-spacing: 1px;
-    color: ${Colors.deep_green}
+    color: white;
 
 `
 
 const TransactionContainer = styled.View`
- margin-top: 50px
+ margin-top: 50px;
+
 `
 
 

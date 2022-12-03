@@ -92,7 +92,7 @@ export const loadRedeemedLoyalties = () => async(dispatch: any, getState: any) =
 
 export const loadLoyaltyCards = () => async(dispatch: any, getState: any) => {
     try {
-        dispatch(startLoader())
+    dispatch(startLoader())
     const loyaltyCards = await LoyaltyService.getAllLoyaltyCards()
     dispatch(getLoyalty(loyaltyCards))
 

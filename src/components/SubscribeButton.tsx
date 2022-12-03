@@ -30,11 +30,7 @@ const Subscribe = styled.View`
     background: ${Colors.green};
     align-items: center;
     justify-content: center;
-    position: absolute;
-    top: 430px;
-    right: 10px;
     border-radius: 7px;
-    z-index: 100;
 `
 
 const SubcribeText = styled.Text`

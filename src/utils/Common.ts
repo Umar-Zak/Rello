@@ -1,3 +1,4 @@
+import {groupBy} from "lodash"
 import { LoyaltyTransaction, LoyalRedemption } from './../models/DTOS';
 
 
@@ -18,4 +19,10 @@ export const  calculateRedeemedPointsPerMerchants = (redemptions: LoyalRedemptio
     }
 
     return results
+}
+
+
+export const groupLoTransaction = (loyaltyTrans: LoyaltyTransaction[]) => {
+    const groupedLoyaltyTransactions = groupBy(loyaltyTrans, (trans) => trans.companyname)
+    return groupedLoyaltyTransactions
 }
