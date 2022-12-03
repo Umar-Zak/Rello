@@ -55,7 +55,7 @@ function LoyaltyCard(card: LoyaltyInterface & {isInWallet?: boolean}) {
 
     return (
     <Container onPress={handleLoyaltyCardPressed} >
-         <Image resizeMode="cover" source={imageUrl} />
+         <Image resizeMode="cover" source={{uri: card.image}} />
          {/* <Overflow/>
         <ContentContainer>
         <CompanyName>{card.companyname}</CompanyName>

@@ -36,8 +36,8 @@ const Container = styled.TouchableOpacity`
 `
 
 const SubContainer = styled.ImageBackground`
- width: 150px;
- height: 150px;
+ width: 130px;
+ height: 130px;
  border-radius: 20px;
  background: white;
  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25)

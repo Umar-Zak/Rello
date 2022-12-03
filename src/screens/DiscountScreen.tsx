@@ -41,7 +41,9 @@ function DiscountScreen() {
         handleSearch={(text: string) => setSearchText(text)}
         />
         <SubContainer
-         
+         contentContainerStyle={{
+            paddingBottom: 80
+         }}
          refreshControl={
             <RefreshControl 
             refreshing={refreshing}

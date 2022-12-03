@@ -22,6 +22,7 @@ function WalletScreen() {
     let subscribedLoyaltyCards = useSelector<any, LoyaltyInterface[]>((state: any) => state.entities.loyalty.subscribedLoyalties)
     const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
     
+    
     const [searchText, setSearchText] = useState("")
     const [activeIcon, setActiveIcon] = useState(0)
     
@@ -65,8 +66,12 @@ function WalletScreen() {
                 </TransactionIcon>
             ))
         }
-    </FlexContainer>
-          <SubContainer>
+         </FlexContainer>
+          <SubContainer
+           contentContainerStyle={{
+            paddingBottom: 80
+           }}
+          >
           <>
            {
             activeIcon === 1 && subscribedDiscounts.length === 0 && <NoSearchResult/>

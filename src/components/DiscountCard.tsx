@@ -7,7 +7,6 @@ import Colors from '../config/Colors';
 import { DiscountInterface } from '../models/DTOS';
 import {selectDiscount} from "../store/entities/DiscountSlice"
 import {openDiscountModal} from "../store/ui/UI"
-import { Alert } from 'react-native';
 import Screens from '../navigation/Screens';
 
 function DiscountCard(discount: DiscountInterface & {isInWallet?: boolean}) {
@@ -20,11 +19,11 @@ function DiscountCard(discount: DiscountInterface & {isInWallet?: boolean}) {
         dispatch(selectDiscount(discount))
         dispatch(openDiscountModal())
     }
-    const imagesUrl = discount?.companyname?.startsWith("la") ? require("../assets/labadi-discount.png") : require("../assets/coral-discount.png")
+   
     
     return (
        <Pressable onPress={handleDiscountPressed}>
-         <Container source={imagesUrl} >
+         <Container source={{uri: discount.image}} >
         </Container>
        </Pressable>
     );

@@ -18,6 +18,7 @@ import Activity from './Activity';
 import Colors from '../config/Colors';
 import DiscountCard from './DiscountCard';
 import LocationService from '../services/LocationService';
+import DiscountCardBanner from './DiscountCardBanner';
 
 
 
@@ -39,11 +40,9 @@ function DiscountModa() {
     if(subscribedDiscounts && subscribedDiscounts.length > 0){
         isFoundInSubscriptions = subscribedDiscounts?.find(discount => discount.discountid === selectedDiscount?.id)
     }
-    const detailsText = `This card offers you 20% discount on all food and drinks purchased at the hotel except on public holidays. Terms & conditions apply
-    `
 
     useEffect(() => {
-        loadMerchantLocation()
+        // loadMerchantLocation()
         if(showDiscountModal){
            Animated.spring(discountModalTopOffset, {
                toValue: 0,
@@ -69,7 +68,8 @@ function DiscountModa() {
         address:      selectedDiscount.address,
         discountype:  selectedDiscount.discountype,
         percentage:   selectedDiscount.percentage,
-        discountid:   selectedDiscount.id
+        discountid:   selectedDiscount.id,
+        image: selectedDiscount.image
        }
 
         dispatch(subscribeDiscount(payload) as unknown as AnyAction)
@@ -98,33 +98,23 @@ function DiscountModa() {
         }}
         >
            {isLoading && <Activity/>}
-           {isModalVisible && 
-           <Modal>
-           <ModalCancel onPress={() => setIsModalVisible(false)} >
-           <AntDesign name="closecircle" size={30} color="white" />
-           </ModalCancel>
-           <DetailedText>{detailsText}</DetailedText>
-         </Modal>}
-            <Background>
-          <SubscribeButton handleSubscribe={handleDiscountSubscribtion} isSubscribed={isFoundInSubscriptions? true : false} />
-            <CardDetailsLocation/>
-            <SubContainer>
-                <DiscountCard {...selectedDiscount} />
-            </SubContainer>
+            <DiscountCardBanner {...selectedDiscount}/>
+           <SubContainer>
+           <HeadersContainer>
             <CompanyName>{selectedDiscount.companyname}</CompanyName>
-        <Contact>Address: {selectedDiscount.address}</Contact>
-        <DetailHeader>Details</DetailHeader>
-        <DetailContainer>
-        <Details>{detailsText.substring(0, 40)}...</Details>
-        <Pressable onPress={() => setIsModalVisible(true)}>
-            {detailsText.length > 40 && <ReadMore>Read more</ReadMore>}
-        </Pressable>
-        </DetailContainer>
-            </Background>
+            <SubscribeButton handleSubscribe={handleDiscountSubscribtion} isSubscribed={isFoundInSubscriptions? true : false} />
+            </HeadersContainer>
+            <ContentContainer>
+            <DetailHeader>Details</DetailHeader>
+            <DetailContainer>
+            <Details>{selectedDiscount.details}</Details>
+            </DetailContainer> 
+            </ContentContainer>
+           </SubContainer>
             <ModalCancel onPress={() => dispatch(closeDiscountModal())} >
              <AntDesign name="closecircle" size={30} color="white" />
             </ModalCancel>
-          {coordinates && <Map latitude={coordinates?.latitude} longitude={coordinates?.longitude}  />}
+          {/* {coordinates && <Map latitude={coordinates?.latitude} longitude={coordinates?.longitude}  />} */}
         </AnimatedDiscountModal>
     );
 }
@@ -136,6 +126,15 @@ const Background = styled.View`
     width: 100%;
     height: 490px;
     background: ${Colors.deep_green}
+`
+
+const ContentContainer = styled.ScrollView`
+ width: 100%;
+ height: 50%;
+ border-radius: 10px;
+ background: #f6f9fc;
+ margin-top: 40px;
+ box-shadow: 0 10px 20px rgba(0,0,0, 0.25)
 `
 
 const CompanyName = styled.Text`
@@ -170,10 +169,9 @@ width: 85%
 
 const Details = styled.Text`
     font-weight: 300;
-    color: white;
     margin-left: 20px;
     margin-top: 10px;
-    width: 210px;
+    width: 250px;
     font-size: 14px
 `
 const DiscountModal = styled.View`
@@ -224,10 +222,22 @@ margin-top: 10px;
 margin-left: 20px
 color: #fd4957
 `
+// const SubContainer = styled.View`
+// align-items: center;
+// justify-content: center;
+// padding-top: 60px
+// `
+
 const SubContainer = styled.View`
-align-items: center;
-justify-content: center;
-padding-top: 60px
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+`
+
+const HeadersContainer = styled.View`
+ flex-direction: row;
+ align-items: center;
+ justify-content: space-between;
 `
 const AnimatedDiscountModal = Animated.createAnimatedComponent(DiscountModal)
 

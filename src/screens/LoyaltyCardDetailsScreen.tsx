@@ -5,7 +5,6 @@ import {AntDesign} from "@expo/vector-icons"
 import {useSelector} from "react-redux"
 import {useDispatch} from "react-redux"
 import { useNavigation } from '@react-navigation/native';
-import CardDetailsLocation from '../components/CardDetailsLocation';
 import Map from '../components/Map';
 import SubscribeButton from '../components/SubscribeButton';
 import { LoyaltyInterface, SubsribedLoyalty} from '../models/DTOS';
@@ -18,6 +17,7 @@ import { AnyAction } from 'redux';
 import LoyaltyCard from '../components/LoyaltyCard';
 import LocationService from '../services/LocationService';
 import { Alert } from 'react-native';
+import LoyaltyCardBanner from '../components/LoyaltyCardBanner';
 
 function LoyaltyCardDetailsScreen() {
     const selectedLoyalty = useSelector<any, LoyaltyInterface>((state: any) => state.entities.loyalty.selectedLoyalty)
@@ -31,7 +31,7 @@ function LoyaltyCardDetailsScreen() {
     const isFoundInSubscription = subscribedLoyaltyCards.find(subs => subs.loyaltyid === selectedLoyalty.id)
 
     useEffect(() => {
-        loadCoordinates()
+        // loadCoordinates()
     }, [])
   
   
@@ -54,7 +54,8 @@ function LoyaltyCardDetailsScreen() {
      address: selectedLoyalty.address,
      amount: selectedLoyalty.amount,
      point: selectedLoyalty.point,
-     loyaltyid: selectedLoyalty.id
+     loyaltyid: selectedLoyalty.id,
+     image: selectedLoyalty.image
     }
     
     
@@ -79,30 +80,23 @@ function LoyaltyCardDetailsScreen() {
             </ModalCancel>
             <DetailedText>{detailsText}</DetailedText>
            </Modal>}
-        <Background>
-        <CardDetailsLocation/>
-       <SubscribeButton 
+            <LoyaltyCardBanner {...selectedLoyalty} />
+      <SubContainer>
+      <HeadersContainer>
+      <CompanyName>{selectedLoyalty.companyname}</CompanyName>
+      <SubscribeButton 
        isSubscribed={isFoundInSubscription? true: false}
         handleSubscribe={handleSubscribeButtonPressed
         } 
         />
-        <SubContainer>
-            <LoyaltyCard {...selectedLoyalty} />
-        </SubContainer>
-        <CompanyName>{selectedLoyalty.companyname}</CompanyName>
-        <Contact>Address: {selectedLoyalty.address}</Contact>
-        <DetailHeader>Details</DetailHeader>
+      </HeadersContainer>
+      <ContentContainer>
+      <DetailHeader>Details</DetailHeader>
         <DetailContainer>
-        <Details>{detailsText.substring(0, 40)}...</Details>
-        <Pressable onPress={() => setIsModalVisible(true)}>
-          {detailsText.length > 40 &&  <ReadMore>Read more</ReadMore>}
-            </Pressable>
-        </DetailContainer>
-        </Background>
-        { coordinates && <Map 
-        latitude={coordinates?.latitude} 
-        longitude={coordinates?.longitude} 
-        />}
+        <Details>{selectedLoyalty.details}</Details>
+        </DetailContainer> 
+      </ContentContainer>
+      </SubContainer>
        </Container>
     );
 }
@@ -112,13 +106,26 @@ export default LoyaltyCardDetailsScreen;
 const Container = styled.View`
     flex: 1;
 `
-
-const SubContainer = styled.View`
-    align-items: center;
-    justify-content: center;
-    padding-top: 20px;
+const ContentContainer = styled.ScrollView`
+ width: 100%;
+ height: 50%;
+ border-radius: 10px;
+ background: #f9fffd;
+ margin-top: 40px;
+ box-shadow: 0 10px 20px rgba(0,0,0, 0.25)
 `
 
+const SubContainer = styled.View`
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+`
+
+const HeadersContainer = styled.View`
+ flex-direction: row;
+ align-items: center;
+ justify-content: space-between;
+`
 const Background = styled.View`
     width: 100%;
     height: 490px;
@@ -129,7 +136,7 @@ const CompanyName = styled.Text`
 margin-top: 20px;
 margin-left: 20px;
 font-size: 20px;
-color: ${Colors.green};
+color: ${Colors.deep_green};
 font-weight: 700;
 margin-bottom: 15px
 
@@ -151,11 +158,11 @@ const DetailHeader = styled.Text`
 
 const Details = styled.Text`
     font-weight: 300;
-    color: white;
     margin-left: 20px;
     margin-top: 10px;
     width: 290px;
-    font-size: 14px
+    font-size: 14px;
+    line-height: 20px;
 `
 
 const Modal = styled.View`

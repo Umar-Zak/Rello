@@ -43,7 +43,7 @@ class Auth extends Https {
 
    async signup(body:SignUpPayload){
        try {
-        const {data} = await this.post<SignUpPayload & {token: string}>("userscustomer", body)
+        const {data} = await this.post<SignUpPayload & {token: string}>("customer", body)
         this.setHeader(data.token)
         await SecureStore.storeToken(data.token)
        } catch (error ) {
@@ -54,7 +54,7 @@ class Auth extends Https {
 
     async signin(body:SiginInPayload){
         try {
-         const {data} = await this.post<SiginInPayload & {token: string}>("userscustomer/login", body)
+         const {data} = await this.post<SiginInPayload & {token: string}>("customer/login", body)
          this.setHeader(data.token)
          await SecureStore.storeToken(data.token)
          
@@ -77,7 +77,7 @@ class Auth extends Https {
         try {
             const token = await SecureStore.getToken() as string
             const user = this.decodeToken(token)
-            const {data} = await this.get<UserProfile>(`userscustomer/${user.id}`)
+            const {data} = await this.get<UserProfile>(`customer/${user.id}`)
             return data
         } catch (error) {
             throw error
@@ -87,7 +87,7 @@ class Auth extends Https {
      async verifyDevice() {
         try {
            const deviceID = await SecureStore.getDeviceToken() as string
-           const res = await this.get<UserProfile>(`userscustomer/me/${deviceID}`)
+           const res = await this.get<UserProfile>(`customer/me/${deviceID}`)
         } catch (error: any) {
             await this.logout()
             throw error
@@ -96,7 +96,7 @@ class Auth extends Https {
 
      async findUserByContact(body: {contact: string}) {
         try {
-           const {data} =  await this.post<UserProfile>("userscustomer/auth/finduser", body)
+           const {data} =  await this.post<UserProfile>("customer/auth/finduser", body)
            return data
         } catch (error) {
             throw error
@@ -105,7 +105,7 @@ class Auth extends Https {
 
      async resetUserPassword(body: SiginInPayload){
         try {
-          const {data} =  await this.post<UserProfile & {token: string}>("userscustomer/auth/resetpassword", body)
+          const {data} =  await this.post<UserProfile & {token: string}>("customer/auth/resetpassword", body)
           this.setHeader(data.token)
           await SecureStore.storeToken(data.token)
         } catch (error) {

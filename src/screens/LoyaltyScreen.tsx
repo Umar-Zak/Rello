@@ -18,7 +18,7 @@ function LoyaltyScreen() {
     const [searchText, setSearchText] = useState("")
     const [refreshing, setRefreshing] = useState(false)
     loyalties = loyalties.filter(loyalty => loyalty.companyname.toLowerCase().startsWith(searchText.toLowerCase()))
-
+ 
     const handleRefresh = () => {
         setRefreshing(true)
         dispatch(loadLoyaltyCards() as unknown as AnyAction)
@@ -34,6 +34,9 @@ function LoyaltyScreen() {
         handleSearch={(text: string) => setSearchText(text)} 
         />
        <SubContainer
+       contentContainerStyle={{
+        paddingBottom: 80
+       }}
        refreshControl={
         <RefreshControl
         refreshing={refreshing}

@@ -20,6 +20,7 @@ import Service from '../components/Service';
 import Screens from '../navigation/Screens';
 import MenuComponent from '../components/Menu';
 import TransactionsChart from '../components/TransactionsCharts';
+import { loadPromotions } from '../store/entities/PromotionSlice';
 
 function HomeScreen() {
     // const discounts = useSelector<any, DiscountInterface[]>((state: any) => state.entities.discount.discounts)
@@ -41,6 +42,7 @@ function HomeScreen() {
         dispatch(loadSubscribedLoyalties() as unknown as AnyAction)
         dispatch(loadDiscountTransactions() as unknown as AnyAction)
         dispatch(loadLoyaltyTransactions() as unknown as AnyAction)
+        dispatch(loadPromotions() as unknown as AnyAction)
     }, [])
 
     const handleAvatarPressed = () => {
@@ -55,7 +57,6 @@ function HomeScreen() {
        <Root>
          <TransactionsModal/>
         {isLoading && <Activity/>}
-        <DiscountModa/>
         <MenuComponent/>
         <TransactionsChart/>
         <Header>
@@ -69,6 +70,9 @@ function HomeScreen() {
         </Header>
         {!isLoading && <Container
         showsVerticalScrollIndicator={false} 
+        contentContainerStyle={{
+            paddingBottom: 80
+        }}
         >
         <Screen>
             <SubContainer>
@@ -86,13 +90,15 @@ function HomeScreen() {
              </ServiceContainer>
              <ServiceContainer>
              <Service 
-             redirectUrl={Screens.promotions}
+             redirectUrl={Screens.promo}
              title="Promotions" 
              image={require("../assets/boy.png")} />
              <Service 
              title="Gift cards" 
              image={require("../assets/Corral_Gift_Card.png")}/>
              </ServiceContainer>
+             
+             
             </SubContainer>
             </Screen>
         </Container>}

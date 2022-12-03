@@ -17,5 +17,7 @@ export default {
     forgotPassword: "FORGOT_PASSWORD",
     settings: "SETTINGS",
     promotions: "PROMOTIONS",
+    promo: "PROMO",
+    promotion_details: "PROMOTION DETAILS",
     analytics: "History"
 }

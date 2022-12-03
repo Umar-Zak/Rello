@@ -1,16 +1,38 @@
 import  React, {useState} from 'react';
 import {RefreshControl} from "react-native"
+import { AnyAction } from 'redux';
+import {useSelector, useDispatch} from "react-redux"
+import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import SearchField from '../components/SearchField';
+import { Promotion } from '../models/DTOS';
+import Screens from "../navigation/Screens"
+import {selectPromotion, loadPromotions} from "../store/entities/PromotionSlice"
+
+
 const PromotionsScreen = () => {
     const [refreshing, setRefreshing] = useState(false)
+    const promotions = useSelector<any, Promotion[]>((state: any) => state.entities.promotion.promotions )
+    const navigation = useNavigation()
+    const dispatch = useDispatch()
 
     const handleRefresh = () => {
         setRefreshing(true)
+        dispatch(loadPromotions() as unknown as AnyAction)
         setTimeout(() => {
             setRefreshing(false)
         }, 4000)
     }
+
+
+
+    const handlePromotionPressed = (promotion: Promotion) => {
+        dispatch(selectPromotion(promotion) as unknown as AnyAction)
+        navigation.navigate(Screens.promotion_details as never)
+    }
+
+
+
     return (
         <Container>
             <SearchField
@@ -18,6 +40,9 @@ const PromotionsScreen = () => {
                 placeholder="Search for promotion"
             />
             <SubContainer
+            contentContainerStyle={{
+                paddingBottom: 80
+            }}
             refreshControl={
                 <RefreshControl
                 refreshing={refreshing}
@@ -27,12 +52,14 @@ const PromotionsScreen = () => {
             showsVerticalScrollIndicator={false}
             >
                 <PromotionsContainer>
-                <Pressable>
-                <Promotion source={require("../assets/amari-loyalty.png")}/>
-                </Pressable>
-                <Pressable>
-                <Promotion source={require("../assets/allied-loyalty.png")}/>
-                </Pressable>
+               {
+                promotions.map((promo, index) => (
+                    <Pressable key={index} onPress={() => handlePromotionPressed(promo)}>
+                    <PromotionCard source={{uri: promo.imageurl}}/>
+                    </Pressable>
+                ))
+               }
+               
                 </PromotionsContainer>
             </SubContainer>
         </Container>
@@ -48,7 +75,7 @@ const Container = styled.View`
 const Pressable = styled.TouchableOpacity`
 
 `
-const Promotion = styled.ImageBackground`
+const PromotionCard = styled.ImageBackground`
  width: 150px;
  height: 100px;
  border-radius: 15px;

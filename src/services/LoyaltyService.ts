@@ -12,7 +12,7 @@ class LoyaltyService extends Https {
 
    async getAllLoyaltyCards(){
         try {
-           const {data} = await this.get<LoyaltyInterface[]>("loyalty_merchant")
+           const {data} = await this.get<LoyaltyInterface[]>("merchantloyalty/findall")
            await SecureStore.saveLoyaltyCards(data)
            
            return data
@@ -25,7 +25,7 @@ class LoyaltyService extends Https {
 
     async createLoyalty(body: SubsribedLoyalty){
         try {
-           const {data} = await this.post<SubsribedLoyalty>("loyalty_customer", body)
+           const {data} = await this.post<SubsribedLoyalty>("customerloyalty", body)
            return data
         } catch (error) {
             throw error
@@ -35,7 +35,7 @@ class LoyaltyService extends Https {
     async getSubscriptions(){
         try {
            const user = await Auth.getUserProfile()
-           const {data} = await this.get<SubsribedLoyalty[]>(`loyalty_customer/clientfind/${user.contact}`)
+           const {data} = await this.get<SubsribedLoyalty[]>(`customerloyalty/findclient/${user.contact}`)
           return data
         } catch (error) {
             throw error
@@ -46,7 +46,7 @@ class LoyaltyService extends Https {
     async getCustomerLoyaltyTransaction() {
         try {
             const user = await Auth.getUserProfile()
-            const {data} = await this.get<LoyaltyTransaction[]>(`loyalty_transaction/transactionbyContact/${user.contact}`)
+            const {data} = await this.get<LoyaltyTransaction[]>(`transactionloyalty/findclient/${user.contact}`)
            return data
         } catch (error) {
             throw error
@@ -55,7 +55,7 @@ class LoyaltyService extends Https {
 
     async approveRedemtion(id: string) {
         try {
-          const {data} =  await this.get<LoyalRedemption[]>(`loyalty_transaction/approve_redemption/${id}`)
+          const {data} =  await this.get<LoyalRedemption[]>(`transactionloyalty/approve_redemption/${id}`)
           return data
         } catch (error) {
             console.log("Error Redeming", error);
