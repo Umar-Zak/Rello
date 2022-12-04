@@ -14,7 +14,7 @@
     },
     "name": "Correl",
     "slug": "mCorrel",
-    "version": "2.9",
+    "version": "3.0.0",
     "orientation": "portrait",
     "icon": "./assets/app-icon.png",
     "userInterfaceStyle": "light",
@@ -33,7 +33,7 @@
       "supportsTablet": true
     },
     "android": {
-      "versionCode": 18,
+      "versionCode": 19,
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/app-splash.png",
