@@ -63,11 +63,14 @@ const ContentContainer = styled.View`
 const InputGroup = styled.View`
  flex-direction: row;
  align-items: center;
+ justify-content: space-between;
+ height: 60px;
+ border-radius: 7px;
+ background: #d4dcdf;
 `
 const InputField = styled.TextInput`
- width: 70%;
+ width: 80%;
  height: 45px;
- background: #d4dcdf;
  border-radius: 7px;
  margin-right: 20px;
  padding: 10px;

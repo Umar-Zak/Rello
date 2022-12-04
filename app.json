@@ -52,8 +52,14 @@
     "plugins": [
       "sentry-expo",
       [
-        "expo-notifications", {
-
+        "expo-notifications",
+        {
+          "icon": "./assets/app-icon.png",
+          "color": "#ffffff",
+          "sounds": [
+            "./src/assets/final_notification.wav"
+            
+          ]
         }
       ]
     ],
