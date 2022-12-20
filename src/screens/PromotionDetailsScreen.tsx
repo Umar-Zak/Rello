@@ -1,5 +1,6 @@
 import  React, {useState} from 'react';
 import styled from 'styled-components/native';
+import ExpoFastImage from 'expo-fast-image'
 import {useSelector} from "react-redux"
 import {Entypo} from "@expo/vector-icons"
 import { Promotion } from '../models/DTOS';
@@ -28,7 +29,14 @@ const PromotionDetailsScreen = () => {
     
     return ( 
         <Container>
-            <Banner source={{uri: selectedPromotion.imageurl}} />
+            <ExpoFastImage
+            uri={selectedPromotion.imageurl}
+            cacheKey={selectedPromotion.imageurl.substring(35)} 
+            style={{
+            width: "100%",
+            height: "40%"
+            }} 
+        />
             <ContentContainer>
                <InputGroup>
                <InputField onChangeText={(text: string) => setCode(text)} value={code} placeholder="Text your code" />
@@ -49,10 +57,7 @@ export default PromotionDetailsScreen;
 
 
 
-const Banner = styled.Image`
-width: 100%;
-height: 40%;
-`
+
 const Container = styled.View`
 flex: 1
 `

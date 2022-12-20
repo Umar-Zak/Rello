@@ -1,6 +1,7 @@
 import  React, {useState} from 'react';
 import {RefreshControl} from "react-native"
 import { AnyAction } from 'redux';
+import ExpoFastImage from 'expo-fast-image'
 import {useSelector, useDispatch} from "react-redux"
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
@@ -54,9 +55,18 @@ const PromotionsScreen = () => {
                 <PromotionsContainer>
                {
                 promotions.map((promo, index) => (
-                    <Pressable key={index} onPress={() => handlePromotionPressed(promo)}>
-                    <PromotionCard source={{uri: promo.imageurl}}/>
-                    </Pressable>
+                <Pressable key={index} onPress={() => handlePromotionPressed(promo)}>
+                <PromotionCard>
+                <ExpoFastImage
+                uri={promo.imageurl}
+                cacheKey={promo.imageurl.substring(35)} 
+                style={{
+                width: "100%",
+                height: "100%"
+                }} 
+                />
+        </PromotionCard>
+        </Pressable>
                 ))
                }
                
@@ -75,7 +85,7 @@ const Container = styled.View`
 const Pressable = styled.TouchableOpacity`
 
 `
-const PromotionCard = styled.ImageBackground`
+const PromotionCard = styled.View`
  width: 150px;
  height: 100px;
  border-radius: 15px;

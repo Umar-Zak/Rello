@@ -1,19 +1,21 @@
 import * as React from 'react';
-import styled from 'styled-components/native';
+import ExpoFastImage from 'expo-fast-image'
 import { DiscountInterface } from '../models/DTOS';
 
 
 const DiscountCardBanner = (discount: DiscountInterface) => {
     
     return ( 
-        <Image resizeMode="cover" source={{uri: discount.image}} />
+        <ExpoFastImage
+        uri={discount.image}
+        cacheKey={discount.image.substring(35)} 
+        style={{
+            width: "100%",
+            height: 250
+            }} 
+        />
     );
 }
  
 export default DiscountCardBanner;
 
-const Image = styled.Image`
-    width: 100%;
-    height: 250px;
-    
-`
