@@ -202,7 +202,7 @@ background: ${Colors.deep_green};
 const TextContainer = styled.View`
     padding-left: 5%;
     padding-right: 5%;
-    margin-top: 40px;
+    margin-top: 20px;
 `
 const Title = styled.Text`
     color: white;

@@ -108,3 +108,10 @@ export interface Promotion {
      merchantcode: string
      detail: string
 }
+
+export type ContactPayload = {
+    email: string,
+    contact: string,
+    title: string,
+    message: string
+}

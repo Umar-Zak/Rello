@@ -7,14 +7,13 @@ import {MaterialIcons} from "@expo/vector-icons"
 import { AnyAction } from 'redux';
 import Screen from '../components/Screen';
 import Colors from '../config/Colors';
-import DiscountModa from '../components/DiscountModal';
 import {loadUserProfile, logoutUser} from "../store/auth/AuthSlice"
-import Auth, { UserProfile } from '../services/Auth';
+import { UserProfile } from '../services/Auth';
 import Activity from '../components/Activity';
 import {loadDiscountCards, loadSubscribedDiscounts, loadDiscountTransactions} from "../store/entities/DiscountSlice"
 import {loadGiftCards} from "../store/entities/GiftSlice"
 import {loadLoyaltyCards, loadSubscribedLoyalties, loadLoyaltyTransactions} from "../store/entities/LoyaltySlice"
-import {showTransModal, showMenu, showGraph} from "../store/ui/UI"
+import {showMenu, showGraph} from "../store/ui/UI"
 import { TransactionsModal } from '../components/TransactionsModal';
 import Service from '../components/Service';
 import Screens from '../navigation/Screens';
@@ -23,13 +22,9 @@ import TransactionsChart from '../components/TransactionsCharts';
 import { loadPromotions } from '../store/entities/PromotionSlice';
 
 function HomeScreen() {
-    // const discounts = useSelector<any, DiscountInterface[]>((state: any) => state.entities.discount.discounts)
-    // const loyalties = useSelector<any, LoyaltyInterface[]>((state: any) => state.entities.loyalty.loyalties)
+   
     const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
     
-    const userProfile = useSelector<any, UserProfile>((state: any) => state.auth.userProfile)
-    
-    const [top] = useState(new Animated.Value(-2000))
     const dispatch = useDispatch()
   
 
@@ -68,7 +63,8 @@ function HomeScreen() {
             <MaterialIcons name="menu"  size={40} color={Colors.dark_grey}/>
             </MenuIcon>
         </Header>
-        {!isLoading && <Container
+        {!isLoading && 
+        <Container
         showsVerticalScrollIndicator={false} 
         contentContainerStyle={{
             paddingBottom: 80
@@ -97,13 +93,10 @@ function HomeScreen() {
              title="Gift cards" 
              image={require("../assets/Corral_Gift_Card.png")}/>
              </ServiceContainer>
-             
-             
             </SubContainer>
             </Screen>
         </Container>}
        </Root>
- 
     );
 }
 

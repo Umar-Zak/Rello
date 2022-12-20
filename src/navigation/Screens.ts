@@ -19,5 +19,7 @@ export default {
     promotions: "PROMOTIONS",
     promo: "PROMO",
     promotion_details: "PROMOTION DETAILS",
-    analytics: "History"
+    analytics: "History",
+    contact: "CONTACT",
+    about: "ABOUT"
 }

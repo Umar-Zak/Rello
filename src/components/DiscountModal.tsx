@@ -12,11 +12,9 @@ import { DiscountInterface, SubscribedDiscount } from '../models/DTOS';
 import {subscribeDiscount} from "../store/entities/DiscountSlice"
 import Map from './Map';
 import SubscribeButton from './SubscribeButton';
-import CardDetailsLocation from './CardDetailsLocation';
 import Screens from '../navigation/Screens';
 import Activity from './Activity';
 import Colors from '../config/Colors';
-import DiscountCard from './DiscountCard';
 import LocationService from '../services/LocationService';
 import DiscountCardBanner from './DiscountCardBanner';
 
@@ -29,7 +27,6 @@ function DiscountModa() {
     const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
     const userProfile = useSelector<any, UserProfile>((state: any) => state.auth.userProfile)
     const navigation = useNavigation()
-    const [isModalVisible, setIsModalVisible] = useState(false)
     const [coordinates, setCoordinates] = useState<{latitude: string, longitude: string}>()
     const dispatch = useDispatch()
     const [discountModalTopOffset] = useState(new Animated.Value(1000))
@@ -119,14 +116,11 @@ function DiscountModa() {
     );
 }
 
+
+
 export default DiscountModa;
 
 
-const Background = styled.View`
-    width: 100%;
-    height: 490px;
-    background: ${Colors.deep_green}
-`
 
 const ContentContainer = styled.ScrollView`
  width: 100%;
@@ -140,19 +134,15 @@ const ContentContainer = styled.ScrollView`
 const CompanyName = styled.Text`
 margin-top: 20px;
 margin-left: 20px;
-font-size: 20px;
+font-size: 17px;
 color: ${Colors.green};
 font-weight: 700;
-margin-bottom: 15px
+margin-bottom: 15px;
+width: 55%;
+line-height: 24px;
 
 `
 
-const Contact = styled.Text`
-    margin-left: 20px;
-    color: white;
-    font-weight: 500;
-    font-size: 17px
-`
 const DetailHeader = styled.Text`
     color: ${Colors.green};
     margin-left: 20px;
@@ -161,11 +151,7 @@ const DetailHeader = styled.Text`
     font-weight: 600
 `
 
-const DetailedText = styled.Text`
-line-height: 25px;
-font-size: 16px;
-width: 85%
-`
+
 
 const Details = styled.Text`
     font-weight: 300;
@@ -190,17 +176,6 @@ width: 210px
 `
 
 
-const Modal = styled.View`
-width: 100%;
-height: 490px
-background: white;
-position: absolute;
-left: 0;
-top: 0;
-z-index: 200;
-padding: 20px;
-padding-top: 70px
-`
 
 const ModalCancel = styled.TouchableOpacity`
     width: 40px;
@@ -215,18 +190,6 @@ const ModalCancel = styled.TouchableOpacity`
 `
 
 
-const Pressable = styled.TouchableOpacity`
-`
-const ReadMore = styled.Text`
-margin-top: 10px;
-margin-left: 20px
-color: #fd4957
-`
-// const SubContainer = styled.View`
-// align-items: center;
-// justify-content: center;
-// padding-top: 60px
-// `
 
 const SubContainer = styled.View`
     padding-top: 20px;

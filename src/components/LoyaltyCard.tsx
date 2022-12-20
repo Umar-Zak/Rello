@@ -5,6 +5,7 @@ import {useDispatch} from "react-redux"
 import { useNavigation } from '@react-navigation/native';
 import Colors from '../config/Colors';
 import { LoyaltyInterface } from '../models/DTOS';
+
 import {selectLoyalty} from "../store/entities/LoyaltySlice"
 import Screens from '../navigation/Screens';
 
@@ -49,7 +50,6 @@ background: #6ec0d6;
 box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 margin-bottom: 30px;
 overflow: hidden;
-margin-right: 20px;
 `
 const ContentContainer = styled.View`
 width: 100%;

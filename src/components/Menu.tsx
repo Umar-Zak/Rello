@@ -6,8 +6,7 @@ import styled from 'styled-components/native';
 import { AnyAction } from 'redux';
 import { useNavigation } from '@react-navigation/native';
 import Colors from "../config/Colors"
-import Auth, { UserProfile } from '../services/Auth';
-import {logoutUser} from "../store/auth/AuthSlice"
+import { UserProfile } from '../services/Auth';
 import {closeMenu, showTransModal} from "../store/ui/UI"
 import Screens from "../navigation/Screens"
 
@@ -35,10 +34,9 @@ const MenuComponent = () => {
         navigation.navigate(Screens.wallets as never)
     }
 
-    const handleLogout = async() => {
-        await Auth.logout()
-        dispatch(logoutUser())
-    }
+    
+
+    
     
     return ( 
         <AnimatedMenu
@@ -49,7 +47,7 @@ const MenuComponent = () => {
        {showingPersonalInfo && 
        <SettingsContainer>
           <CloseIcon onPress={() => setShowingPersonalInfo(false)}>
-                <AntDesign color="#28c8a4" name="closecircle" size={50} />
+                <AntDesign color={Colors.green} name="closecircle" size={50} />
                 </CloseIcon>
             <UserDataComponent {...userProfile} />
         </SettingsContainer>}
@@ -72,15 +70,9 @@ const MenuComponent = () => {
         </MenuItem>
         <Liner/>
         </MenuItemsContainer>
-        <BottomActionsContainer>
-        <LogoutContainer onPress={handleLogout} >
-        <AntDesign name="logout" color={Colors.green} size={25} />
-      <Logout>Logout</Logout>
-      </LogoutContainer>
          <Pressable onPress={closedMenu} >
-         <AntDesign color="#28c8a4" name="closecircle" size={50} />
+         <AntDesign color={Colors.green} name="closecircle" size={50} />
          </Pressable>
-        </BottomActionsContainer>
            </MenuScroll>
         </AndroidOverlay>
       
@@ -130,7 +122,7 @@ height: 100%;
 position: absolute;
 left: 0;
 z-index: 100;
-background: #002147;
+background: white;
 padding-left: 20px;
 padding-right: 20px;
 padding-top: 100px;
@@ -178,7 +170,7 @@ border-radius: 7px;
 `
 
 const Info = styled.Text`
-color: white;
+color: ${Colors.deep_green};
 font-weight: 400;
 font-size: 16px;
 `
@@ -189,7 +181,7 @@ const AndroidOverlay = styled.View`
     position: absolute;
     left: 0;
     z-index: 80;
-    background: #002147;
+    background:white;
     padding-top: 120px;
     padding-bottom: 20px;
    padding-left: 20px;
@@ -219,7 +211,7 @@ const Menu = styled.View`
 const MenuItemsContainer = styled.View`
  width: 100%;
  height: 400px;
- background: #001528;
+ background: #d4dcdf;
  margin-bottom: 15px;
  border-radius: 15px;
  margin-bottom: 15px;
@@ -238,7 +230,7 @@ const MenuItem = styled.TouchableOpacity`
 `
 
 const MenuItemText = styled.Text`
- color: white;
+ color: ${Colors.deep_green};
  font-size: 18px;
  margin-left: 10px;
  font-weight: 400;
@@ -254,10 +246,11 @@ const Liner = styled.View`
 const BottomActionsContainer = styled.View`
 width: 100%;
 height: 180px;
-background: #001528;
+background: #d4dcdf;
 margin-bottom: 15px;
 border-radius: 15px;
 `
+
 
 const AnimatedMenu = Animated.createAnimatedComponent(Menu)
 

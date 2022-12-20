@@ -2,8 +2,8 @@ import React from 'react';
 import {createNativeStackNavigator} from "@react-navigation/native-stack"
 import Screens from './Screens';
 import HomeScreen from '../screens/HomeScreen';
-import GiftCardDetailScreen from '../screens/GiftCardDetailScreen';
-import LoyaltyCardDetailsScreen from '../screens/LoyaltyCardDetailsScreen';
+import ContactScreen from '../screens/ContactScreen';
+import AboutScreen from '../screens/AboutScreen';
 
 const Stack = createNativeStackNavigator()
 
@@ -17,14 +17,13 @@ function FeedNavigation() {
             headerShown: false
         }}
         />
-        <Stack.Screen 
-        name={Screens.giftDetail}  
-        component={GiftCardDetailScreen}
-        />
-
-        <Stack.Screen 
-        name={Screens.loyaltyDetail} 
-        component={LoyaltyCardDetailsScreen}
+         <Stack.Screen 
+        name={Screens.contact} 
+        component={ContactScreen}
+         />
+         <Stack.Screen 
+        name={Screens.about} 
+        component={AboutScreen}
          />
       </Stack.Navigator>
     );

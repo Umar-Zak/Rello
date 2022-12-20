@@ -119,7 +119,7 @@ flex: 1;
 const Container = styled.View`
   width: 100%;
   height: 100%;
-  background: #002147;
+  background: white;
   position: absolute;
   top: 0;
   z-index: 100;

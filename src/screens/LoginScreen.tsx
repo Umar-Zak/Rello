@@ -63,6 +63,8 @@ function LoginScreen() {
             dispatch(stopLoader())
             dispatch(activateUser())
         } catch (error: any) {
+            console.log("res err",error.response.data);
+            
             dispatch(stopLoader())
             Alert.alert(error.response.data.message)
         }
@@ -114,11 +116,15 @@ function LoginScreen() {
             </LoginTextContainer>
             <LoginTextContainer>
             <Login onPress={handleForgotPasswordPressed} >
-            <ForgotPassword>Forgot password</ForgotPassword>
+           
             </Login>
             </LoginTextContainer>
+            <Login onPress={handleForgotPasswordPressed}>
+            <ForgotPassword>Forgot password</ForgotPassword>
+            </Login>
       </>
      </Form>
+     
       </InputMask>
      </Container>
     );
@@ -131,7 +137,7 @@ background: ${Colors.deep_green};
 const TextContainer = styled.View`
     padding-left: 5%;
     padding-right: 5%;
-    margin-top: 40px;
+    margin-top: 20px;
 `
 const Title = styled.Text`
     color: white;
@@ -159,7 +165,8 @@ const LoginText = styled.Text`
 const ForgotPassword = styled.Text`
     color: ${Colors.green};
     font-size: 17px;
-    margin-top: -20px;
+    margin-top: -40px;
+    text-align: center;
 `
 const Login = styled.TouchableOpacity``
 const Tagline = styled.Text`
@@ -168,5 +175,8 @@ const Tagline = styled.Text`
     line-height: 25px;
     font-size: 17px;
     opacity: 0.9;
+`
+
+const Pressable = styled.TouchableOpacity`
 `
 export default LoginScreen;
