@@ -2,13 +2,13 @@ import React from 'react';
 import "styled-components"
 import { ActivityIndicator } from 'react-native'
 import styled from 'styled-components/native';
-import Colors from '../config/Colors';
+
 
 
 function Activity() {
     return (
        <Container>
-        <ActivityIndicator   size="large" color={Colors.green}/>
+        <ActivityIndicator   size="large" color="#2bcec4"/>
        </Container>
     );
 }

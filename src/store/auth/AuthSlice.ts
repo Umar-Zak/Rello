@@ -1,33 +1,32 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { AppDispatch, RootState } from './../Store';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Auth, { UserProfile } from "../../services/Auth";
 
 
 type AuthSlice = {
     user: boolean,
-    userProfile: UserProfile | null | {}
+    userProfile: UserProfile
 }
 
-type SeedProfileAction = {
-    type: string,
-    payload: UserProfile
-}
+
+const Placeholder: UserProfile[] = []
 
 const slice = createSlice({
     name: "auth",
     initialState: {
         user: false,
-        userProfile: {}
+        userProfile: Placeholder[0]
 
-    },
+    } as AuthSlice,
     reducers: {
-        activateUser: (state: AuthSlice) => {
+        activateUser: (state) => {
             state.user = true
         },
-        logoutUser: (state: AuthSlice) => {
+        logoutUser: (state) => {
             state.user = false
         },
 
-    seedUserProfile: (state: AuthSlice, action: SeedProfileAction) => {
+    seedUserProfile: (state, action: PayloadAction<UserProfile>) => {
         state.userProfile = action.payload
     }
     }
@@ -35,9 +34,8 @@ const slice = createSlice({
 
 export default slice.reducer
 
-export const loadUserProfile = () => async (dispatch: any, getState: any) => {
+export const loadUserProfile = () => async (dispatch: AppDispatch, getState: () => RootState) => {
     const userProfile = await Auth.getUserProfile()
-    
     dispatch(seedUserProfile(userProfile))
 }
 export const {logoutUser, activateUser, seedUserProfile} = slice.actions

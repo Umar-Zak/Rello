@@ -39,7 +39,7 @@
         "foregroundImage": "./assets/app-splash.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.mcorrel.app",
+      "package": "com.mcorral.app",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyC_AfXIFASx_A-kyuALHWZxZF_DcXp3M4U"

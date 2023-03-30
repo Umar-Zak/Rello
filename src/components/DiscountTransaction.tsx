@@ -29,7 +29,8 @@ font-size: 17px
 const DateText = styled.Text`
 font-weight: 400
 font-size: 15px;
-color: ${Colors.deep_green}
+color: white;
+opacity: 0.6
 `
 
 const SimpleFlex = styled.View`

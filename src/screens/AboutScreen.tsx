@@ -1,26 +1,42 @@
 import * as React from 'react';
 import styled from 'styled-components/native';
-import * as Application from 'expo-application';
 import Colors from '../config/Colors';
 const AboutScreen = () => {
     return ( 
         <Container>
             <SubContainer
-            contentContainer={{
-                paddingBottom: 30
+            contentContainerStyle={{
+                paddingBottom: 50
             }}
             >
-            <Title>Get the best of Corral {Application.nativeApplicationVersion}</Title>
+            <Title>About Us</Title>
                 <Text>
-                Getting best deals on your purchases never got easier!!
-                 Download Corral and Get great value on purchases
-                 made at various stores and restaurants.
-                Join this exclusive club of shoppers for great 
-                benefits such as Discounts on purchases and Loyalty Rewards as a customer.
-                You can also buy and Gift shopping vouchers to loved ones. 
-                And guess what? You don’t have to worry about carrying around all 
-                those bulky cards. With Corral app, all your cards are safe on your mobile phone.
+                Welcome to Corral Mobile App! 
+                We are excited to offer you a variety of rewards 
+                and benefits for your patronage from you favourite retail stores.
+                Corral is easy to use, and features a user-friendly 
+                interface that showcases various discount, loyalty, and gift card services from multiple merchants.
                 </Text>
+  
+                <SubTitle>Benefits of the app include</SubTitle>
+                <Text>
+                - Get discount on purchases made with partner stores
+                </Text>
+                <Text>- Earn points on purchases made with partner stores, and redeem them for a wide range of perks and benefits.</Text>
+                <Text>- Purchase gift cards for loved ones. </Text>
+                <Text>- Participate in sales competitions to win gifts and prizes</Text>
+                <Paragraph>
+                In addition to these rewards, Corral also helps customers authenticate 
+                products of various manufacturers purchased at retail stores. 
+                With Corral, you can easily verify the authenticity of your 
+                purchases and ensure that you are getting the high-quality 
+                products you paid for and deserve.
+                We are dedicated to providing the best possible experience and are constantly 
+                updating and improving our app to ensure it meets your needs. 
+                </Paragraph>
+                <Paragraph>
+                So welcome to your new Rewards Partner!
+                </Paragraph>
             </SubContainer>
         </Container>
      );
@@ -52,4 +68,21 @@ const Text = styled.Text`
  font-size: 15px;
  width: 90%;
 line-height: 24px;
+`
+
+const Paragraph = styled.Text`
+font-size: 15px;
+ width: 90%;
+line-height: 24px;
+margin-top: 20px;
+`
+
+const SubTitle = styled.Text`
+ color: ${Colors.deep_green}
+ font-size: 17px;
+ margin-top: 30px;
+ margin-bottom: 15px;
+ font-weight: 500;
+ text-transform: capitalize;
+ letter-spacing: 1px;   
 `

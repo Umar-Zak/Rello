@@ -1,73 +1,57 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {DiscountInterface, DiscountTransaction, SubscribedDiscount} from "../../models/DTOS"
 import DiscountService from "../../services/DiscountService";
+import { AppDispatch, RootState } from "../Store";
 import {hideErrorModal, showErrorModal, startLoader, stopLoader} from "../ui/UI"
 
 
-type AddDiscount = {
-    type: string
-    payload: DiscountInterface
-}
-
-
-
-type GetDiscountsAction = {
-    type: string,
-    payload: DiscountInterface[]
-}
-
-
-
-type InitialiaseDiscountTransactions = {
-    type: string,
-    payload: DiscountTransaction[]
-}
 
 type DiscountSlice = {
     discounts: DiscountInterface[],
-    selectedDiscount: DiscountInterface | null | {},
+    selectedDiscount: DiscountInterface 
     subscribedDiscounts: SubscribedDiscount[],
     discountTransactions: DiscountTransaction[]
 }
 
+const Placeholder: DiscountInterface[] = []
 
  const slice = createSlice({
     initialState: {
         discounts: [],
-        selectedDiscount: {},
+        selectedDiscount: Placeholder[0],
         subscribedDiscounts: [],
         discountTransactions: []
-    },
-    name: "bugs",
+    } as DiscountSlice,
+    name: "discounts",
     reducers:  {
-        addBugs: (state: DiscountSlice, action: AddDiscount) => {
+        addDiscount: (state, action: PayloadAction<DiscountInterface>) => {
             state.discounts.push(action.payload)
         },
 
-        selectDiscount: (state: DiscountSlice, action:AddDiscount ) => {
+        selectDiscount: (state, action: PayloadAction<DiscountInterface> ) => {
             state.selectedDiscount = action.payload
             
         },
     
-        subribeToDiscountCard: (state: DiscountSlice, action: {type: string, payload: SubscribedDiscount}) => {
+        subribeToDiscountCard: (state, action: {type: string, payload: SubscribedDiscount}) => {
            state.subscribedDiscounts.push(action.payload)
         },
 
-        getSubscriptions: (state: DiscountSlice, action: {type: string, payload: SubscribedDiscount[]}) => {
+        getSubscriptions: (state, action: {type: string, payload: SubscribedDiscount[]}) => {
             state.subscribedDiscounts = action.payload
         },
 
-        getDiscounts: (state: DiscountSlice, action: GetDiscountsAction) => {
+        getDiscounts: (state, action: PayloadAction<DiscountInterface[]>) => {
             state.discounts = action.payload
         },
 
-        initializeDiscountTransaction: (state: DiscountSlice, action: InitialiaseDiscountTransactions) => {
+        initializeDiscountTransaction: (state , action: PayloadAction<DiscountTransaction[]>) => {
             state.discountTransactions = action.payload
         }
     }
 })
 
-export const loadDiscountCards = () => async(dispatch: any, getState: any) => {
+export const loadDiscountCards = () => async(dispatch: AppDispatch, getState: () => RootState) => {
     dispatch(startLoader())
     
     const discountCards = await DiscountService.getAllDiscountCards()
@@ -79,8 +63,8 @@ export const loadDiscountCards = () => async(dispatch: any, getState: any) => {
 }
 
 
-export const subscribeDiscount = (body: SubscribedDiscount) => async( dispatch: any, getState: any) => {
-   const subscribedDiscounts = getState().entities.discount.subscribedDiscounts as DiscountInterface[]
+export const subscribeDiscount = (body: SubscribedDiscount) => async( dispatch: AppDispatch, getState: () => RootState) => {
+   const subscribedDiscounts = getState().entities.discount.subscribedDiscounts 
    let selectedDiscount = subscribedDiscounts.find(discount => discount.discountid === body.discountid || discount.merchantcode === body.merchantcode)
    if(selectedDiscount) {
      dispatch(showErrorModal("You already have a subscription from this merchant"))
@@ -96,12 +80,13 @@ export const subscribeDiscount = (body: SubscribedDiscount) => async( dispatch: 
         const subscribedDiscount = await DiscountService.createDiscount(body)
         dispatch(subribeToDiscountCard(subscribedDiscount))
         dispatch(stopLoader())
-    } catch (error) {
+    } catch (error: any) {
         dispatch(stopLoader())
+        dispatch(showErrorModal("Could not subscribe to discount card"))
     }
 }
 
-export const loadSubscribedDiscounts = () => async (dispatch: any, getState: any) => {
+export const loadSubscribedDiscounts = () => async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
         dispatch(startLoader())
        const subscriptions = await DiscountService.getSubscribedDiscounts()
@@ -114,14 +99,12 @@ export const loadSubscribedDiscounts = () => async (dispatch: any, getState: any
 }
 
 
-export const loadDiscountTransactions = () => async(dispatch: any, getState: any) => {
+export const loadDiscountTransactions = () => async(dispatch: AppDispatch, getState: () => RootState) => {
     try {
         const transactions = await DiscountService.getCustomerDiscountTransactions()
         dispatch(initializeDiscountTransaction(transactions))
     } catch (error) {
-        
         dispatch(showErrorModal("An error occured connecting to server"))
-
         setTimeout(() => {
         dispatch(hideErrorModal())
      }, 1300)
@@ -131,4 +114,4 @@ export const loadDiscountTransactions = () => async(dispatch: any, getState: any
 
 export default slice.reducer
 
-export const {selectDiscount, addBugs, subribeToDiscountCard, getDiscounts, getSubscriptions, initializeDiscountTransaction} = slice.actions
+export const {selectDiscount, addDiscount, subribeToDiscountCard, getDiscounts, getSubscriptions, initializeDiscountTransaction} = slice.actions

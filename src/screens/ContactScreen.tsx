@@ -2,7 +2,6 @@ import * as React from 'react';
 import styled from 'styled-components/native';
 import {Feather, Entypo} from "@expo/vector-icons"
 import * as Yup from "yup"
-import {useDispatch, useSelector} from "react-redux"
 import Colors from '../config/Colors';
 import Form from '../components/Form';
 import AppTextInput from '../components/AppTextInput';
@@ -13,6 +12,7 @@ import { startLoader, stopLoader } from '../store/ui/UI';
 import { AnyAction } from 'redux';
 import { Alert } from 'react-native';
 import ContactService from '../services/ContactService';
+import { useAppDispatch, useAppSelector } from '../hooks/CustomReduxHooks';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -33,8 +33,8 @@ const validationSchema = Yup.object().shape({
 
 
 const ContactScreen = () => {
-   const dispatch = useDispatch()
-   const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
+   const dispatch = useAppDispatch()
+   const isLoading = useAppSelector(({ui}) => ui.isLoading)
 
     const handleFormSubmission = async(body: ContactPayload) => {
      dispatch(startLoader() as unknown as AnyAction)
@@ -100,6 +100,9 @@ const ContactScreen = () => {
                     <AppTextInput 
                     label='Message'
                     name="message" 
+                    height={150}
+                    numberOfLines={5}
+                    multiline={true}
                     />
                     <SubmitButton text='Submit' />
                     </>

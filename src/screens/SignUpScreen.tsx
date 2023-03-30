@@ -4,20 +4,18 @@ import styled from "styled-components/native"
 import * as Yup from "yup"
 import {useSelector, useDispatch} from "react-redux"
 import {useNavigation} from "@react-navigation/native"
-import InputMask from '../components/InputMask';
-import Screen from '../components/Screen';
 import Colors from '../config/Colors';
 import AppTextInput from "../components/AppTextInput";
 import Form from '../components/Form';
 import SubmitButton from '../components/SubmitButton';
 import Screens from '../navigation/Screens';
 import Auth, { SignUpPayload } from '../services/Auth';
-import Activity from '../components/Activity';
 import { Alert } from 'react-native';
 import { sendOTP } from '../utils/SmsUtil';
 import {startLoader, stopLoader} from "../store/ui/UI"
 import {activateUser} from "../store/auth/AuthSlice"
 import SecureStore from '../models/SecureStore';
+import AuthForm from '../components/AuthForm';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -48,7 +46,6 @@ const validateOtp = Yup.object().shape({
 function SignUpScreen() {
     const navigation = useNavigation()
     const dispatch = useDispatch()
-    const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
     const [otp, setOtp] = useState("")
     const [isAuth, setIsAuth] = useState(false)
     const [signUpInfo, setSignUpInfo] = useState<SignUpPayload>()
@@ -73,7 +70,7 @@ function SignUpScreen() {
         setSignUpInfo(body)
         const number = body.contact.substring(1)
         const code = Date.now().toString().substring(7)
-        const message = `Your Rello sign up verification code is ${code}`
+        const message = `Your Corral sign up verification code is ${code}`
         setOtp(code)
 
         try {
@@ -82,7 +79,7 @@ function SignUpScreen() {
             setIsAuth(true)
         } catch (error) {
             dispatch(stopLoader())
-            Alert.alert("Error", "Please enter a valid number")
+            Alert.alert("ERROR", "Please enter a valid number")
         }
         
     }
@@ -98,25 +95,18 @@ function SignUpScreen() {
             dispatch(activateUser())
            } catch (error: any) {
             dispatch(startLoader())
-            Alert.alert(error.response.data.message)
+            Alert.alert("ERROR",error.response.data.message)
            }
     }
 
 
     return (
-     <Container>
-       {isLoading && <Activity/>}
-         <Screen>
-        <>
-        <TextContainer>
-            <Title>Create account</Title>
-            <Tagline>Sign up and start shopping</Tagline>
-        </TextContainer>
-        
-        </>
-      </Screen>
-     {!isAuth && <InputMask>
-   <Form
+        <AuthForm
+        title='Create an Account'
+        >
+            <>
+            {!isAuth &&
+         <Form
      initialValues={{
         email: "",
         password: "",
@@ -134,12 +124,14 @@ function SignUpScreen() {
             autoCorrect={false}
             label='First name*'  
             name='firstname'
+            icon='user'
         />
         <AppTextInput 
         autoCapitalize='none'
             autoCorrect={false}
             label='Last name*'  
             name='lastname'
+            icon='user'
         />
         <AppTextInput 
         autoCapitalize='none'
@@ -147,12 +139,14 @@ function SignUpScreen() {
             label='Phone number*'  
             name='contact'
             keyboardType='phone-pad'
+            icon='phone'
         />
       <AppTextInput 
         autoCapitalize='none'
             autoCorrect={false}
             label='Email*'  
             name='email'
+            icon='mail'
         />
             <AppTextInput 
             secureTextEntry 
@@ -160,6 +154,7 @@ function SignUpScreen() {
             autoCapitalize='none' 
             label='Password*'
             name='password'
+            icon='lock'
               />
            <SubmitButton text='Sign Up' />
             <LoginTextContainer>
@@ -170,8 +165,8 @@ function SignUpScreen() {
             </LoginTextContainer>
             </>
      </Form>
-      </InputMask>}
-     {isAuth && <InputMask>
+      }
+     {isAuth &&
       <Form
       initialValues={{
         otp: ""
@@ -190,26 +185,13 @@ function SignUpScreen() {
         <SubmitButton text='Verify' />
        </>
       </Form>
-      </InputMask>}
-     </Container>
+      }
+            </>
+        </AuthForm>
     );
 }
 
-const Container = styled.View`
-flex: 1;
-background: ${Colors.deep_green};
-`
-const TextContainer = styled.View`
-    padding-left: 5%;
-    padding-right: 5%;
-    margin-top: 20px;
-`
-const Title = styled.Text`
-    color: white;
-    margin-bottom: 14px;
-    font-size: 26px;
-    font-weight: 600;
-`
+
 
 const LoginTextContainer = styled.View`
     flex-direction: row;
@@ -224,15 +206,9 @@ const HaveText = styled.Text`
     color: ${Colors.dark_grey};
 `
 const LoginText = styled.Text`
-    color: ${Colors.green};
+    color: #97CBEC;
     font-size: 17px;
 `
 const Login = styled.TouchableOpacity``
-const Tagline = styled.Text`
-    color: white;
-    width: 80%;
-    line-height: 25px;
-    font-size: 17px;
-    opacity: 0.8;
-`
+
 export default SignUpScreen;

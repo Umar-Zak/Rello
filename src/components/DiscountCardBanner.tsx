@@ -6,6 +6,8 @@ import { DiscountInterface } from '../models/DTOS';
 const DiscountCardBanner = (discount: DiscountInterface) => {
     
     return ( 
+      <>
+      { discount.image &&
         <ExpoFastImage
         uri={discount.image}
         cacheKey={discount.image.substring(35)} 
@@ -13,7 +15,9 @@ const DiscountCardBanner = (discount: DiscountInterface) => {
             width: "100%",
             height: 250
             }} 
-        />
+        /> 
+      }
+      </>
     );
 }
  

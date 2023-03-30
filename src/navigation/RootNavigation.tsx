@@ -15,6 +15,7 @@ import {startLoader, stopLoader} from "../store/ui/UI"
 import Auth from '../services/Auth';
 import LoyaltyService from '../services/LoyaltyService';
 import {initializeRedeemedLoyalties} from "../store/entities/LoyaltySlice"
+import Skeleton from '../components/Skeleton';
 
 
 
@@ -90,7 +91,7 @@ function RootNavigation() {
        
      }
 
-     if(!isAppReady) return <Activity/>
+     if(!isAppReady) return <Skeleton isLoading={true} />
 
     return (
        <>

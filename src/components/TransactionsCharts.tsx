@@ -53,7 +53,7 @@ const TransactionsChart = () => {
         <MaterialCommunityIcons name="chevron-right" color={Colors.green} size={30} />
         </MenuItem>
         <Liner/>
-        <MenuItem onPress={() => handleNavigationPressed(Screens.discount)}>
+        <MenuItem onPress={() => handleNavigationPressed(Screens.dis)}>
         <MenuItemText>Discount cards</MenuItemText>
         <MaterialCommunityIcons name="chevron-right" color={Colors.green} size={30} />
         </MenuItem>
@@ -72,8 +72,14 @@ const TransactionsChart = () => {
         <MenuItemText>About us</MenuItemText>
         <MaterialCommunityIcons name="chevron-right" color={Colors.green} size={30} />
         </MenuItem>
+        <MenuItem onPress={() => handleNavigationPressed(Screens.faqs)}>
+        <MenuItemText>FAQs</MenuItemText>
+        <MaterialCommunityIcons name="chevron-right" color={Colors.green} size={30} />
+        </MenuItem>
         <Liner/>
        </MenuItemsContainer>
+       
+       <AuthContainer>
        <LogoutContainer onPress={handleLogout}>
         <AntDesign name="logout" color={Colors.green} size={25} />
       <Logout>Logout</Logout>
@@ -81,6 +87,7 @@ const TransactionsChart = () => {
       <CloseIcon onPress={() => dispatch(closeGraph() as unknown as AnyAction)}>
     <AntDesign name="close" size={30} color="white" />
     </CloseIcon>
+       </AuthContainer>
     </SubContainer>
     </AnimatedContainer>
      );
@@ -118,17 +125,16 @@ export default TransactionsChart;
    width: ${width}px;
    height: ${height}px;
    background: white;
-   padding-left: 15px;
-   padding-right: 15px;
+   padding-left: 10px;
+   padding-right: 10px;
    padding-top: 100px;
   `
 
 const MenuItemsContainer = styled.View`
  width: 100%;
- height: 400px;
- background: #d4dcdf;
+ height: 470px;
+ background: white;
  margin-bottom: 15px;
- border-radius: 15px;
  margin-bottom: 15px;
  padding-left: 10px;
  padding-right: 10px;
@@ -137,12 +143,15 @@ const MenuItemsContainer = styled.View`
 
 const MenuItem = styled.TouchableOpacity`
  width: 100%;
- height: 40px;
+ height: 60px;
  margin-top: 10px;
  margin-bottom: 10px;
  flex-direction: row;
  align-items: center;
- justify-content: space-between
+ justify-content: space-between;
+ border: 1px solid rgba(0, 0, 0, 0.2);
+ border-radius: 5px;
+ background: #fafbfd;
 `
 
 const MenuItemText = styled.Text`
@@ -175,4 +184,7 @@ const Logout = styled.Text`
 
   const AnimatedContainer = Animated.createAnimatedComponent(Container)
   
-  
+  const AuthContainer = styled.View`
+  width: 100%;
+  height: 300px;
+  `

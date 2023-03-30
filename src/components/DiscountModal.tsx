@@ -87,6 +87,7 @@ function DiscountModa() {
          }
             
        }
+       
 
     return (
         <AnimatedDiscountModal 
@@ -178,8 +179,8 @@ width: 210px
 
 
 const ModalCancel = styled.TouchableOpacity`
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border-radius: 17px;
     align-items: center;
     justify-content: center;

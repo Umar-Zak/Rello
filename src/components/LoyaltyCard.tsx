@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import "styled-components"
 import styled from "styled-components/native"
 import ExpoFastImage from 'expo-fast-image'
@@ -37,7 +37,7 @@ function LoyaltyCard(card: LoyaltyInterface & {isInWallet?: boolean}) {
     );
 }
 
-export default LoyaltyCard;
+export default memo(LoyaltyCard);
 
 const Container = styled.TouchableOpacity`
 width: 150px;
@@ -47,6 +47,8 @@ background: #6ec0d6;
 box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 margin-bottom: 30px;
 overflow: hidden;
+margin-left: 7px;
+margin-right: 7px;
 `
 
 

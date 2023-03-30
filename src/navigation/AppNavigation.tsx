@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {AntDesign, MaterialIcons} from "@expo/vector-icons";
+import {AntDesign, MaterialIcons, Entypo} from "@expo/vector-icons";
 import Screens from './Screens';
 import DiscountScreen from '../screens/DiscountScreen';
 import Colors from '../config/Colors';
@@ -8,11 +8,14 @@ import FeedNavigation from './FeedNavigation';
 import LoyaltyNavigation from './LoyaltyNavigation';
 import WalletActivityNavigation from './WalletActivityNavigation';
 import PromotionsNavigation from './PromotionsNavigation';
+import DiscountNavigation from './DiscountNavigation';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 const Tab = createBottomTabNavigator();
 function AppNavigation() {
     return (
-       <Tab.Navigator
+       <ErrorBoundary>
+        <Tab.Navigator
        screenOptions={{
         tabBarActiveTintColor: Colors.green
        }}
@@ -23,7 +26,6 @@ function AppNavigation() {
         options={{
             tabBarIcon: ({size, color}) => <AntDesign size={size} color={color} name='home' />,
             headerShown: false
-            
         }}
         />
         <Tab.Screen 
@@ -36,20 +38,22 @@ function AppNavigation() {
         }}
          />
         <Tab.Screen 
-        name={Screens.discount} 
-        component={DiscountScreen}
+        name={Screens.dis} 
+        component={DiscountNavigation}
         options={{
-            tabBarIcon: ({size, color}) => <AntDesign size={size} color={color} name='shoppingcart' />
+            tabBarIcon: ({size, color}) => <AntDesign size={size} color={color} name='shoppingcart' />,
+            headerShown: false
         }}
          />
          <Tab.Screen 
         name={Screens.promo} 
         component={PromotionsNavigation}
         options={{
-            tabBarIcon: ({size, color}) => <AntDesign size={size} color={color} name='Trophy' />,
+            tabBarIcon: ({size, color}) => <Entypo size={size} color={color} name='code' />,
             headerShown: false
         }}
          />
+
         <Tab.Screen 
         name={Screens.wallets} 
         component={WalletActivityNavigation} 
@@ -59,6 +63,7 @@ function AppNavigation() {
         }}
         />
        </Tab.Navigator>
+       </ErrorBoundary>
     );
 }
 

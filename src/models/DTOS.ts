@@ -12,6 +12,14 @@ export interface DiscountInterface {
     discountid: string
     image: string
     details: string
+    contacts: string
+    location: Coordinates[]
+}
+
+export type Coordinates = {
+    _id: string
+    longitude: string
+    latitude: string
 }
 
 export type SubscribedDiscount = {
@@ -51,6 +59,8 @@ export interface LoyaltyInterface {
     _id: string
     details: string
     image: string
+    contact: string
+    location: Coordinates[]
 }
 
 export interface GiftCardInterface {
@@ -107,6 +117,10 @@ export interface Promotion {
      imageurl: string
      merchantcode: string
      detail: string
+     contact: string
+     createdAt: string
+     promotion: string
+     updatedAt: string
 }
 
 export type ContactPayload = {
@@ -114,4 +128,12 @@ export type ContactPayload = {
     contact: string,
     title: string,
     message: string
+}
+
+export interface ProductAuth {
+    merchantcode: string
+    code: string
+    detail: string
+    imageurl: string
+    id: string
 }
