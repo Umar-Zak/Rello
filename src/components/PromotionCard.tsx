@@ -1,10 +1,10 @@
-import * as React from 'react';
-import styled from 'styled-components/native';
-import { AnyAction } from 'redux';
-import ExpoFastImage from 'expo-fast-image'
-import { useNavigation } from '@react-navigation/native';
-import { Promotion } from '../models/DTOS';
-import { useAppDispatch, useAppSelector } from '../hooks/CustomReduxHooks';
+import * as React from "react";
+import styled from "styled-components/native";
+import { AnyAction } from "redux";
+import ExpoFastImage from "expo-fast-image"
+import { useNavigation } from "@react-navigation/native";
+import { Promotion } from "../models/DTOS";
+import { useAppDispatch} from "../hooks/CustomReduxHooks";
 import {selectPromotion} from "../store/entities/PromotionSlice"
 import Screens from "../navigation/Screens"
 

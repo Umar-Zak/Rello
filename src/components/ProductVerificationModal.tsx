@@ -1,16 +1,16 @@
-import React, {useState, useEffect} from 'react';
-import styled from 'styled-components/native';
+import React, {useState, useEffect} from "react";
+import styled from "styled-components/native";
 import {Animated, Alert} from "react-native"
 import * as Yup from "yup"
-import {useAppSelector, useAppDispatch} from '../hooks/CustomReduxHooks';
+import {useAppSelector, useAppDispatch} from "../hooks/CustomReduxHooks";
 import {closeVerificationModal} from "../store/ui/UI"
-import { AnyAction } from 'redux';
+import { AnyAction } from "redux";
 import {AntDesign} from "@expo/vector-icons"
-import Form from './Form';
-import AppTextInput from './AppTextInput';
-import SubmitButton from './SubmitButton';
-import Map from './Map';
-import ProductAuthService from '../services/ProductAuthService';
+import Form from "./Form";
+import AppTextInput from "./AppTextInput";
+import SubmitButton from "./SubmitButton";
+import Map from "./Map";
+import ProductAuthService from "../services/ProductAuthService";
 
 
 const validationSchema = Yup.object().shape({

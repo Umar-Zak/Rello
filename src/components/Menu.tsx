@@ -1,14 +1,14 @@
-import  React, {useEffect, useState} from 'react';
-import { Animated, Dimensions} from 'react-native';
+import  React, {useEffect, useState} from "react";
+import { Animated, Dimensions} from "react-native";
 import {AntDesign, MaterialCommunityIcons} from "@expo/vector-icons"
-import styled from 'styled-components/native';
-import { AnyAction } from 'redux';
-import { useNavigation } from '@react-navigation/native';
+import styled from "styled-components/native";
+import { AnyAction } from "redux";
+import { useNavigation } from "@react-navigation/native";
 import Colors from "../config/Colors"
-import { UserProfile} from '../services/Auth';
+import { UserProfile} from "../services/Auth";
 import {closeMenu, showTransModal} from "../store/ui/UI"
 import Screens from "../navigation/Screens"
-import { useAppDispatch, useAppSelector } from '../hooks/CustomReduxHooks';
+import { useAppDispatch, useAppSelector } from "../hooks/CustomReduxHooks";
 const {height} = Dimensions.get("screen")
 
 

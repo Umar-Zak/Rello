@@ -1,8 +1,7 @@
-import * as React from 'react';
-import { Platform } from 'react-native';
-import styled from 'styled-components/native';
-import { DiscountTransaction } from '../models/DTOS';
-import Colors from '../config/Colors';
+import * as React from "react";
+import styled from "styled-components/native";
+import { DiscountTransaction } from "../models/DTOS";
+import Colors from "../config/Colors";
 const DiscountTransactionComponent = (trans: DiscountTransaction) => {
     return ( 
         <TransactionTray>

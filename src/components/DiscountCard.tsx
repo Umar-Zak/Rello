@@ -1,12 +1,12 @@
-import React, {memo} from 'react';
+import React, {memo} from "react";
 import "styled-components"
-import { useDispatch } from 'react-redux';
-import ExpoFastImage from 'expo-fast-image'
-import { useNavigation } from '@react-navigation/native';
-import styled from 'styled-components/native';
-import { DiscountInterface } from '../models/DTOS';
+import { useDispatch } from "react-redux";
+import ExpoFastImage from "expo-fast-image"
+import { useNavigation } from "@react-navigation/native";
+import styled from "styled-components/native";
+import { DiscountInterface } from "../models/DTOS";
 import {selectDiscount} from "../store/entities/DiscountSlice"
-import Screens from '../navigation/Screens';
+import Screens from "../navigation/Screens";
 
 
 function DiscountCard(discount: DiscountInterface & {isInWallet?: boolean}) {
@@ -17,7 +17,7 @@ function DiscountCard(discount: DiscountInterface & {isInWallet?: boolean}) {
     const handleDiscountPressed = () => {
         const transformedDiscount = {...discount, type: "discount"}
         
-        if(discount.isInWallet) return navigation.navigate(Screens.walletDetail as never, transformedDiscount as never)
+        if(discount.isInWallet as boolean) return navigation.navigate(Screens.walletDetail as never, transformedDiscount as never)
 
         dispatch(selectDiscount(discount))
         navigation.navigate(Screens.discountDetails as never)

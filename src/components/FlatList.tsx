@@ -1,18 +1,20 @@
-import * as React from 'react';
-import styled from 'styled-components/native';
-import NoSearchResult from './NoSearchResult';
+import * as React from "react";
+import styled from "styled-components/native";
+import NoSearchResult from "./NoSearchResult";
 import LoyaltyCard from "./LoyaltyCard"
-import { DiscountInterface, LoyaltyInterface, ProductAuth, Promotion } from '../models/DTOS';
-import DiscountCard from './DiscountCard';
-import PromotionCard from './PromotionCard';
-import BrandCard from './BrandCard';
+import { Data, DiscountInterface, LoyaltyInterface, ProductAuth, Promotion } from "../models/DTOS";
+import DiscountCard from "./DiscountCard";
+import PromotionCard from "./PromotionCard";
+import BrandCard from "./BrandCard";
+import FinancialService from "./FinancialService";
+import { ImageSourcePropType } from "react-native";
 
 
 interface FlatlistProps {
     handleRefresh: () => void
     refreshing: boolean
-    data: unknown[]
-    type: "loyalty" | "discount" | "promo" | "auth"
+    data: Data[]
+    type: "loyalty" | "discount" | "promo" | "auth" | "f_services"
     isCardInWallet?: boolean
 }
 
@@ -31,9 +33,14 @@ const FlatList = ({handleRefresh, isCardInWallet,refreshing, type, data}: Flatli
 
             if(type === "auth") return <BrandCard {...item as ProductAuth} />
 
+            if(type === "f_services") return <FinancialService image={item as ImageSourcePropType} />
+
             return <DiscountCard {...item as DiscountInterface} isInWallet={isCardInWallet} />
         }}
-        keyExtractor={(item: unknown, index: number) => item._id}
+        keyExtractor={(item: unknown) => {
+            const transformedItem = item as Data
+            return transformedItem._id
+        }}
         columnWrapperStyle={{
          justifyContent: "center"
         }}

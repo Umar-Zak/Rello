@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 import {Dimensions} from "react-native"
 import Animated, {useSharedValue, useAnimatedStyle, useAnimatedScrollHandler, interpolateColor} from "react-native-reanimated"
-import styled from 'styled-components/native';
-import { useNavigation } from '@react-navigation/native';
+import styled from "styled-components/native";
+import { useNavigation } from "@react-navigation/native";
 import {AntDesign} from "@expo/vector-icons"
-import Colors from '../config/Colors';
+import Colors from "../config/Colors";
 import {getSplashContent} from "../models/StaticContent"
 const {width, height} = Dimensions.get("screen")
 import Screens from "../navigation/Screens"

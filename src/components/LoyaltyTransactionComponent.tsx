@@ -1,7 +1,6 @@
-import * as React from 'react';
-import {Platform} from "react-native"
-import styled from 'styled-components/native';
-import Colors from '../config/Colors';
+import  React from "react";
+import styled from "styled-components/native";
+import Colors from "../config/Colors";
 
 interface LoyaltyTransactionInterface {
   totalPoints: number

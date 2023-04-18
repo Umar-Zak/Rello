@@ -1,11 +1,11 @@
-import * as React from 'react';
-import styled from 'styled-components/native';
-import { AnyAction } from 'redux';
-import ExpoFastImage from 'expo-fast-image'
-import { ProductAuth} from '../models/DTOS';
-import { useAppDispatch} from '../hooks/CustomReduxHooks';
+import * as React from "react";
+import styled from "styled-components/native";
+import { AnyAction } from "redux";
+import ExpoFastImage from "expo-fast-image"
+import { ProductAuth} from "../models/DTOS";
+import { useAppDispatch} from "../hooks/CustomReduxHooks";
 import {selectBrand} from "../store/entities/ProductAuthSlice"
-import { showVerificationModal } from '../store/ui/UI';
+import { showVerificationModal } from "../store/ui/UI";
 
 const BrandCard = (brand: ProductAuth) => {
 

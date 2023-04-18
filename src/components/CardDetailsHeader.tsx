@@ -1,7 +1,6 @@
-import React from 'react';
+import React from "react";
 import "styled-components"
 import styled from "styled-components/native"
-import Colors from "../config/Colors"
 
 interface CardDetailsHeaderInterface {
     title: string

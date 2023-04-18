@@ -1,11 +1,10 @@
 import type { LoyaltyTransaction, LoyalRedemption, LoyaltyInterface, SubsribedLoyalty } from './../../models/DTOS';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import LoyaltyService from "../../services/LoyaltyService";
-import {hideErrorModal, showErrorModal, startLoader, stopLoader } from "../ui/UI";
-import { AppDispatch, RootState } from '../Store';
+import { hideErrorModal, showErrorModal, startLoader, stopLoader } from "../ui/UI";
+import { AppDispatch, RootState } from "../Store";
 
-
-type LoyaltySlice = {
+interface LoyaltySlice {
     loyalties: LoyaltyInterface[],
     selectedLoyalty: LoyaltyInterface
     subscribedLoyalties: SubsribedLoyalty[],

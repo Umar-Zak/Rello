@@ -1,32 +1,32 @@
-import React, {useState} from 'react';
-import { StyleSheet, Dimensions} from 'react-native'
-import  MapView, {Marker} from 'react-native-maps';
-import { Coordinates } from '../models/DTOS';
+import React, {useState} from "react";
+import { StyleSheet, Dimensions} from "react-native"
+import  MapView, {Marker} from "react-native-maps";
+import { Coordinates } from "../models/DTOS";
 
 interface MapInterface {
     coordinates?: Coordinates[]
     companyname: string
 }
 
-const testcoords = [
-    {
-        latitude: 5.673899696885459,
-        longitude:  -0.12964515839245375,
-    },
-    {
-        latitude: 5.6394715971756515,
-        longitude:  -0.13591427834770073,
-    },
-    {
-        latitude: 5.586373035412458,
-        longitude: -0.16721031703960718,
-    },
-]
+// const testcoords = [
+//     {
+//         latitude: 5.673899696885459,
+//         longitude:  -0.12964515839245375,
+//     },
+//     {
+//         latitude: 5.6394715971756515,
+//         longitude:  -0.13591427834770073,
+//     },
+//     {
+//         latitude: 5.586373035412458,
+//         longitude: -0.16721031703960718,
+//     },
+// ]
 
 
 
-function Map({companyname,coordinates}: MapInterface) {
-    const [coords, setCoords] = useState({
+function Map({companyname}: MapInterface) {
+    const [coords] = useState({
         latitude: 5.634309652069938,
         longitude:  -0.14762310410696564,
     })

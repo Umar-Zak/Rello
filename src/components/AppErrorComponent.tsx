@@ -1,5 +1,5 @@
-import * as React from 'react';
-import LottieView from 'lottie-react-native';
+import * as React from "react";
+import LottieView from "lottie-react-native";
 const AppErrorComponent = () => {
     return ( 
         <LottieView

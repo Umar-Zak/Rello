@@ -1,5 +1,5 @@
-import React from 'react';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import React from "react";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import {Formik} from "formik"
 import * as Yup from "yup"
 import "styled-components"
@@ -19,14 +19,14 @@ function Form({children ,initialValues, isKeyBoardAvoidingNeeded, onSubmit, vali
         resetForm()
     }
 
-   if(!isKeyBoardAvoidingNeeded) return (
+   if(!isKeyBoardAvoidingNeeded as boolean) return (
         <Formik
         initialValues={initialValues}
         onSubmit={(values, {resetForm}) => handleFormSubmission(values, resetForm)}
         validationSchema={validationSchema}
         >
             {
-                ({}) => (
+                () => (
                     <KeyboardAwareScrollView 
                     style={{flex: 1, marginBottom: 70}} 
                     showsVerticalScrollIndicator={false} 
@@ -46,7 +46,7 @@ function Form({children ,initialValues, isKeyBoardAvoidingNeeded, onSubmit, vali
         validationSchema={validationSchema}
         >
             {
-                ({}) => (
+                () => (
                     <ContentContainer>
                       {children}
                     </ContentContainer>
@@ -56,9 +56,9 @@ function Form({children ,initialValues, isKeyBoardAvoidingNeeded, onSubmit, vali
     )
 }
 
-const Scroll = styled.ScrollView`
-    /* width: 100%; */
-`
+// const Scroll = styled.ScrollView`
+//     /* width: 100%; */
+// `
 
 // const KeyBoardAvoidingView = styled.KeyboardAvoidingView`
 // flex: 1;

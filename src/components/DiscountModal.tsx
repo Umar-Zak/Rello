@@ -1,46 +1,46 @@
-import React, {useState, useEffect} from 'react';
-import {Animated} from 'react-native'
+import React, {useState, useEffect} from "react";
+import {Animated} from "react-native"
 import  "styled-components"
-import { AnyAction } from 'redux';
-import { useSelector, useDispatch } from 'react-redux';
+import { AnyAction } from "redux";
+import { useSelector, useDispatch } from "react-redux";
 import {AntDesign} from "@expo/vector-icons"
-import { useNavigation } from '@react-navigation/native';
-import styled from 'styled-components/native';
+import { useNavigation } from "@react-navigation/native";
+import styled from "styled-components/native";
 import {closeDiscountModal} from "../store/ui/UI"
-import { UserProfile } from '../services/Auth';
-import { DiscountInterface, SubscribedDiscount } from '../models/DTOS';
+import { UserProfile } from "../services/Auth";
+import { DiscountInterface, SubscribedDiscount } from "../models/DTOS";
 import {subscribeDiscount} from "../store/entities/DiscountSlice"
-import Map from './Map';
-import SubscribeButton from './SubscribeButton';
-import Screens from '../navigation/Screens';
-import Activity from './Activity';
-import Colors from '../config/Colors';
-import LocationService from '../services/LocationService';
-import DiscountCardBanner from './DiscountCardBanner';
+import SubscribeButton from "./SubscribeButton";
+import Screens from "../navigation/Screens";
+import Activity from "./Activity";
+import Colors from "../config/Colors";
+import LocationService from "../services/LocationService";
+import DiscountCardBanner from "./DiscountCardBanner";
+import { useAppSelector } from "../hooks/CustomReduxHooks";
 
 
 
 function DiscountModa() {
-    const showDiscountModal = useSelector((state: any) => state.ui.showDiscountModal)
-    const selectedDiscount = useSelector<any, DiscountInterface>((state: any) => state.entities.discount.selectedDiscount)
-    const subscribedDiscounts = useSelector<any, SubscribedDiscount[]>((state: any) => state.entities.discount.subscribedDiscounts)
-    const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
-    const userProfile = useSelector<any, UserProfile>((state: any) => state.auth.userProfile)
+    const showDiscountModal = useAppSelector((state) => state.ui.showDiscountModal)
+    const selectedDiscount = useAppSelector((state) => state.entities.discount.selectedDiscount)
+    const subscribedDiscounts = useAppSelector((state) => state.entities.discount.subscribedDiscounts)
+    const isLoading = useAppSelector((state) => state.ui.isLoading)
+    const userProfile = useAppSelector((state) => state.auth.userProfile)
     const navigation = useNavigation()
-    const [coordinates, setCoordinates] = useState<{latitude: string, longitude: string}>()
+    const [_ ,setCoordinates] = useState<{latitude: string, longitude: string}>()
     const dispatch = useDispatch()
     const [discountModalTopOffset] = useState(new Animated.Value(1000))
     
     
     let isFoundInSubscriptions: undefined | SubscribedDiscount = undefined
   
-    if(subscribedDiscounts && subscribedDiscounts.length > 0){
+    if(subscribedDiscounts && subscribedDiscounts.length > 0 as boolean){
         isFoundInSubscriptions = subscribedDiscounts?.find(discount => discount.discountid === selectedDiscount?.id)
     }
 
     useEffect(() => {
         // loadMerchantLocation()
-        if(showDiscountModal){
+        if(showDiscountModal as boolean){
            Animated.spring(discountModalTopOffset, {
                toValue: 0,
                useNativeDriver: false
@@ -76,17 +76,17 @@ function DiscountModa() {
        }
 
 
-       const loadMerchantLocation = async () => {
-         if(selectedDiscount){
-            try {
-                const result = await LocationService.getMerchantCoordinate(selectedDiscount?.companyname)
-                setCoordinates(result[0])
-            } catch (error) {
-                console.log(error)
-            }
-         }
+    //    const loadMerchantLocation = async () => {
+    //      if(selectedDiscount){
+    //         try {
+    //             const result = await LocationService.getMerchantCoordinate(selectedDiscount?.companyname)
+    //             setCoordinates(result[0])
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //      }
             
-       }
+    //    }
        
 
     return (

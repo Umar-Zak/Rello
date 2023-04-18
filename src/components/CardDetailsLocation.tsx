@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import "styled-components"
 import styled from "styled-components/native"
 import {Entypo} from "@expo/vector-icons"

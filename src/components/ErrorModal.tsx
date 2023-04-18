@@ -1,12 +1,11 @@
-import * as React from 'react';
-import styled from 'styled-components/native';
-import  Constants  from 'expo-constants';
+import * as React from "react";
+import styled from "styled-components/native";
+import  Constants  from "expo-constants";
 import {AntDesign} from "@expo/vector-icons"
-import {useDispatch} from "react-redux"
 import {hideErrorModal} from "../store/ui/UI"
-import { AnyAction } from 'redux';
-import Colors from '../config/Colors';
-import { useAppDispatch } from '../hooks/CustomReduxHooks';
+import { AnyAction } from "redux";
+import Colors from "../config/Colors";
+import { useAppDispatch } from "../hooks/CustomReduxHooks";
 const ErrorModal = ({message}: {message: string}) => {
     
     const dispatch = useAppDispatch()

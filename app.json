@@ -33,7 +33,7 @@
       "supportsTablet": true
     },
     "android": {
-      "versionCode": 19,
+      "versionCode": 20,
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/app-splash.png",

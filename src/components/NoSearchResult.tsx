@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import "styled-components"
-import styled from 'styled-components/native';
+import styled from "styled-components/native";
 function NoSearchResult({text}: {text?: string}) {
     return (
        <Container>

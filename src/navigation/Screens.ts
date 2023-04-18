@@ -25,5 +25,6 @@ export default {
     contact: "CONTACT",
     about: "ABOUT",
     verification: "PRODUCT  VERIFICATION",
-    faqs: "FAQs"
+    faqs: "FAQs",
+    financial_services: "Financial Services"
 }

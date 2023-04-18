@@ -1,13 +1,13 @@
-import React, {memo} from 'react';
+import React, {memo} from "react";
 import "styled-components"
 import styled from "styled-components/native"
-import ExpoFastImage from 'expo-fast-image'
+import ExpoFastImage from "expo-fast-image"
 import {useDispatch} from "react-redux"
-import { useNavigation } from '@react-navigation/native';
-import { LoyaltyInterface } from '../models/DTOS';
+import { useNavigation } from "@react-navigation/native";
+import { LoyaltyInterface } from "../models/DTOS";
 
 import {selectLoyalty} from "../store/entities/LoyaltySlice"
-import Screens from '../navigation/Screens';
+import Screens from "../navigation/Screens";
 
 function LoyaltyCard(card: LoyaltyInterface & {isInWallet?: boolean}) {
     const dispatch = useDispatch()
@@ -15,7 +15,7 @@ function LoyaltyCard(card: LoyaltyInterface & {isInWallet?: boolean}) {
 
     const handleLoyaltyCardPressed = () => {
         const params = {...card, type: "loyalty"}
-        if(card.isInWallet) return navigation.navigate(Screens.walletDetail as never, params as never)
+        if(card.isInWallet as boolean) return navigation.navigate(Screens.walletDetail as never, params as never)
         
         dispatch(selectLoyalty(card))
         navigation.navigate(Screens.loyaltyDetail as never)

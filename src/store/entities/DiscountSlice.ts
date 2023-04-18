@@ -24,9 +24,9 @@ const Placeholder: DiscountInterface[] = []
     } as DiscountSlice,
     name: "discounts",
     reducers:  {
-        addDiscount: (state, action: PayloadAction<DiscountInterface>) => {
-            state.discounts.push(action.payload)
-        },
+        // addDiscount: (state, action: PayloadAction<DiscountInterface>) => {
+        //     state.discounts.push(action.payload)
+        // },
 
         selectDiscount: (state, action: PayloadAction<DiscountInterface> ) => {
             state.selectedDiscount = action.payload
@@ -114,4 +114,4 @@ export const loadDiscountTransactions = () => async(dispatch: AppDispatch, getSt
 
 export default slice.reducer
 
-export const {selectDiscount, addDiscount, subribeToDiscountCard, getDiscounts, getSubscriptions, initializeDiscountTransaction} = slice.actions
+export const {selectDiscount, subribeToDiscountCard, getDiscounts, getSubscriptions, initializeDiscountTransaction} = slice.actions

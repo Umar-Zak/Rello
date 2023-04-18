@@ -1,11 +1,11 @@
-import {Component} from 'react';
-import styled from 'styled-components/native';
-import AppErrorComponent from './AppErrorComponent';
+import {Component} from "react";
+import styled from "styled-components/native";
+import AppErrorComponent from "./AppErrorComponent";
 
 
 export default class ErrorBoundary extends Component {
     state = {hasError: false}
-    static getDerivedStateFromError(error: Error){
+    static getDerivedStateFromError(){
         return {hasError: true}
     }
 

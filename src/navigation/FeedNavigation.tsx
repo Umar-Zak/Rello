@@ -7,6 +7,7 @@ import AboutScreen from '../screens/AboutScreen';
 import ErrorBoundary from '../components/ErrorBoundary';
 import ProductListScreen from '../services/ProductsListScreen';
 import FAQsScreen from '../screens/FAQsScreen';
+import FinancialServicesScreen from '../screens/FinancialServicesScreen';
 
 const Stack = createNativeStackNavigator()
 
@@ -39,6 +40,10 @@ function FeedNavigation() {
         name={Screens.faqs} 
         component={FAQsScreen}
          />
+         <Stack.Screen 
+         name={Screens.financial_services}
+         component={FinancialServicesScreen}
+          />
       </Stack.Navigator>
       </ErrorBoundary>
     );

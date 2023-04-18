@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 import "styled-components"
-import ExpoFastImage from 'expo-fast-image'
-import { LoyaltyInterface } from '../models/DTOS';
+import ExpoFastImage from "expo-fast-image"
+import { LoyaltyInterface } from "../models/DTOS";
 
 
 

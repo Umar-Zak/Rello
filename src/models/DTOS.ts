@@ -1,4 +1,9 @@
-export interface DiscountInterface {
+export interface Data {
+    _id: string
+}
+
+
+export interface DiscountInterface extends Data {
     merchantcode: string 
     companyname: string
     address: string 
@@ -46,7 +51,7 @@ export type SubsribedLoyalty = {
 }
 
 
-export interface LoyaltyInterface {
+export interface LoyaltyInterface extends Data {
     merchantcode: string 
     companyname: string 
     address: string 
@@ -63,7 +68,7 @@ export interface LoyaltyInterface {
     location: Coordinates[]
 }
 
-export interface GiftCardInterface {
+export interface GiftCardInterface extends Data {
     merchantcode: string 
     companyname: string
     address: string 
@@ -113,7 +118,7 @@ export interface LoyalRedemption {
 }
 
 
-export interface Promotion {
+export interface Promotion extends Data{
      imageurl: string
      merchantcode: string
      detail: string
