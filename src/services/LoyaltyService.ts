@@ -36,9 +36,11 @@ class LoyaltyService extends Https {
         try {
            const user = await Auth.getUserProfile()
            const {data} = await this.get<SubsribedLoyalty[]>(`customerloyalty/findclient/${user.contact}`)
+           await SecureStore.saveSubscribedLoyaltiesCards(data)
           return data
         } catch (error) {
-            throw error
+            const savedSubscribedLoyaltyCards = await SecureStore.getSavedSubscribedLoyaltyCards()
+            return savedSubscribedLoyaltyCards
         }
     }
 

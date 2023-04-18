@@ -15,6 +15,7 @@ class DiscountService  extends Https {
    async getAllDiscountCards(){
         try {
           const {data} =  await this.get<DiscountInterface[]>("merchantdiscount/findall")
+          
           await SecureStore.saveDiscountCards(data)
           return data
         } catch (error) {
@@ -37,9 +38,13 @@ class DiscountService  extends Https {
       try {
          const user = await Auth.getUserProfile()
         const {data} = await this.get<SubscribedDiscount[]>(`customerdiscount/findclient/${user.contact}`)
+        
+        
+        await SecureStore.saveSubsribedDiscounts(data)
         return data
       } catch (error) {
-        throw error
+        const savedSubcribedDiscount = await SecureStore.getSavedSubsribedDiscounts()
+        return savedSubcribedDiscount
       }
     }
 

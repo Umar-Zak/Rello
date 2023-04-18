@@ -1,51 +1,62 @@
 import React, {useState} from 'react';
 import "styled-components"
-import {useSelector} from "react-redux"
 import {AntDesign, MaterialIcons} from "@expo/vector-icons"
 import styled from 'styled-components/native';
 import SearchField from '../components/SearchField';
 import Colors from '../config/Colors';
-import { DiscountInterface, GiftCardInterface, LoyaltyInterface } from '../models/DTOS';
-import DiscountCard from '../components/DiscountCard';
-import LoyaltyCard from '../components/LoyaltyCard';
-import GiftCard from '../components/GiftCard';
 import Activity from '../components/Activity';
-import NoSearchResult from '../components/NoSearchResult';
-import Overlay from '../components/Overlay';
+import ErrorModal from '../components/ErrorModal';
+import { useAppSelector , useAppDispatch} from '../hooks/CustomReduxHooks';
+import FlatList from '../components/FlatList';
+import { loadSubscribedDiscounts } from '../store/entities/DiscountSlice';
+import { AnyAction } from 'redux';
+import { loadSubscribedLoyalties } from '../store/entities/LoyaltySlice';
+
 
 
  
 
 function WalletScreen() {
-    let subscribedDiscounts = useSelector<any, DiscountInterface[]>((state: any) => state.entities.discount.subscribedDiscounts)
-    let subscribedGiftCards = useSelector<any, GiftCardInterface[]>((state: any) => state.entities.gift.subscribedGiftCards)
-    let subscribedLoyaltyCards = useSelector<any, LoyaltyInterface[]>((state: any) => state.entities.loyalty.subscribedLoyalties)
-    const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
-    
+    const dispatch = useAppDispatch()
+    let subscribedDiscounts = useAppSelector(({entities: {discount}}) => discount.subscribedDiscounts)
+    let subscribedGiftCards = useAppSelector(({entities: {gift}}) => gift.subscribedGiftCards)
+    let subscribedLoyaltyCards = useAppSelector(({entities: {loyalty}}) => loyalty.subscribedLoyalties)
+    const showingErrorModal = useAppSelector(({ui}) => ui.showErrorModal)
+    const errorMessage = useAppSelector(({ui}) => ui.errorMessage)
+    const isLoading = useAppSelector(({ui}) =>  ui.isLoading)
+    const [refreshing, setRefreshing] = useState(false)
     
     const [searchText, setSearchText] = useState("")
-    const [activeIcon, setActiveIcon] = useState(0)
+    const [activeTab, setActiveTab] = useState(0)
     
     
-    switch (activeIcon) {
+    switch (activeTab) {
         case 0:
             subscribedLoyaltyCards = subscribedLoyaltyCards.filter(loyaltyCard => loyaltyCard.companyname.toLowerCase().startsWith(searchText.toLowerCase()))
             break
         case 1:
             subscribedDiscounts = subscribedDiscounts.filter(discountCard => discountCard.companyname.toLowerCase().startsWith(searchText.toLowerCase()))
             break
-        case 2:
-            subscribedGiftCards = subscribedGiftCards.filter(giftCard => giftCard.companyname.toLowerCase().startsWith(searchText.toLowerCase()))
-            break
+        // case 2:
+        //     subscribedGiftCards = subscribedGiftCards.filter(giftCard => giftCard.companyname.toLowerCase().startsWith(searchText.toLowerCase()))
+        //     break
         
         default:
             subscribedLoyaltyCards = subscribedLoyaltyCards.filter(loyaltyCard => loyaltyCard.companyname.toLowerCase().startsWith(searchText.toLowerCase()))
             
     }
     
+    
+    const handleRefresh = async() => {
+        setRefreshing(true)
+        await dispatch(loadSubscribedDiscounts() as unknown as AnyAction)
+        await dispatch(loadSubscribedLoyalties() as unknown as AnyAction)
+        setRefreshing(false)
+    }
 
     return (
-        <RootView>
+         <RootView>
+           {showingErrorModal && <ErrorModal message={errorMessage} />}
         {isLoading && <Activity/>}
       <Container>
         <SearchField 
@@ -55,63 +66,30 @@ function WalletScreen() {
         <FlexContainer>
         {
             icons.map((icon, index) => (
-                <TransactionIcon 
-                onPress={() => setActiveIcon(index)}
+                <Tab 
+                onPress={() => setActiveTab(index)}
                 key={index} 
-                style={{
-                    backgroundColor: activeIcon === index? "#fd4957": "#001528",
-                }}>
-                {icon.icon}
-                <TransactionText>{icon.text}</TransactionText>
-                </TransactionIcon>
+                >
+                <TabText>{icon.text}</TabText>
+                {index === activeTab && <UnderScore  />}
+                </Tab>
             ))
         }
          </FlexContainer>
-          <SubContainer
-           contentContainerStyle={{
-            paddingBottom: 80
-           }}
-          >
-          <>
-           {
-            activeIcon === 1 && subscribedDiscounts.length === 0 && <NoSearchResult/>
-           }
-           <CardContainer >
-           {
-            activeIcon === 1 && subscribedDiscounts.map((discount, index) => (
-                    <DiscountCard key={index} isInWallet={true} {...discount} />
-                
-            ))
-           }
-           </CardContainer>
-           </>
-
-          <>
-          {
-            activeIcon === 0 && subscribedLoyaltyCards.length === 0 && <NoSearchResult/>
-          }
-           <CardContainer >
-          {
-            activeIcon === 0 && subscribedLoyaltyCards.map((loyalty,index) => (
-                    <LoyaltyCard key={index} isInWallet={true} {...loyalty} />
-            ))
-           }
-             </CardContainer>
-          </>
-           <>
-           {
-            activeIcon === 2 && subscribedGiftCards.length === 0 && <NoSearchResult/>
-           }
-           {
-            activeIcon === 2 && subscribedGiftCards.map((giftCard, index) => (
-                <CardContainer key={index} >
-                <GiftCard {...giftCard} />
-                </CardContainer>
-            ))
-           }
-           </>
-           
-          </SubContainer>
+         {activeTab === 1 && <FlatList 
+         isCardInWallet={true}
+         data={subscribedDiscounts}
+         type="discount"
+         refreshing={refreshing}
+         handleRefresh={handleRefresh}
+         />}
+         {activeTab === 0 && <FlatList 
+         isCardInWallet={true}
+         data={subscribedLoyaltyCards}
+         type="loyalty"
+         refreshing={refreshing}
+         handleRefresh={handleRefresh}
+         />}
       </Container>
       </RootView>
     );
@@ -123,19 +101,6 @@ const Container = styled.View`
     flex: 1;
     padding: 20px;
 `
-const SubContainer = styled.ScrollView`
- padding-top: 30px;
-`
-
-
-
-
-const CardContainer = styled.View`
-   flex-direction: row;
-   align-items: center;
-   justify-content: space-around;
-   flex-wrap: wrap;
-`
 
 const RootView = styled.View`
 flex: 1
@@ -143,32 +108,34 @@ flex: 1
 const FlexContainer = styled.View`
  flex-direction: row;
  align-items: center;
- justify-content: space-around;
- margin-top: 5px;
  margin-bottom: 30px;
- background: #001528;
- height: 80px;
- border-radius: 20px;
 `
 
-const TransactionIcon = styled.TouchableOpacity`
+const Tab = styled.TouchableOpacity`
     width: 50%;
-    height: 100%;
-    border-radius: 20px;
     align-items: center;
     justify-content: center;
     `
 
-    const TransactionText = styled.Text`
+    const TabText = styled.Text`
     margin-top: 5px;
     font-size: 14px;
-    color: white;
+    color: ${Colors.dark_grey};
+    `
+
+
+    const UnderScore = styled.View`
+     width: 100%;
+     height: 3px;
+     margin-top: 5px;
+     background-color: ${Colors.green};
+     border-radius: 15px;
     `
 
 const icons = [
     {
         text: "Loyalties",
-        icon: <MaterialIcons size={35} color={Colors.green} name='loyalty' />
+        icon: <MaterialIcons size={35} color="white" name='loyalty' />
     },
     // {
     //     text: "Gifts",
@@ -176,6 +143,6 @@ const icons = [
     // },
     {
         text: "Discounts",
-        icon: <AntDesign size={35} color={Colors.green} name='shoppingcart' />
+        icon: <AntDesign size={35} color="white" name='shoppingcart' />
     }
 ]

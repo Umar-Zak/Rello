@@ -1,44 +1,78 @@
 import  React, {useState} from 'react';
 import styled from 'styled-components/native';
+import ExpoFastImage from 'expo-fast-image'
+import {AntDesign} from "@expo/vector-icons"
 import {useSelector} from "react-redux"
-import {Entypo} from "@expo/vector-icons"
+import * as Yup from "yup"
 import { Promotion } from '../models/DTOS';
-import Colors from '../config/Colors';
 import { Alert } from 'react-native';
 import PromotionService from '../services/PromotionService';
+import Map from '../components/Map';
+import Form from '../components/Form';
+import AppTextInput from '../components/AppTextInput';
+import SubmitButton from '../components/SubmitButton';
+
+const validationSchema = Yup.object().shape({
+    code: Yup.string()
+    .required("Competition code is required")
+    .label("Competition code")
+})
+
 const PromotionDetailsScreen = () => {
     const selectedPromotion = useSelector<any, Promotion>((state: any) => state.entities.promotion.selectedPromotion)
-    const [code, setCode] = useState("")
-
+    const [showingMap, setShowingMap] = useState(false)
   
 
-    const handleCodeSubmit = async() => {
-        if(!code) return Alert.alert("Invalid Action", "Please enter a promotion code")
+    const handleCodeSubmit = async(code: string) => {
         try {
             await PromotionService.submitPromotionCode({merchantcode: selectedPromotion.merchantcode, usedcode: code})
-            setCode("")
-            Alert.alert("Success", "You code is captured successfully")
+            Alert.alert("Success", "Your code is captured successfully")
         } catch (error: any) {
            Alert.alert("Error", error.response.data)
-          
-            
         }
-       
     }
+    
     
     return ( 
         <Container>
-            <Banner source={{uri: selectedPromotion.imageurl}} />
+             {showingMap && <Cancel onPress={() => setShowingMap(false) }>
+            <AntDesign name="close" color="red" size={30} />
+          </Cancel>}
+           { showingMap && <Map companyname={selectedPromotion.contact}/>}
+            <ExpoFastImage
+            uri={selectedPromotion.imageurl}
+            cacheKey={selectedPromotion.imageurl.substring(35)} 
+            style={{
+            width: "100%",
+            height: 260
+            }} 
+        />
             <ContentContainer>
-               <InputGroup>
-               <InputField onChangeText={(text: string) => setCode(text)} value={code} placeholder="Text your code" />
-               <Pressable onPress={handleCodeSubmit}>
-                <Entypo name="arrow-bold-right" size={45} color={Colors.green}/>
-               </Pressable>
-               </InputGroup>
+               <Form 
+                initialValues={{
+                    code: ""
+                }}
+                validationSchema={validationSchema}
+                onSubmit={values => handleCodeSubmit(values.code)
+                }
+                isKeyBoardAvoidingNeeded={true}
+               >
+               <>
+               <AppTextInput
+                name='code'
+                label='Competition code'
+                />
+                <SubmitButton text='Submit Code' />
+               </>
+               </Form>
                <DiscriptionView>
                 <Description>Description</Description>
                 <DescriptionText>{selectedPromotion.detail}</DescriptionText>
+                <Description>Contact</Description>
+                <DescriptionText>{selectedPromotion.contact}</DescriptionText>
+                <Touchable onPress={() => setShowingMap(true) }>
+                <ViewUsText>View us on map</ViewUsText>
+                </Touchable>
                </DiscriptionView>
             </ContentContainer>
         </Container>
@@ -49,57 +83,59 @@ export default PromotionDetailsScreen;
 
 
 
-const Banner = styled.Image`
-width: 100%;
-height: 40%;
-`
-const Container = styled.View`
-flex: 1
+const Container = styled.ScrollView`
+flex: 1;
+background: white;
 `
 const ContentContainer = styled.View`
  padding: 20px;
 `
 
-const InputGroup = styled.View`
- flex-direction: row;
- align-items: center;
- justify-content: space-between;
- height: 60px;
- border-radius: 7px;
- background: #d4dcdf;
-`
-const InputField = styled.TextInput`
- width: 80%;
- height: 45px;
- border-radius: 7px;
- margin-right: 20px;
- padding: 10px;
- font-size: 16px;
- color: ${Colors.deep_green}
-`
-
-const Pressable = styled.TouchableOpacity`
-
-`
-
 const DiscriptionView = styled.ScrollView`
  width: 100%;
- height: 40%;
- background: #d4dcdf;
+ height: 400px;
+ background: white;
+ margin-top: -60px;
  border-radius: 10px;
- margin-top: 30px;
  padding: 20px;
+ box-shadow: 0 10px 15px rgba(0, 0, 0, 0.20);
 `
 
 const Description = styled.Text`
  font-size: 20px;
- color: ${Colors.deep_green}
+ color: rgba(0, 0, 0, 0.8)
  font-weight: 700;
  margin-bottom: 20px;
+ margin-top: 10px
 `
 
 
 const DescriptionText = styled.Text`
  width: 80%;
  line-height: 20px;
+ color: #444444
+`
+const ViewUsText = styled.Text`
+ font-size: 16px;
+ margin-top: 20px;
+ color: #fd3a5c
+`
+
+
+const Touchable = styled.TouchableOpacity`
+`
+
+
+
+const Cancel = styled.TouchableOpacity`
+width: 40px;
+height: 40px;
+position: absolute;
+top: 20px;
+right: 20px;
+z-index: 150;
+align-items: center;
+justify-content: center;
+background: white;
+border-radius: 7px;
 `

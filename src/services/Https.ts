@@ -10,13 +10,15 @@ class Https {
    protected delete = axios.delete
    
    constructor() {
-        axios.defaults.baseURL = "http://45.79.213.253/api"
+        axios.defaults.baseURL = "https://www.corralapp.com/api"
         this.initAxios()
     }
 
-    protected setHeader(token: string){
+   setHeader(token: string){
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
     }
+
+    
 
     async initAxios(){
         const token = await SecureStore.getToken() as unknown as string

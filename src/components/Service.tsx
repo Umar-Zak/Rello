@@ -1,31 +1,34 @@
-import * as React from 'react';
-import styled from 'styled-components/native';
-import { Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import Colors from '../config/Colors';
+import * as React from "react";
+import styled from "styled-components/native";
+import { Alert, ImageSourcePropType } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import Colors from "../config/Colors";
 
 
 interface ServiceComponentInterface {
-    image: string
+    image: ImageSourcePropType
     title: string
     redirectUrl?: string
+    onPress?: () => void
 }
 
-const Service = ({image,redirectUrl,title}: ServiceComponentInterface) => {
+const Service = ({image,redirectUrl,title, onPress}: ServiceComponentInterface) => {
     const navigation = useNavigation()
 
     const handleServiceTapped = (redirectUrl?: string) => {
-      if(!redirectUrl) return Alert.alert("INFO", "Coming soon")
+
+        if(onPress) return onPress()
+
+      if(!redirectUrl as boolean) return Alert.alert("INFO", "Coming soon")
 
       navigation.navigate(redirectUrl as unknown as never)
     }
 
     return ( 
          <Container onPress= {() => handleServiceTapped(redirectUrl)}>
-            <SubContainer source={image}>
-
+            <SubContainer resizeMode="cover" source={image}>
              </SubContainer>
-             <ServiceText>{title}</ServiceText>
+             <ServiceText numberOfLines={2}>{title}</ServiceText>
          </Container>
      );
 }
@@ -33,6 +36,8 @@ const Service = ({image,redirectUrl,title}: ServiceComponentInterface) => {
 export default Service;
 
 const Container = styled.TouchableOpacity`
+align-items: center;
+width: 130px;
 `
 
 const SubContainer = styled.ImageBackground`
@@ -51,4 +56,7 @@ font-size: 15px;
 letter-spacing: 1px;
 margin-top: 10px;
 text-align: center;
+width: 90%;
+margin-left: auto;
+margin-right: auto;
 `

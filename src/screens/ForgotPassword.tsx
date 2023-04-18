@@ -1,23 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import "styled-components"
 import styled from "styled-components/native"
-import {useDispatch, useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
 import * as Yup from "yup"
 import {useNavigation} from "@react-navigation/native"
-import InputMask from '../components/InputMask';
-import Screen from '../components/Screen';
-import Colors from '../config/Colors';
 import AppTextInput from "../components/AppTextInput";
 import Form from '../components/Form';
 import SubmitButton from '../components/SubmitButton';
 import Screens from '../navigation/Screens';
-import Auth, { SiginInPayload } from '../services/Auth';
+import Auth from '../services/Auth';
 import { Alert } from 'react-native';
-import Activity from '../components/Activity';
 import {activateUser} from "../store/auth/AuthSlice"
 import {startLoader, stopLoader} from "../store/ui/UI"
 import SecureStore from '../models/SecureStore';
 import { sendOTP } from '../utils/SmsUtil';
+import AuthForm from '../components/AuthForm';
 
 
 const validationSchema = Yup.object().shape({
@@ -44,7 +41,6 @@ const validatePassword = Yup.object().shape({
 function ForgotPasswordScreen() {
     const navigation =useNavigation()
     const dispatch = useDispatch()
-    const isLoading = useSelector<any, boolean>((state: any) => state.ui.isLoading)
     const [deviceID, setDeviceID] = useState("")
     const [otp, setOtp] = useState("")
     const [contact, setContact] = useState("")
@@ -77,8 +73,6 @@ function ForgotPasswordScreen() {
             setOtp(code)
             dispatch(stopLoader())
         } catch (error: any) {
-            console.log("ERRor",error.response);
-            
             dispatch(stopLoader())
             if(error.response.status === 400) {
                 Alert.alert("ERROR", "This number is not registered")
@@ -107,19 +101,12 @@ function ForgotPasswordScreen() {
     }
 
     return (
-     <Container>
-       {isLoading && <Activity/>}
-         <Screen>
+     
+    <AuthForm
+     title='Recover Your Account'
+    >
         <>
-        <TextContainer>
-            <Title>Forgot Password</Title>
-            <Tagline>Verify your phone number</Tagline>
-        </TextContainer>
-        </>
-      </Screen>
-      <InputMask>
-    <>
-   {!otp && <Form
+        {!otp && <Form
      initialValues={{
         contact: ""
      }}
@@ -134,6 +121,7 @@ function ForgotPasswordScreen() {
             label='Phone number*' 
             name='contact'
             keyboardType='phone-pad'
+            icon='phone'
         />
            <SubmitButton text='Verify Number'/>
            <LoginTextContainer>
@@ -150,7 +138,6 @@ function ForgotPasswordScreen() {
      }}
      validationSchema={validateOTP}
      onSubmit={(values: {otp: string}) => verifyOTP(values.otp)
-     
      }
      >
      <>
@@ -185,6 +172,7 @@ function ForgotPasswordScreen() {
         label='New Password*' 
         name='password'
         secureTextEntry
+        icon='lock'
         />
            <SubmitButton text='Reset Password'/>
            <LoginTextContainer>
@@ -194,27 +182,12 @@ function ForgotPasswordScreen() {
             </LoginTextContainer>
       </>
      </Form>}
-    </>
-      </InputMask>
-     </Container>
+        </>
+    </AuthForm>
     );
 }
 
-const Container = styled.View`
-flex: 1;
-background: ${Colors.deep_green};
-`
-const TextContainer = styled.View`
-    padding-left: 5%;
-    padding-right: 5%;
-    margin-top: 40px;
-`
-const Title = styled.Text`
-    color: white;
-    margin-bottom: 14px;
-    font-size: 26px;
-    font-weight: 700;
-`
+
 
 const LoginTextContainer = styled.View`
     flex-direction: row;
@@ -224,25 +197,11 @@ const LoginTextContainer = styled.View`
     padding-left: 10%;
     padding-right: 10%;
 `
-const HaveText = styled.Text`
-    font-size:16px ;
-    color: ${Colors.dark_grey};
-`
 const LoginText = styled.Text`
-    color: ${Colors.green};
+    color: #97CBEC;
     font-size: 17px;
 `
-const ForgotPassword = styled.Text`
-    color: ${Colors.green};
-    font-size: 17px;
-    margin-top: -20px;
-`
+
 const Login = styled.TouchableOpacity``
-const Tagline = styled.Text`
-    color: white;
-    width: 80%;
-    line-height: 25px;
-    font-size: 17px;
-    opacity: 0.9;
-`
+
 export default ForgotPasswordScreen;

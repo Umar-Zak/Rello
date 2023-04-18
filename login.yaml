@@ -1,0 +1,79 @@
+# login.yaml
+
+appId: com.mcorral.app
+---
+- openLink: exp://192.168.100.102:19000
+- scrollUntilVisible:
+    element:
+      # id: "viewId" # (optional) Finds view with id that matches regexp
+      text: "Login" # (optional) Finds view with text that matches regexp
+    direction: RIGHT # DOWN|UP|LEFT|RIGHT (optional, default: DOWN)
+    timeout: 50000 # (optional, default: 20000ms)
+    speed: 40 # 0-100 (optional, default: 40) Scroll speed. Higher values scroll faster.
+    visibilityPercentage: 100 # 0-100 (optional, default 100) Percentage of element visible in viewport
+
+- tapOn: Login
+
+- tapOn:
+    id: "phone"
+
+- inputText: "0550103718"
+
+- tapOn:
+    id: "password"
+
+- inputText: "0550103718"
+
+- hideKeyboard
+
+- tapOn:
+    text: "Sign In"
+- assertVisible: "Home"
+
+- tapOn:
+    text: "LOYALTY"
+
+- tapOn:
+    text: "CMPT"
+
+- tapOn:
+    text: "DISCOUNT"
+
+- tapOn:
+    text: "WLT"
+
+- tapOn:
+    text: "HOME"
+
+- tapOn:
+    id: "menu"
+
+- tapOn:
+    text: "Contact us"
+
+- tapOn:
+    text: "HOME"
+
+- tapOn:
+    id: "menu"
+
+- tapOn:
+    text: "About us"
+
+- tapOn:
+    text: "HOME"
+
+- tapOn:
+    id: "menu"
+
+- tapOn:
+    text: "FAQs"
+
+- tapOn:
+    text: "HOME"
+
+- tapOn:
+    id: "menu"
+
+- tapOn:
+    text: "Logout"

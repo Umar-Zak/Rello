@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 import "styled-components"
-import styled from 'styled-components/native';
-import Colors from '../config/Colors';
+import styled from "styled-components/native";
+import Colors from "../config/Colors";
 
 interface ButtonInterface {
     text: string
@@ -21,9 +21,8 @@ const Container = styled.TouchableOpacity`
     height: 52px;
     align-items: center;
     justify-content: center;
-    border-radius: 7px;
-    background: ${Colors.green};
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    background: #97CBEC;
 `
 const Text = styled.Text`
     color: ${Colors.light};

@@ -1,11 +1,11 @@
 import {useEffect} from 'react'
 import {Provider} from 'react-redux';
 import * as Sentry from "sentry-expo"
-
+import { ConfigCatProvider,PollingMode } from "configcat-react";
 import store from './src/store/Store';
 import { useRequireLocationPermisssion, useNotifications } from './src/hooks/UseLocation';
 import RootNavigation from './src/navigation/RootNavigation';
-
+import SkeletonContent from "react-native-skeleton-content"
 
 
 Sentry.init({
@@ -26,9 +26,20 @@ export default function App() {
   }, [])
   
   return (
-  <Provider store={store} >
+  <ConfigCatProvider 
+   sdkKey="dCTbCIz1R0KGMh9FhYXtAA/k7pgY2Hia02GlWqURZKI0g" 
+   pollingMode={PollingMode.AutoPoll}
+   options={{
+    pollIntervalSeconds: 10
+   }}
+  >
+    <Provider store={store} >
     <RootNavigation/>
   </Provider>
+  </ConfigCatProvider>
+
+  
+  
       )
 }
 

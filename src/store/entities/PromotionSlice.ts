@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { AppDispatch, RootState } from './../Store';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Promotion } from "../../models/DTOS";
 import PromotionService from "../../services/PromotionService";
 import { startLoader, stopLoader } from "../ui/UI";
@@ -9,23 +10,20 @@ type PromotionSlice = {
     selectedPromotion: Promotion | null
 }
 
-type PromotionsType = {
-    type: string
-    payload: Promotion[]
-}
 
 const slice = createSlice({
     initialState: {
         promotions: [],
         selectedPromotion: null
-    },
+    } as PromotionSlice,
     name: "promotions",
     reducers: {
-        initializePromotions: (state: PromotionSlice, action: PromotionsType) => {
+        initializePromotions: (state, action: PayloadAction<Promotion[]>) => {
             state.promotions = action.payload
+            
         },
 
-        selectPromotion: (state: PromotionSlice, action: {type: string, payload: Promotion}) => {
+        selectPromotion: (state, action: {type: string, payload: Promotion}) => {
             state.selectedPromotion = action.payload
         }
     }
@@ -34,7 +32,7 @@ const slice = createSlice({
 
 export default slice.reducer
 
-export const loadPromotions = () => async(dispatch: any, getState: any) => {
+export const loadPromotions = () => async(dispatch: AppDispatch, getState: () => RootState) => {
     try {
         dispatch(startLoader())
         const promotions = await PromotionService.getAllPromotions()

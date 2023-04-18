@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice,PayloadAction } from "@reduxjs/toolkit";
 
 
 type UIInterface = {
@@ -9,6 +9,7 @@ type UIInterface = {
     errorMessage: string,
     menuOffset: number,
     graphOffset: number
+    verificationModalOffset: number
 }
 
 
@@ -20,61 +21,70 @@ const slice =  createSlice({
         showErrorModal: false,
         errorMessage: "",
         menuOffset: -2000,
-        graphOffset: -1200
-    },
+        graphOffset: -1200,
+        verificationModalOffset: 1000
+    } as UIInterface,
     name: "ui",
     reducers: {
-        openDiscountModal: (state: UIInterface) => {
+        openDiscountModal: (state) => {
             state.showDiscountModal = true
         },
-        closeDiscountModal: (state: UIInterface) => {
+        closeDiscountModal: (state) => {
             state.showDiscountModal = false
         },
 
-        startLoader: (state: UIInterface) => {
+        startLoader: (state) => {
             state.isLoading = true
         },
 
-        stopLoader: (state: UIInterface) => {
+        stopLoader: (state) => {
             state.isLoading = false
         },
 
-        showTransModal: (state:  UIInterface) => {
+        showTransModal: (state) => {
             state.showTransactionsModal = true
             
         },
 
-        closeTransModal: (state: UIInterface) => {
+        closeTransModal: (state) => {
             state.showTransactionsModal = false
         },
 
-        showErrorModal: (state: UIInterface, action: {type: string, payload: string}) => {
+        showErrorModal: (state, action: PayloadAction<string>) => {
             state.showErrorModal = true
             state.errorMessage = action.payload
         },
 
-        hideErrorModal: (state: UIInterface) => {
+        hideErrorModal: (state) => {
             state.showErrorModal = false
             state.errorMessage = ""
         },
 
-        showMenu: (state: UIInterface) => {
+        showMenu: (state) => {
             state.menuOffset = 0
         },
 
-        closeMenu: (state: UIInterface) => {
+        closeMenu: (state) => {
             state.menuOffset = -2000
         },
 
-        showGraph: (state: UIInterface) => {
+        showGraph: (state) => {
             state.graphOffset = 0
         },
 
-        closeGraph: (state: UIInterface) => {
+        closeGraph: (state) => {
             state.graphOffset = -1200
+        },
+
+        showVerificationModal: (state) => {
+            state.verificationModalOffset = 20
+        },
+
+        closeVerificationModal: (state) => {
+            state.verificationModalOffset = 1200
         }
     }
 })
 
 export default slice.reducer
-export const {closeDiscountModal, openDiscountModal, startLoader, stopLoader, showTransModal, closeTransModal, showErrorModal, hideErrorModal, showMenu, closeMenu, showGraph, closeGraph} = slice.actions
+export const {closeDiscountModal, openDiscountModal, startLoader, stopLoader, showTransModal, closeTransModal, showErrorModal, hideErrorModal, showMenu, closeMenu, showGraph, closeGraph, showVerificationModal, closeVerificationModal} = slice.actions

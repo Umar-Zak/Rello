@@ -1,26 +1,27 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect} from "react"
 import {groupBy} from "lodash"
-import {Animated, } from "react-native"
-import {useDispatch, useSelector} from "react-redux"
+import {Animated, Dimensions } from "react-native"
 import {AntDesign, MaterialIcons} from "@expo/vector-icons"
-import styled from 'styled-components/native'
-import Colors from '../config/Colors'
+import styled from "styled-components/native"
+import Colors from "../config/Colors"
 import {closeTransModal} from "../store/ui/UI"
-import { DiscountTransaction, LoyalRedemption, LoyaltyTransaction } from '../models/DTOS'
-import NoSearchResult from './NoSearchResult'
-import DiscountTransactionComponent from './DiscountTransaction'
-import LoyaltyTransactionComponent from './LoyaltyTransactionComponent'
-import { calculateAccumulatedPointsPerMerchant, calculateRedeemedPointsPerMerchants, groupLoTransaction } from '../utils/Common'
+import NoSearchResult from "./NoSearchResult"
+import DiscountTransactionComponent from "./DiscountTransaction"
+import LoyaltyTransactionComponent from "./LoyaltyTransactionComponent"
+import {calculateAccumulatedPointsPerMerchant, calculateRedeemedPointsPerMerchants, groupLoTransaction } from "../utils/Common"
+import { useAppDispatch, useAppSelector } from "../hooks/CustomReduxHooks"
 
+const {height} = Dimensions.get("screen")
 
 export const TransactionsModal = () => {
     const [left] = useState(new Animated.Value(2000))
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
-    const showTransactionsModal = useSelector<any, boolean>((state): any => state.ui.showTransactionsModal) 
-    const discountTransactions = useSelector<any, DiscountTransaction[]>((state): any => state.entities.discount.discountTransactions) 
-    const loyaltyTransactions = useSelector<any, LoyaltyTransaction[]>((state): any => state.entities.loyalty.loyaltyTransactions) 
-    const redeemedLoyalties = useSelector<any, LoyalRedemption[]>((state): any => state.entities.loyalty.redeemedLoyalties) 
+    const showTransactionsModal = useAppSelector((state)=> state.ui.showTransactionsModal) 
+    const discountTransactions = useAppSelector((state) => state.entities.discount.discountTransactions) 
+    const loyaltyTransactions = useAppSelector((state) => state.entities.loyalty.loyaltyTransactions) 
+    const redeemedLoyalties = useAppSelector((state) => state.entities.loyalty.redeemedLoyalties) 
+    
     
     
     const groupedLoyaltyTransactions = groupLoTransaction(loyaltyTransactions)
@@ -50,19 +51,18 @@ export const TransactionsModal = () => {
     left: left
    }}>
     
-   <RootView showsVerticalScrollIndicator={false}>
-   <CloseIcon onPress={() => dispatch(closeTransModal())}>
-    <AntDesign name="close" size={30} color="white" />
-    </CloseIcon>
+  <ContentView>
+  <RootView showsVerticalScrollIndicator={false}>
+   
     <Title>Your transactions</Title>
     <FlexContainer>
         {
             icons.map((icon, index) => (
                 <TransactionIcon 
                 onPress={() => setActiveIcon(index)}
-                key={index} 
+                key={index}
                 style={{
-                    backgroundColor: activeIcon === index? "#fd4957": "#001528",
+                    backgroundColor: activeIcon === index? Colors.green: "black",
                 }}>
                 {icon.icon}
                 <TransactionText>{icon.text}</TransactionText>
@@ -92,9 +92,13 @@ export const TransactionsModal = () => {
              />
         ))
        }
-        
     </TransactionContainer>}
    </RootView>
+   
+  </ContentView>
+  <CloseIcon onPress={() => dispatch(closeTransModal())}>
+    <AntDesign name="close" size={30} color={Colors.green} />
+    </CloseIcon>
    </AnimatedContainer>
   )
  }
@@ -103,38 +107,45 @@ export const TransactionsModal = () => {
  const icons = [
     {
         text: "Loyalties",
-        icon: <MaterialIcons size={35} color={Colors.green} name='loyalty' />
+        icon: <MaterialIcons size={35} color="white" name='loyalty' />
     },
     {
         text: "Discounts",
-        icon: <AntDesign size={35} color={Colors.green} name='gift' />
+        icon: <AntDesign size={35} color="white" name='gift' />
     },
 ]
 
 
 const RootView = styled.ScrollView`
-flex: 1;
+flex: 1
+`
+
+const ContentView = styled.View`
+height: ${(height / 5) * 4}px;
+background: white;
+padding: 20px;
+border-bottom-left-radius: 40px;
+border-bottom-right-radius: 40px;
 `
 
 const Container = styled.View`
   width: 100%;
-  height: 100%;
-  background: #002147;
+  height: ${height}px;
+  background: white;
   position: absolute;
   top: 0;
   z-index: 100;
-  padding: 20px;
+  background-color: #0b0d33;
+  align-items: center;
 `
 const CloseIcon = styled.TouchableOpacity`
- position: absolute;
- top: 40px;
- right: 10px;
  width: 40px;
  height: 40px;
- border-radius: 15px;
- background: ${Colors.deep_green}
+ border-radius: 25px;
+ background: white;
  justify-content: center;
  align-items: center;
+ margin-top: 30px;
 `
 const FlexContainer = styled.View`
  flex-direction: row;
@@ -165,11 +176,12 @@ const AnimatedContainer = Animated.createAnimatedComponent(Container)
 
 
 const Title = styled.Text`
-    margin-top: 90px;
+    margin-top: 50px;
     font-size: 19px;
     font-weight: 500;
     letter-spacing: 1px;
-    color: white;
+    color: ${Colors.deep_green};
+    text-align: center;
 
 `
 

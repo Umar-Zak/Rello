@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`has 1 child 1`] = `
+exports[`No Search Result Should render correctly 1`] = `
 <View
   style={
     Array [

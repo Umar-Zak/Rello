@@ -53,11 +53,11 @@ class Auth extends Https {
     }
 
     async signin(body:SiginInPayload){
+       
         try {
          const {data} = await this.post<SiginInPayload & {token: string}>("customer/login", body)
          this.setHeader(data.token)
          await SecureStore.storeToken(data.token)
-         
         } catch (error ) {
             throw error
         }
@@ -68,18 +68,22 @@ class Auth extends Https {
        await SecureStore.removeToken()
      }
 
-     private decodeToken(token: string): {id: string, exp: number, iat: number}{
-        const decodedToken = jwtDecode<{id: string, exp: number, iat: number}>(token)
+     private decodeToken(token: string): {id: string, exp: number, iat: number} | undefined{
+        try {
+            const decodedToken = jwtDecode<{id: string, exp: number, iat: number}>(token)
         return decodedToken
+        } catch (error) {
+            return undefined
+        }
      }
 
      async getUserProfile(){
         try {
             const token = await SecureStore.getToken() as string
             const user = this.decodeToken(token)
-            const {data} = await this.get<UserProfile>(`customer/${user.id}`)
+            const {data} = await this.get<UserProfile>(`customer/${user?.id}`)
             return data
-        } catch (error) {
+        } catch (error:any) {
             throw error
         }
      }

@@ -1,8 +1,7 @@
-import * as React from 'react';
-import { Platform } from 'react-native';
-import styled from 'styled-components/native';
-import { DiscountTransaction } from '../models/DTOS';
-import Colors from '../config/Colors';
+import * as React from "react";
+import styled from "styled-components/native";
+import { DiscountTransaction } from "../models/DTOS";
+import Colors from "../config/Colors";
 const DiscountTransactionComponent = (trans: DiscountTransaction) => {
     return ( 
         <TransactionTray>
@@ -29,7 +28,8 @@ font-size: 17px
 const DateText = styled.Text`
 font-weight: 400
 font-size: 15px;
-color: ${Colors.deep_green}
+color: white;
+opacity: 0.6
 `
 
 const SimpleFlex = styled.View`

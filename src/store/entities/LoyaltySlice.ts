@@ -1,85 +1,63 @@
-import { LoyaltyTransaction, LoyalRedemption } from './../../models/DTOS';
-import { createSlice } from "@reduxjs/toolkit";
-import { LoyaltyInterface, SubsribedLoyalty } from "../../models/DTOS";
+import type { LoyaltyTransaction, LoyalRedemption, LoyaltyInterface, SubsribedLoyalty } from './../../models/DTOS';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import LoyaltyService from "../../services/LoyaltyService";
-import {  hideErrorModal, showErrorModal, startLoader, stopLoader } from "../ui/UI";
+import { hideErrorModal, showErrorModal, startLoader, stopLoader } from "../ui/UI";
+import { AppDispatch, RootState } from "../Store";
 
-
-type LoyaltySlice = {
+interface LoyaltySlice {
     loyalties: LoyaltyInterface[],
-    selectedLoyalty: LoyaltyInterface | null,
+    selectedLoyalty: LoyaltyInterface
     subscribedLoyalties: SubsribedLoyalty[],
     loyaltyTransactions: LoyaltyTransaction[],
     redeemedLoyalties: LoyalRedemption[]
 }
 
-type LoyalTransactionAction = {
-    type: string
-    payload: LoyaltyTransaction[]
-}
-
-
-type LoyalRedemptionAction = {
-    type: string
-    payload: LoyalRedemption[]
-}
-
-type LoyaltyAction = {
-    type: string
-    payload: LoyaltyInterface
-   
-}
-
-type GetLoyaltyAction = {
-    type: string
-    payload: LoyaltyInterface[]
-}
-
+const Placeholder: LoyaltyInterface[] = []
 
 const slice = createSlice({
     name: "loyalty",
     initialState: {
         loyalties: [],
-        selectedLoyalty: null,
+        selectedLoyalty: Placeholder[0],
         subscribedLoyalties: [],
         loyaltyTransactions: [],
         redeemedLoyalties: []
-    },
+    } as LoyaltySlice,
 
     reducers: {
 
-        addLoyalty: (state: LoyaltySlice, action: LoyaltyAction) => {
+        addLoyalty: (state, action: PayloadAction<LoyaltyInterface>) => {
             state.loyalties.push(action.payload)
         },
 
-        selectLoyalty: (state: LoyaltySlice, action: LoyaltyAction) => {
+        selectLoyalty: (state, action: PayloadAction<LoyaltyInterface>) => {
             state.selectedLoyalty = action.payload
             
         },
 
-        subscribeToLoyaltyCard: (state: LoyaltySlice, action: {type: string, payload: SubsribedLoyalty}) => {
+        subscribeToLoyaltyCard: (state, action: {type: string, payload: SubsribedLoyalty}) => {
             state.subscribedLoyalties.push(action.payload)
         },
 
-        getLoyalty: (state: LoyaltySlice, action: GetLoyaltyAction) => { 
-            state.loyalties = action.payload.filter(loyalty => !loyalty.companyname.toLowerCase().startsWith("mel"))
+        getLoyalty: (state, action: PayloadAction<LoyaltyInterface[]>) => { 
+            state.loyalties = action.payload
         },
 
-        getSubscriptions: (state: LoyaltySlice, action: {type: string, payload: SubsribedLoyalty[]}) => {
+        getSubscriptions: (state, action: {type: string, payload: SubsribedLoyalty[]}) => {
             state.subscribedLoyalties = action.payload
         },
 
-        initializeLoyaltyTransaction: (state: LoyaltySlice, action: LoyalTransactionAction) => {
+        initializeLoyaltyTransaction: (state, action: PayloadAction<LoyaltyTransaction[]>) => {
             state.loyaltyTransactions = action.payload
         },
 
-        initializeRedeemedLoyalties: (state: LoyaltySlice, action: LoyalRedemptionAction) => {
+        initializeRedeemedLoyalties: (state, action: PayloadAction<LoyalRedemption[]>) => {
             state.redeemedLoyalties = action.payload
         }
     }
 })
 
-export const loadRedeemedLoyalties = () => async(dispatch: any, getState: any) => {
+export const loadRedeemedLoyalties = () => async(dispatch: AppDispatch, getState: () => RootState) => {
 
     try {
        // Implementation coming soon: Reason is, endpoint isn't built yet. An oversight.
@@ -90,7 +68,7 @@ export const loadRedeemedLoyalties = () => async(dispatch: any, getState: any) =
 }
 
 
-export const loadLoyaltyCards = () => async(dispatch: any, getState: any) => {
+export const loadLoyaltyCards = () => async(dispatch: AppDispatch, getState: () => RootState) => {
     try {
     dispatch(startLoader())
     const loyaltyCards = await LoyaltyService.getAllLoyaltyCards()
@@ -103,21 +81,22 @@ export const loadLoyaltyCards = () => async(dispatch: any, getState: any) => {
 }
 
 
-export const createSubscription = (body: SubsribedLoyalty) => async (dispatch: any, getState: any) => {
-   
-    const subscribedLoyalties = getState().entities.loyalty.subscribedLoyalties as SubsribedLoyalty[]
+export const createSubscription = (body: SubsribedLoyalty) => async (dispatch: AppDispatch, getState: () => RootState) => {
+    //    The below lines of code where commented because the logic changed.
+    // We revert to it in the future; for now, it's not needed.
+    // const subscribedLoyalties = getState().entities.loyalty.subscribedLoyalties as SubsribedLoyalty[]
     
-    let selectedLoyalty = subscribedLoyalties.find(loyalty => loyalty.loyaltyid === body.loyaltyid)
-    if(selectedLoyalty) return
+    // let selectedLoyalty = subscribedLoyalties.find(loyalty => loyalty.loyaltyid === body.loyaltyid)
+    // if(selectedLoyalty) return
 
-    selectedLoyalty = subscribedLoyalties.find(loyalty => loyalty.merchantcode === body.merchantcode)
-    if(selectedLoyalty) {
-         dispatch(showErrorModal("You already have a subscription from this merchant"))
-        setTimeout(() => {
-            dispatch(hideErrorModal())
-        }, 1200)
-         return
-    }
+    // selectedLoyalty = subscribedLoyalties.find(loyalty => loyalty.merchantcode === body.merchantcode)
+    // if(selectedLoyalty) {
+    //      dispatch(showErrorModal("You already have a subscription from this merchant"))
+    //     setTimeout(() => {
+    //         dispatch(hideErrorModal())
+    //     }, 1200)
+    //      return
+    // }
 
     try {
         dispatch(startLoader())
@@ -126,12 +105,13 @@ export const createSubscription = (body: SubsribedLoyalty) => async (dispatch: a
         dispatch(stopLoader())
     } catch (error) {
         dispatch(stopLoader())
+        dispatch(showErrorModal("Could not subscribe to loyalty card"))
     }
 
 }
 
 
-export const loadSubscribedLoyalties = () => async(dispatch: any, getState: any) => {
+export const loadSubscribedLoyalties = () => async(dispatch: AppDispatch, getState: () => RootState) => {
     try {
         dispatch(startLoader())
         const subscriptions = await LoyaltyService.getSubscriptions()
@@ -142,7 +122,7 @@ export const loadSubscribedLoyalties = () => async(dispatch: any, getState: any)
     }
 }
 
-export const loadLoyaltyTransactions = () => async(dispatch: any, getState: any) => {
+export const loadLoyaltyTransactions = () => async(dispatch: AppDispatch, getState: () => RootState) => {
     try {
       const transactions = await LoyaltyService.getCustomerLoyaltyTransaction()
       dispatch(initializeLoyaltyTransaction(transactions))

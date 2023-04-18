@@ -1,7 +1,7 @@
-import React, { Children } from 'react';
+import React from "react";
 import "styled-components"
 import styled from "styled-components/native"
-import Colors from '../config/Colors';
+
 
 interface InputMaskInterface {
     children: React.ReactElement
@@ -17,7 +17,7 @@ function InputMask({children}: InputMaskInterface) {
 const Container = styled.View`
 position: absolute;
 width: 100%;
-height: 70%;
+height: 80%;
 bottom: 0;
 left: 0;
 z-index: 50;
