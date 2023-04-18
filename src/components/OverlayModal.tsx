@@ -1,7 +1,7 @@
-import React from 'react';
-import { AnyAction } from 'redux';
-import styled from 'styled-components/native';
-import { useAppDispatch } from '../hooks/CustomReduxHooks';
+import React from "react";
+import { AnyAction } from "redux";
+import styled from "styled-components/native";
+import { useAppDispatch } from "../hooks/CustomReduxHooks";
 import {closeVerificationModal} from "../store/ui/UI"
 
 const OverlayModal = () => {

@@ -1,6 +1,6 @@
-import * as React from 'react';
-import ExpoFastImage from 'expo-fast-image'
-import { DiscountInterface } from '../models/DTOS';
+import * as React from "react";
+import ExpoFastImage from "expo-fast-image"
+import { DiscountInterface } from "../models/DTOS";
 
 
 const DiscountCardBanner = (discount: DiscountInterface) => {

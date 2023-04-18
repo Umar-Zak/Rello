@@ -1,27 +1,26 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect} from "react"
 import {groupBy} from "lodash"
 import {Animated, Dimensions } from "react-native"
-import {useDispatch, useSelector} from "react-redux"
 import {AntDesign, MaterialIcons} from "@expo/vector-icons"
-import styled from 'styled-components/native'
-import Colors from '../config/Colors'
+import styled from "styled-components/native"
+import Colors from "../config/Colors"
 import {closeTransModal} from "../store/ui/UI"
-import { DiscountTransaction, LoyalRedemption, LoyaltyTransaction } from '../models/DTOS'
-import NoSearchResult from './NoSearchResult'
-import DiscountTransactionComponent from './DiscountTransaction'
-import LoyaltyTransactionComponent from './LoyaltyTransactionComponent'
-import {calculateAccumulatedPointsPerMerchant, calculateRedeemedPointsPerMerchants, groupLoTransaction } from '../utils/Common'
+import NoSearchResult from "./NoSearchResult"
+import DiscountTransactionComponent from "./DiscountTransaction"
+import LoyaltyTransactionComponent from "./LoyaltyTransactionComponent"
+import {calculateAccumulatedPointsPerMerchant, calculateRedeemedPointsPerMerchants, groupLoTransaction } from "../utils/Common"
+import { useAppDispatch, useAppSelector } from "../hooks/CustomReduxHooks"
 
 const {height} = Dimensions.get("screen")
 
 export const TransactionsModal = () => {
     const [left] = useState(new Animated.Value(2000))
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
-    const showTransactionsModal = useSelector<any, boolean>((state): any => state.ui.showTransactionsModal) 
-    const discountTransactions = useSelector<any, DiscountTransaction[]>((state): any => state.entities.discount.discountTransactions) 
-    const loyaltyTransactions = useSelector<any, LoyaltyTransaction[]>((state): any => state.entities.loyalty.loyaltyTransactions) 
-    const redeemedLoyalties = useSelector<any, LoyalRedemption[]>((state): any => state.entities.loyalty.redeemedLoyalties) 
+    const showTransactionsModal = useAppSelector((state)=> state.ui.showTransactionsModal) 
+    const discountTransactions = useAppSelector((state) => state.entities.discount.discountTransactions) 
+    const loyaltyTransactions = useAppSelector((state) => state.entities.loyalty.loyaltyTransactions) 
+    const redeemedLoyalties = useAppSelector((state) => state.entities.loyalty.redeemedLoyalties) 
     
     
     

@@ -38,6 +38,8 @@ class DiscountService  extends Https {
       try {
          const user = await Auth.getUserProfile()
         const {data} = await this.get<SubscribedDiscount[]>(`customerdiscount/findclient/${user.contact}`)
+        
+        
         await SecureStore.saveSubsribedDiscounts(data)
         return data
       } catch (error) {

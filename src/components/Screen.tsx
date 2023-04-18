@@ -1,14 +1,15 @@
-import React from 'react';
+import React from "react";
 import  "styled-components"
 import styled from "styled-components/native"
+import {StyleSheet} from "react-native"
 interface ScreenInterface {
-    style?: {},
+    style?: StyleSheet.NamedStyles<unknown>,
     children?: React.ReactElement
 
 }
 function Screen({style, children}: ScreenInterface) {
     return (
-           <SafeView>
+           <SafeView style={style}>
             {children}
             </SafeView>
     );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {TouchableOpacity} from "react-native"
 import "styled-components"
 import styled from "styled-components/native"

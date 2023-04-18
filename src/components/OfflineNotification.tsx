@@ -1,9 +1,9 @@
-import React from 'react';
-import  Constants  from 'expo-constants';
+import React from "react";
+import  Constants  from "expo-constants";
 import "styled-components"
-import styled from 'styled-components/native';
-import { useNetInfo } from '@react-native-community/netinfo';
-import Colors from '../config/Colors';
+import styled from "styled-components/native";
+import { useNetInfo } from "@react-native-community/netinfo";
+import Colors from "../config/Colors";
 
 
 const OfflineNotification = () => {

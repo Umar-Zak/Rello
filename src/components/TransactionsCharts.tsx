@@ -1,20 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect} from "react";
 import {Dimensions, Animated} from "react-native"
 import {AntDesign} from "@expo/vector-icons"
-import styled from 'styled-components/native';
+import styled from "styled-components/native";
 import {MaterialCommunityIcons} from "@expo/vector-icons"
-import { useNavigation } from '@react-navigation/native';
-import {useSelector, useDispatch} from "react-redux"
-import { AnyAction } from 'redux';
+import { useNavigation } from "@react-navigation/native";
+import { AnyAction } from "redux";
 import {closeGraph} from "../store/ui/UI"
-import Colors from '../config/Colors';
-import Auth from '../services/Auth';
+import Colors from "../config/Colors";
+import Auth from "../services/Auth";
 import {logoutUser} from "../store/auth/AuthSlice"
 import Screens from "../navigation/Screens"
+import { useAppDispatch, useAppSelector } from "../hooks/CustomReduxHooks";
 
 const TransactionsChart = () => {
-    const dispatch = useDispatch()
-    const offset = useSelector<any, number>((state: any) => state.ui.graphOffset)
+    const dispatch = useAppDispatch()
+    const offset = useAppSelector((state) => state.ui.graphOffset)
     const [top] = useState(new Animated.Value(offset))
     const navigation = useNavigation()
 
@@ -29,10 +29,10 @@ const TransactionsChart = () => {
         dispatch(logoutUser())
     }
 
-    const handleContactPressed = () => {
-        dispatch(closeGraph() as unknown as AnyAction)
-        navigation.navigate(Screens.contact as never)
-    }
+    // const handleContactPressed = () => {
+    //     dispatch(closeGraph() as unknown as AnyAction)
+    //     navigation.navigate(Screens.contact as never)
+    // }
       
 
     const handleNavigationPressed = (url: string) => {

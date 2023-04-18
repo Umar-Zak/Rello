@@ -1,8 +1,8 @@
-import * as React from 'react';
-import styled from 'styled-components/native';
-import { Alert, ImageSourcePropType } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import Colors from '../config/Colors';
+import * as React from "react";
+import styled from "styled-components/native";
+import { Alert, ImageSourcePropType } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import Colors from "../config/Colors";
 
 
 interface ServiceComponentInterface {
@@ -19,7 +19,7 @@ const Service = ({image,redirectUrl,title, onPress}: ServiceComponentInterface) 
 
         if(onPress) return onPress()
 
-      if(!redirectUrl) return Alert.alert("INFO", "Coming soon")
+      if(!redirectUrl as boolean) return Alert.alert("INFO", "Coming soon")
 
       navigation.navigate(redirectUrl as unknown as never)
     }
@@ -36,7 +36,6 @@ const Service = ({image,redirectUrl,title, onPress}: ServiceComponentInterface) 
 export default Service;
 
 const Container = styled.TouchableOpacity`
-// background: red;
 align-items: center;
 width: 130px;
 `

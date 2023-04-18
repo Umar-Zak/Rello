@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">21.73% </span>
+                <span class="strong">78.26% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/23</span>
+                <span class='fraction'>18/23</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">21.73% </span>
+                <span class="strong">78.26% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/23</span>
+                <span class='fraction'>18/23</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -122,7 +122,9 @@
 <a name='L57'></a><a href='#L57'>57</a>
 <a name='L58'></a><a href='#L58'>58</a>
 <a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -149,9 +151,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -159,11 +161,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -171,12 +175,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -207,35 +211,37 @@ class DiscountService  extends Https {
         }
     }
 &nbsp;
-<span class="fstat-no" title="function not covered" >    as</span>ync createDiscount(body: SubscribedDiscount){
-<span class="cstat-no" title="statement not covered" >      try {</span>
-        const {data} = <span class="cstat-no" title="statement not covered" >await this.post&lt;SubscribedDiscount&gt;("customerdiscount", body)</span>
-<span class="cstat-no" title="statement not covered" >        return data</span>
+    async createDiscount(body: SubscribedDiscount){
+      try {
+        const {data} = await this.post&lt;SubscribedDiscount&gt;("customerdiscount", body)
+        return data
       } catch (error: any) {
 <span class="cstat-no" title="statement not covered" >        throw error</span>
         
       }
     }
 &nbsp;
-<span class="fstat-no" title="function not covered" >    as</span>ync getSubscribedDiscounts(){
-<span class="cstat-no" title="statement not covered" >      try {</span>
-         const user = <span class="cstat-no" title="statement not covered" >await Auth.getUserProfile()</span>
-        const {data} = <span class="cstat-no" title="statement not covered" >await this.get&lt;SubscribedDiscount[]&gt;(`customerdiscount/findclient/${user.contact}`)</span>
-<span class="cstat-no" title="statement not covered" >        await SecureStore.saveSubsribedDiscounts(data)</span>
-<span class="cstat-no" title="statement not covered" >        return data</span>
+    async getSubscribedDiscounts(){
+      try {
+         const user = await Auth.getUserProfile()
+        const {data} = await this.get&lt;SubscribedDiscount[]&gt;(`customerdiscount/findclient/${user.contact}`)
+        
+        
+        await SecureStore.saveSubsribedDiscounts(data)
+        return data
       } catch (error) {
         const savedSubcribedDiscount = <span class="cstat-no" title="statement not covered" >await SecureStore.getSavedSubsribedDiscounts()</span>
 <span class="cstat-no" title="statement not covered" >        return savedSubcribedDiscount</span>
       }
     }
 &nbsp;
-<span class="fstat-no" title="function not covered" >    as</span>ync getCustomerDiscountTransactions(){
-<span class="cstat-no" title="statement not covered" >        try {</span>
-          const user = <span class="cstat-no" title="statement not covered" >await Auth.getUserProfile()</span>
-          const {data} = <span class="cstat-no" title="statement not covered" >await this.get&lt;DiscountTransaction[]&gt;(`transactiondiscount/findclient/${user.contact}`)</span>
-<span class="cstat-no" title="statement not covered" >          return data</span>
+    async getCustomerDiscountTransactions(){
+        try {
+          const user = await Auth.getUserProfile()
+          const {data} = await this.get&lt;DiscountTransaction[]&gt;(`transactiondiscount/findclient/${user.contact}`)
+          return data
         } catch (error) {
-<span class="cstat-no" title="statement not covered" >          throw error</span>
+          throw error
         }
     }
 }
@@ -247,7 +253,7 @@ export default new DiscountService()</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-01-25T18:47:51.476Z
+                at 2023-04-18T16:12:24.139Z
             </div>
         <script src="../prettify.js"></script>
         <script>

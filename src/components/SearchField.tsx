@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import "styled-components"
-import styled from 'styled-components/native';
+import styled from "styled-components/native";
 import {Feather} from "@expo/vector-icons"
 import Colors from "../config/Colors"
 

@@ -14,7 +14,7 @@ class Https {
         this.initAxios()
     }
 
-    protected setHeader(token: string){
+   setHeader(token: string){
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
     }
 

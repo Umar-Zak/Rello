@@ -1,14 +1,14 @@
-import React from 'react';
-import { StyleSheet } from 'react-native'
+import React from "react";
+import { StyleSheet } from "react-native"
 import "styled-components"
 import {useDispatch} from "react-redux"
 import {useNavigation} from "@react-navigation/native"
-import styled from 'styled-components/native';
+import styled from "styled-components/native";
 import {LinearGradient} from "expo-linear-gradient"
-import { getGradients } from '../config/Colors';
-import { GiftCardInterface } from '../models/DTOS';
+import { getGradients } from "../config/Colors";
+import { GiftCardInterface } from "../models/DTOS";
 import {selectGiftCard} from "../store/entities/GiftSlice"
-import Screens from '../navigation/Screens';
+import Screens from "../navigation/Screens";
 function GiftCard(giftCard: GiftCardInterface) {
     const dispatch = useDispatch()
     const navigation = useNavigation()

@@ -1,8 +1,8 @@
-import React, {ReactElement} from 'react';
+import React, {ReactElement} from "react";
 import "styled-components"
 import styled from "styled-components/native"
-import Activity from '../components/Activity';
-import {useAppSelector } from '../hooks/CustomReduxHooks';
+import Activity from "../components/Activity";
+import {useAppSelector } from "../hooks/CustomReduxHooks";
 
 interface AuthFormProps {
     children: ReactElement

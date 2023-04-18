@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">2.94% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/34</span>
+                <span class='fraction'>9/36</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">11.11% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/9</span>
+                <span class='fraction'>3/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">2.94% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/34</span>
+                <span class='fraction'>9/36</span>
             </div>
         
             
@@ -181,7 +181,11 @@
 <a name='L116'></a><a href='#L116'>116</a>
 <a name='L117'></a><a href='#L117'>117</a>
 <a name='L118'></a><a href='#L118'>118</a>
-<a name='L119'></a><a href='#L119'>119</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -236,32 +240,36 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -354,11 +362,11 @@ class Auth extends Https {
     }
 &nbsp;
 <span class="fstat-no" title="function not covered" >    as</span>ync signin(body:SiginInPayload){
+       
 <span class="cstat-no" title="statement not covered" >        try {</span>
          const {data} = <span class="cstat-no" title="statement not covered" >await this.post&lt;SiginInPayload &amp; {token: string}&gt;("customer/login", body)</span>
 <span class="cstat-no" title="statement not covered" >         this.setHeader(data.token)</span>
 <span class="cstat-no" title="statement not covered" >         await SecureStore.storeToken(data.token)</span>
-         
         } catch (error ) {
 <span class="cstat-no" title="statement not covered" >            throw error</span>
         }
@@ -369,18 +377,22 @@ class Auth extends Https {
 <span class="cstat-no" title="statement not covered" >       await SecureStore.removeToken()</span>
      }
 &nbsp;
-<span class="fstat-no" title="function not covered" >     pr</span>ivate decodeToken(token: string): {id: string, exp: number, iat: number}{
-        const decodedToken = <span class="cstat-no" title="statement not covered" >jwtDecode&lt;{id: string, exp: number, iat: number}&gt;(token)</span>
+     private decodeToken(token: string): {id: string, exp: number, iat: number} | undefined{
+        try {
+            const decodedToken = jwtDecode&lt;{id: string, exp: number, iat: number}&gt;(token)
 <span class="cstat-no" title="statement not covered" >        return decodedToken</span>
+        } catch (error) {
+            return undefined
+        }
      }
 &nbsp;
-<span class="fstat-no" title="function not covered" >     as</span>ync getUserProfile(){
-<span class="cstat-no" title="statement not covered" >        try {</span>
-            const token = <span class="cstat-no" title="statement not covered" >await SecureStore.getToken() as string</span>
-            const user = <span class="cstat-no" title="statement not covered" >this.decodeToken(token)</span>
-            const {data} = <span class="cstat-no" title="statement not covered" >await this.get&lt;UserProfile&gt;(`customer/${user.id}`)</span>
-<span class="cstat-no" title="statement not covered" >            return data</span>
-        } catch (error) {
+     async getUserProfile(){
+        try {
+            const token = await SecureStore.getToken() as string
+            const user = this.decodeToken(token)
+            const {data} = await this.get&lt;UserProfile&gt;(`customer/${user?.id}`)
+            return data
+        } catch (error:any) {
 <span class="cstat-no" title="statement not covered" >            throw error</span>
         }
      }
@@ -424,7 +436,7 @@ export default new Auth()</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-01-25T18:47:51.476Z
+                at 2023-04-18T16:12:24.139Z
             </div>
         <script src="../prettify.js"></script>
         <script>

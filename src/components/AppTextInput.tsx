@@ -1,9 +1,9 @@
-import React from 'react';
-import  'styled-components';
+import React from "react";
+import  "styled-components";
 import styled from "styled-components/native"
 import {useFormikContext} from "formik"
 import {Entypo} from "@expo/vector-icons"
-import Colors from '../config/Colors';
+import Colors from "../config/Colors";
 
 
 // Type inference on line 36 was just done to
@@ -33,13 +33,13 @@ function AppTextInput({label, name ,height,icon,id,...rest}: TextFieldInterface)
     return (
        <Container>
         <Label>{label}</Label>
-        <InputGroup style={{height: height? height: 52}}>
+        <InputGroup style={{height: (height !== undefined && height !== null)? height: 52}}>
         {icon && <Entypo name={icon as "map"} size={25} color="#97CBEC" />}
         <InputField 
         style={{
-            height: height? height : 52
+            height: (height !== undefined && height !== null)? height : 52
         }}
-         testID={id? id : ""}
+         testID={(id !== undefined && id !== null)? id : ""}
          {...rest}
          value={values[name]}
          onChangeText={(value: string) => setFieldValue(name, value)}
