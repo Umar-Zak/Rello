@@ -14,7 +14,7 @@ import { Alert } from 'react-native';
 import {activateUser} from "../store/auth/AuthSlice"
 import {startLoader, stopLoader} from "../store/ui/UI"
 import SecureStore from '../models/SecureStore';
-import { useAppDispatch, useAppSelector } from '../hooks/CustomReduxHooks';
+import { useAppDispatch} from '../hooks/CustomReduxHooks';
 import AuthForm from '../components/AuthForm';
 
 
@@ -46,7 +46,7 @@ function LoginScreen() {
     
     const loadDeviceID = async () => {
         const result = await SecureStore.getDeviceToken() as string
-        setDeviceID(result)
+        setDeviceID(result || "ExponentPushToken[gh7Ky6GeZx3lJDb9AY7x82]")
 
     }
     

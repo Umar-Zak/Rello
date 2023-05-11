@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">31.25% </span>
+                <span class="strong">46.87% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/32</span>
+                <span class='fraction'>15/32</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">10% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>1/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/15</span>
+                <span class='fraction'>6/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">31.25% </span>
+                <span class="strong">46.87% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/32</span>
+                <span class='fraction'>15/32</span>
             </div>
         
             
@@ -175,13 +175,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -196,7 +196,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">20x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -227,18 +227,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -246,6 +239,13 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -325,12 +325,12 @@ private DEVICE = "expo_token"
  }
 &nbsp;
  
-<span class="fstat-no" title="function not covered" > as</span>ync saveLoyaltyCards(loyaltyCards: LoyaltyInterface[]) {
-<span class="cstat-no" title="statement not covered" >   await AsyncStorage.setItem(this.LOYALTY, JSON.stringify(loyaltyCards))</span>
+ async saveLoyaltyCards(loyaltyCards: LoyaltyInterface[]) {
+   await AsyncStorage.setItem(this.LOYALTY, JSON.stringify(loyaltyCards))
  }
 &nbsp;
-<span class="fstat-no" title="function not covered" > as</span>ync saveSubscribedLoyaltiesCards(subscribedLoyaltyCards: SubsribedLoyalty[]){
-<span class="cstat-no" title="statement not covered" >  await AsyncStorage.setItem(this.SUBSCRIBED_LOYALTIES, JSON.stringify(subscribedLoyaltyCards))</span>
+ async saveSubscribedLoyaltiesCards(subscribedLoyaltyCards: SubsribedLoyalty[]){
+  await AsyncStorage.setItem(this.SUBSCRIBED_LOYALTIES, JSON.stringify(subscribedLoyaltyCards))
  }
 &nbsp;
 &nbsp;
@@ -341,10 +341,10 @@ private DEVICE = "expo_token"
  }
 &nbsp;
 &nbsp;
-<span class="fstat-no" title="function not covered" > as</span>ync getSavedLoyaltyCards() {
-   const savedLoyaltyCards = <span class="cstat-no" title="statement not covered" >await AsyncStorage.getItem(this.LOYALTY) as string</span>
-   const loyaltyCards = <span class="cstat-no" title="statement not covered" >JSON.parse(savedLoyaltyCards) as LoyaltyInterface[]</span>
-<span class="cstat-no" title="statement not covered" >   return loyaltyCards? loyaltyCards : []</span>
+ async getSavedLoyaltyCards() {
+   const savedLoyaltyCards = await AsyncStorage.getItem(this.LOYALTY) as string
+   const loyaltyCards = JSON.parse(savedLoyaltyCards) as LoyaltyInterface[]
+   return loyaltyCards? loyaltyCards : <span class="branch-1 cbranch-no" title="branch not covered" >[]</span>
  }
 &nbsp;
 <span class="fstat-no" title="function not covered" > as</span>ync saveGiftCards(giftCards: GiftCardInterface[]) {
@@ -367,7 +367,7 @@ export default new SecureStorage()</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-04-18T16:12:24.139Z
+                at 2023-04-20T15:01:59.156Z
             </div>
         <script src="../prettify.js"></script>
         <script>

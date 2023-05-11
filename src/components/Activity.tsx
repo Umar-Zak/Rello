@@ -8,7 +8,10 @@ import styled from "styled-components/native";
 function Activity() {
     return (
        <Container>
-        <ActivityIndicator   size="large" color="#2bcec4"/>
+       <ContentContainer>
+       <ActivityIndicator   size="small" color="#2bcec4"/>
+       <Text>Please wait....</Text>
+       </ContentContainer>
        </Container>
     );
 }
@@ -22,7 +25,21 @@ const Container = styled.View`
     top: 0;
     left: 0;
     z-index: 100;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.4);
     align-items: center;
     justify-content: center;
+`
+
+const ContentContainer = styled.View`
+ width: 200px;
+ height: 50px;
+ flex-direction: row;
+ background: white;
+ border-radius: 10px;
+ align-items: center;
+ justify-content: center;
+`
+
+const Text = styled.Text`
+margin-left: 10px;
 `
