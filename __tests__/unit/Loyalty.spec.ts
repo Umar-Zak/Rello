@@ -3,7 +3,7 @@ import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import AxisoMockAdapter from "axios-mock-adapter"
 import { AnyAction} from "redux";
 import { LoyaltyInterface, SubsribedLoyalty } from "../../src/models/DTOS";
-import { createSubscription, loadLoyaltyCards, loadLoyaltyTransactions, loadSubscribedLoyalties } from "../../src/store/entities/LoyaltySlice";
+import {createSubscription, loadLoyaltyCards, loadLoyaltyTransactions, loadSubscribedLoyalties } from "../../src/store/entities/LoyaltySlice";
 import Store from "../../src/store/Store";
 import reducer from "../../src/store/RootReducer"
 

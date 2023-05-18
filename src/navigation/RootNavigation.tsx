@@ -84,7 +84,7 @@ function RootNavigation() {
          await Auth.verifyDevice()
          const token = await SecureStore.getToken()
          if(token) dispatch(activateUser())
-      } catch (error) {
+      } catch (error:any) {
          Auth.logout()
          dispatch(logoutUser())
       }

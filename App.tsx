@@ -6,6 +6,7 @@ import store from './src/store/Store';
 import { useRequireLocationPermisssion, useNotifications } from './src/hooks/UseLocation';
 import RootNavigation from './src/navigation/RootNavigation';
 import SkeletonContent from "react-native-skeleton-content"
+import SampleLoginForm from './src/components/Playground';
 
 
 Sentry.init({
@@ -38,6 +39,7 @@ export default function App() {
   </Provider>
   </ConfigCatProvider>
 
+  // <SampleLoginForm/>
   
   
       )

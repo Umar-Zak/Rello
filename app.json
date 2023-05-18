@@ -12,9 +12,9 @@
         }
       ]
     },
-    "name": "Correl",
+    "name": "MCorral",
     "slug": "mCorrel",
-    "version": "3.0.1",
+    "version": "3.0.8",
     "orientation": "portrait",
     "icon": "./assets/app-icon.png",
     "userInterfaceStyle": "light",
@@ -30,19 +30,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mcorrel.app",
+      "config": {
+        "googleMapsApiKey": "AIzaSyBkD3xZnGnfJCFox8jYsmDYrhrreeOJ0wY"
+      }
     },
     "android": {
-      "versionCode": 21,
+      "versionCode": 26,
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/app-splash.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.mcorral.app",
+      "package": "com.mcorrel.app",
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyC_AfXIFASx_A-kyuALHWZxZF_DcXp3M4U"
+          "apiKey": "AIzaSyBUYLdMtAjONN7qO3zuIwDoM6z9C6TCf68"
         }
       }
     },
@@ -51,17 +55,7 @@
     },
     "plugins": [
       "sentry-expo",
-      [
-        "expo-notifications",
-        {
-          "icon": "./assets/app-icon.png",
-          "color": "#ffffff",
-          "sounds": [
-            "./src/assets/final_notification.wav"
-            
-          ]
-        }
-      ]
+      ["expo-notifications"]
     ],
     "extra": {
       "eas": {

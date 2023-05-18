@@ -46,7 +46,7 @@ function LoginScreen() {
     
     const loadDeviceID = async () => {
         const result = await SecureStore.getDeviceToken() as string
-        setDeviceID(result || "ExponentPushToken[gh7Ky6GeZx3lJDb9AY7x82]")
+        setDeviceID(result)
 
     }
     
@@ -61,6 +61,8 @@ function LoginScreen() {
     const handleLogin = async(body: SiginInPayload) => {
         dispatch(startLoader())
         try {
+            console.log("DeviceID",deviceID);
+            
             await Auth.signin(body)
             dispatch(stopLoader())
             dispatch(activateUser())
