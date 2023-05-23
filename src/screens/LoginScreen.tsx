@@ -61,8 +61,6 @@ function LoginScreen() {
     const handleLogin = async(body: SiginInPayload) => {
         dispatch(startLoader())
         try {
-            console.log("DeviceID",deviceID);
-            
             await Auth.signin(body)
             dispatch(stopLoader())
             dispatch(activateUser())

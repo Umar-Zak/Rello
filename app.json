@@ -6,15 +6,14 @@
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
             "organization": "umar-zakaria",
-            "project": "correl",
-            "authToken": "ea1f44ac6b4c48ec9ff95917fc6875122b18cf9a7e3048c7908128ec1aa9f418"
+            "project": "correl"
           }
         }
       ]
     },
-    "name": "MCorral",
+    "name": "Corral Rewards",
     "slug": "mCorrel",
-    "version": "3.0.8",
+    "version": "3.1.3",
     "orientation": "portrait",
     "icon": "./assets/app-icon.png",
     "userInterfaceStyle": "light",
@@ -37,7 +36,7 @@
       }
     },
     "android": {
-      "versionCode": 26,
+      "versionCode": 27,
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/app-splash.png",
