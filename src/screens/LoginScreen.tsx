@@ -59,6 +59,9 @@ function LoginScreen() {
     }
 
     const handleLogin = async(body: SiginInPayload) => {
+        const NOT_MESSAGE = "Please allow notifications in your settings for this app in order to log in. Our app depends extensively on it"
+        if(!deviceID) return Alert.alert("WARNING", NOT_MESSAGE)
+        
         dispatch(startLoader())
         try {
             await Auth.signin(body)

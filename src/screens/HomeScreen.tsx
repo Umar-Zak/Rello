@@ -108,7 +108,7 @@ function HomeScreen() {
             image={require("../assets/verified.png")} 
             />
            <Service 
-            redirectUrl={Screens.financial_services}
+            // redirectUrl={Screens.financial_services}
             title="Financial services" 
             image={require("../assets/savings.png")} 
             />

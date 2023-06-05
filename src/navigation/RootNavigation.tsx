@@ -3,12 +3,10 @@ import {Alert} from "react-native"
 import * as Notifications from "expo-notifications"
 import { NavigationContainer } from '@react-navigation/native';
 import { AnyAction } from 'redux';
-import {useSelector, useDispatch} from "react-redux"
 import OnboardingNavigation from './OnboardingNavigation';
 import AppNavigation from './AppNavigation';
 import {activateUser, logoutUser} from "../store/auth/AuthSlice"
 import SecureStore from '../models/SecureStore';
-import Activity from '../components/Activity';
 import OfflineNotification from '../components/OfflineNotification';
 import ErrorModal from '../components/ErrorModal';
 import {startLoader, stopLoader} from "../store/ui/UI"
@@ -16,15 +14,16 @@ import Auth from '../services/Auth';
 import LoyaltyService from '../services/LoyaltyService';
 import {initializeRedeemedLoyalties} from "../store/entities/LoyaltySlice"
 import Skeleton from '../components/Skeleton';
+import { useAppDispatch, useAppSelector } from '../hooks/CustomReduxHooks';
 
 
 
 
 function RootNavigation() {
-     const dispatch = useDispatch()
-     const user = useSelector<any, boolean>((state: any) => state.auth.user)
-     const showErrorModal = useSelector<any, boolean>((state: any) => state.ui.showErrorModal)
-     const errorMessage = useSelector<any, string>((state: any) => state.ui.errorMessage)
+     const dispatch = useAppDispatch()
+     const user = useAppSelector((state) => state.auth.user)
+     const showErrorModal = useAppSelector((state) => state.ui.showErrorModal)
+     const errorMessage = useAppSelector((state) => state.ui.errorMessage)
      const [isAppReady, setIsAppReady] = useState(false)
     
      useEffect(() => {

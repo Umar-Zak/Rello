@@ -20,9 +20,8 @@ Sentry.init({
 export default function App() {
 
   useEffect(() => {
-    useRequireLocationPermisssion()
+    // useRequireLocationPermisssion()
     useNotifications()
-   
     
   }, [])
   

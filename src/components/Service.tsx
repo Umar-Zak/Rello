@@ -26,7 +26,7 @@ const Service = ({image,redirectUrl,title, onPress}: ServiceComponentInterface) 
 
     return ( 
          <Container onPress= {() => handleServiceTapped(redirectUrl)}>
-            <SubContainer resizeMode="center" source={image}>
+            <SubContainer resizeMode="contain" source={image}>
              </SubContainer>
              <ServiceText numberOfLines={2}>{title}</ServiceText>
          </Container>
