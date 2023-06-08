@@ -15,6 +15,7 @@ import LoyaltyService from '../services/LoyaltyService';
 import {initializeRedeemedLoyalties} from "../store/entities/LoyaltySlice"
 import Skeleton from '../components/Skeleton';
 import { useAppDispatch, useAppSelector } from '../hooks/CustomReduxHooks';
+import Activity from '../components/Activity';
 
 
 
@@ -80,7 +81,9 @@ function RootNavigation() {
 
      const initializeAuth = async() => {
       try {
-         await Auth.verifyDevice()
+         const deviceId = await SecureStore.getDeviceToken()
+         if(deviceId)
+           await Auth.verifyDevice()
          const token = await SecureStore.getToken()
          if(token) dispatch(activateUser())
       } catch (error:any) {
@@ -90,7 +93,7 @@ function RootNavigation() {
        
      }
 
-     if(!isAppReady) return <Skeleton isLoading={true} />
+     if(!isAppReady) return <Activity prompt='Loading...'  />
 
     return (
        <>
