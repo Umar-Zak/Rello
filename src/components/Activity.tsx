@@ -4,13 +4,16 @@ import { ActivityIndicator } from "react-native"
 import styled from "styled-components/native";
 
 
+interface ActivityInterface {
+    prompt?:string
+}
 
-function Activity() {
+function Activity({prompt}: ActivityInterface) {
     return (
        <Container>
        <ContentContainer>
        <ActivityIndicator   size="small" color="#2bcec4"/>
-       <Text>Please wait....</Text>
+       <Text>{prompt ? prompt : "Please wait...."}</Text>
        </ContentContainer>
        </Container>
     );
