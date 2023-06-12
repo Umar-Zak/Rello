@@ -13,7 +13,7 @@
     },
     "name": "Corral Rewards",
     "slug": "mCorrel",
-    "version": "3.1.9",
+    "version": "3.2.0",
     "orientation": "portrait",
     "icon": "./assets/app-icon.png",
     "userInterfaceStyle": "light",
@@ -29,7 +29,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": false,
+      "supportsTablet": true,
       "bundleIdentifier": "com.mcorral.app",
       "config": {
         "googleMapsApiKey": "AIzaSyBkD3xZnGnfJCFox8jYsmDYrhrreeOJ0wY"
