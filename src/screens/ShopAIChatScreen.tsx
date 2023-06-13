@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Dimensions} from "react-native"
+import {Alert, Dimensions} from "react-native"
 import styled from 'styled-components/native';
 import {Ionicons} from "@expo/vector-icons"
 import axios from 'axios';
@@ -37,7 +37,7 @@ const ShopAIChatScreen = () => {
      } 
      catch (error: any) {
       setShowingLoader(false)
-      console.log("error", error.response.data);
+      Alert.alert("ERROR", "Something went wrong")
      }
 
     }
@@ -53,8 +53,9 @@ const ShopAIChatScreen = () => {
 
     return (
         <Screen>
-         <>
-         {showingLoader && <Activity/>}
+          <>
+          {showingLoader && <Activity/>}
+         <Container>
         {showingResultsModal && <FeedBackModal 
          contentContainerStyle={{
           padding: 20,
@@ -73,7 +74,7 @@ const ShopAIChatScreen = () => {
          </FeedBackModal>}
 
             <KeyboardAwareScrollView>
-           <Container>
+           <SubContainer>
           
            <FeedBackContainer
             >
@@ -104,8 +105,9 @@ const ShopAIChatScreen = () => {
             </SubmitButton>
            </Form>
             </FeedBackContainer>
-           </Container>
+           </SubContainer>
            </KeyboardAwareScrollView>
+           </Container>
            </>
         </Screen>
     );
@@ -114,10 +116,17 @@ const ShopAIChatScreen = () => {
 export default ShopAIChatScreen;
 
 const Container = styled.View`
+width: 100%;
+max-width: 700px;
+margin-left: auto;
+margin-right: auto;
+`
+
+const SubContainer = styled.View`
  height: 90%;
  padding: 20px;
  flex-direction: column;
-//  justify-content: flex-end;
+ 
 `
 
 const FeedBackContainer = styled.View`
