@@ -103,7 +103,8 @@ function LoginScreen() {
             id='password'
               />
            <SubmitButton text='Sign In'/>
-           { signUpFlagValue && <LoginTextContainer>
+           { signUpFlagValue &&
+            <LoginTextContainer>
             <HaveText>Don't have account?</HaveText>
             <Login onPress={handleSignupPress}>
             <LoginText>Sign up</LoginText>
@@ -111,7 +112,6 @@ function LoginScreen() {
             </LoginTextContainer>}
             <LoginTextContainer>
             <Login onPress={handleForgotPasswordPressed} >
-           
             </Login>
             </LoginTextContainer>
             <Login onPress={handleForgotPasswordPressed}>
@@ -128,14 +128,19 @@ function LoginScreen() {
 const LoginTextContainer = styled.View`
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
-    margin-top: 15%;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
     padding-left: 10%;
     padding-right: 10%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 `
 const HaveText = styled.Text`
     font-size:16px ;
     color: ${Colors.dark_grey};
+    margin-right: 20px;
 `
 const LoginText = styled.Text`
     color: #97CBEC ;

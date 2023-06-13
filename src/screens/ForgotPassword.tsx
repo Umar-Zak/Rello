@@ -193,7 +193,7 @@ const LoginTextContainer = styled.View`
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    margin-top: 15%;
+    margin-top: 30px;
     padding-left: 10%;
     padding-right: 10%;
 `

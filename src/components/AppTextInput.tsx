@@ -53,7 +53,9 @@ function AppTextInput({label, name ,height,icon,id,...rest}: TextFieldInterface)
 const Container = styled.View`
 width: 100%;
 margin-bottom: 25px;
-
+max-width: 600px;
+margin-left:auto;
+margin-right: auto;
 `
 
 const Error = styled.Text`

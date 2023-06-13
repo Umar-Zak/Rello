@@ -196,14 +196,15 @@ function SignUpScreen() {
 const LoginTextContainer = styled.View`
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
-    margin-top: 15%;
+    justify-content: center;
+    margin-top: 30px;
     padding-left: 10%;
     padding-right: 10%;
 `
 const HaveText = styled.Text`
     font-size:16px ;
     color: ${Colors.dark_grey};
+    margin-right: 20px;
 `
 const LoginText = styled.Text`
     color: #97CBEC;

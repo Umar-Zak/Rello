@@ -21,7 +21,7 @@ const slice =  createSlice({
         showErrorModal: false,
         errorMessage: "",
         menuOffset: -2000,
-        graphOffset: -1200,
+        graphOffset: -1800,
         verificationModalOffset: 1000
     } as UIInterface,
     name: "ui",
@@ -73,7 +73,7 @@ const slice =  createSlice({
         },
 
         closeGraph: (state) => {
-            state.graphOffset = -1200
+            state.graphOffset = -2000
         },
 
         showVerificationModal: (state) => {

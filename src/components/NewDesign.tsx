@@ -185,6 +185,9 @@ text-align: center;
 
 const Button = styled.View`
  width: 100%;
+ max-width: 600px;
+ margin-left: auto;
+ margin-right: auto;
  height: 50px;
  border-radius: 30px;
  align-items: center;
