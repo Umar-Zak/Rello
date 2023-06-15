@@ -143,6 +143,9 @@ const MenuItemsContainer = styled.View`
 
 const MenuItem = styled.TouchableOpacity`
  width: 100%;
+ max-width: 700px;
+ margin-left: auto;
+ margin-right: auto;
  height: 60px;
  margin-top: 10px;
  margin-bottom: 10px;

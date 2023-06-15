@@ -69,5 +69,5 @@ export default Form;
 
 const ContentContainer = styled.View`
  width: 100%;
- height: 250px
+ height: 250px;
 `

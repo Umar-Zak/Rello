@@ -93,7 +93,6 @@ class Auth extends Https {
            const deviceID = await SecureStore.getDeviceToken() as string
            const res = await this.get<UserProfile>(`customer/me/${deviceID}`)
         } catch (error: any) {
-            await this.logout()
             throw error
         }
      }

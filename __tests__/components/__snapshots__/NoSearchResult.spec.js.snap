@@ -3,8 +3,8 @@
 exports[`No Search Result Should render correctly 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "alignItems": "center",
         "flexBasis": 0,
         "flexGrow": 1,
@@ -16,8 +16,8 @@ exports[`No Search Result Should render correctly 1`] = `
 >
   <Text
     style={
-      Array [
-        Object {},
+      [
+        {},
       ]
     }
   >

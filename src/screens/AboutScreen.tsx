@@ -45,7 +45,11 @@ const AboutScreen = () => {
 export default AboutScreen;
 
 const Container = styled.SafeAreaView`
- flex: 1
+ flex: 1;
+ width: 100%;
+ max-width: 700px;
+ margin-left: auto;
+ margin-right: auto;
 `
 
 const SubContainer = styled.ScrollView`

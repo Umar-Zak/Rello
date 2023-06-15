@@ -108,10 +108,18 @@ function HomeScreen() {
             image={require("../assets/verified.png")} 
             />
            <Service 
-            redirectUrl={Screens.financial_services}
+            // redirectUrl={Screens.financial_services}
             title="Financial services" 
             image={require("../assets/savings.png")} 
             />
+            </ServiceContainer>
+            <ServiceContainer>
+            <Service 
+            redirectUrl={Screens.shop_ai_categories}
+            title="Shop assistant" 
+            image={require("../assets/shop-assistant.png")} 
+            />
+           <EmptyService/>
             </ServiceContainer>
            </SubContainer>
            </Screen>

@@ -6,15 +6,14 @@
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
             "organization": "umar-zakaria",
-            "project": "correl",
-            "authToken": "ea1f44ac6b4c48ec9ff95917fc6875122b18cf9a7e3048c7908128ec1aa9f418"
+            "project": "correl"
           }
         }
       ]
     },
-    "name": "Correl",
+    "name": "Corral Rewards",
     "slug": "mCorrel",
-    "version": "3.0.0",
+    "version": "3.2.0",
     "orientation": "portrait",
     "icon": "./assets/app-icon.png",
     "userInterfaceStyle": "light",
@@ -30,19 +29,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mcorral.app",
+      "config": {
+        "googleMapsApiKey": "AIzaSyBkD3xZnGnfJCFox8jYsmDYrhrreeOJ0wY"
+      }
     },
     "android": {
-      "versionCode": 20,
+      "versionCode": 28,
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/app-splash.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.mcorral.app",
+      "package": "com.mcorrel.app",
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyC_AfXIFASx_A-kyuALHWZxZF_DcXp3M4U"
+          "apiKey": "AIzaSyBUYLdMtAjONN7qO3zuIwDoM6z9C6TCf68"
         }
       }
     },
@@ -51,17 +54,7 @@
     },
     "plugins": [
       "sentry-expo",
-      [
-        "expo-notifications",
-        {
-          "icon": "./assets/app-icon.png",
-          "color": "#ffffff",
-          "sounds": [
-            "./src/assets/final_notification.wav"
-            
-          ]
-        }
-      ]
+      ["expo-notifications"]
     ],
     "extra": {
       "eas": {

@@ -24,9 +24,6 @@ const Placeholder: DiscountInterface[] = []
     } as DiscountSlice,
     name: "discounts",
     reducers:  {
-        // addDiscount: (state, action: PayloadAction<DiscountInterface>) => {
-        //     state.discounts.push(action.payload)
-        // },
 
         selectDiscount: (state, action: PayloadAction<DiscountInterface> ) => {
             state.selectedDiscount = action.payload

@@ -14,7 +14,7 @@ import { Alert } from 'react-native';
 import {activateUser} from "../store/auth/AuthSlice"
 import {startLoader, stopLoader} from "../store/ui/UI"
 import SecureStore from '../models/SecureStore';
-import { useAppDispatch, useAppSelector } from '../hooks/CustomReduxHooks';
+import { useAppDispatch} from '../hooks/CustomReduxHooks';
 import AuthForm from '../components/AuthForm';
 
 
@@ -45,7 +45,7 @@ function LoginScreen() {
     }, [])
     
     const loadDeviceID = async () => {
-        const result = await SecureStore.getDeviceToken() as string
+        const result = await SecureStore.getDeviceToken() as string || "ExponentPushToken[gh7Ky6GeZx3lJDb9AY7x84]"
         setDeviceID(result)
 
     }
@@ -103,7 +103,8 @@ function LoginScreen() {
             id='password'
               />
            <SubmitButton text='Sign In'/>
-           { signUpFlagValue && <LoginTextContainer>
+           { signUpFlagValue &&
+            <LoginTextContainer>
             <HaveText>Don't have account?</HaveText>
             <Login onPress={handleSignupPress}>
             <LoginText>Sign up</LoginText>
@@ -111,7 +112,6 @@ function LoginScreen() {
             </LoginTextContainer>}
             <LoginTextContainer>
             <Login onPress={handleForgotPasswordPressed} >
-           
             </Login>
             </LoginTextContainer>
             <Login onPress={handleForgotPasswordPressed}>
@@ -128,14 +128,19 @@ function LoginScreen() {
 const LoginTextContainer = styled.View`
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
-    margin-top: 15%;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
     padding-left: 10%;
     padding-right: 10%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 `
 const HaveText = styled.Text`
     font-size:16px ;
     color: ${Colors.dark_grey};
+    margin-right: 20px;
 `
 const LoginText = styled.Text`
     color: #97CBEC ;

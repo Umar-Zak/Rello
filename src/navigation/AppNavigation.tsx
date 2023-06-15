@@ -2,7 +2,6 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {AntDesign, MaterialIcons, Entypo} from "@expo/vector-icons";
 import Screens from './Screens';
-import DiscountScreen from '../screens/DiscountScreen';
 import Colors from '../config/Colors';
 import FeedNavigation from './FeedNavigation';
 import LoyaltyNavigation from './LoyaltyNavigation';
@@ -24,7 +23,7 @@ function AppNavigation() {
         name={Screens.home} 
         component={FeedNavigation} 
         options={{
-            tabBarIcon: ({size, color}) => <AntDesign size={size} color={color} name='home' />,
+            tabBarIcon: ({size, color, focused}) => <AntDesign size={size} color={focused? color : "#011c34"} name='home' />,
             headerShown: false
         }}
         />
@@ -32,7 +31,7 @@ function AppNavigation() {
         name={Screens.loyalty} 
         component={LoyaltyNavigation}
         options={{
-            tabBarIcon: ({size, color}) => <MaterialIcons size={size} color={color} name='loyalty' />,
+            tabBarIcon: ({size, color, focused}) => <MaterialIcons size={size} color={focused? color : "#011c34"} name='loyalty' />,
             headerShown: false
             
         }}
@@ -41,7 +40,7 @@ function AppNavigation() {
         name={Screens.dis} 
         component={DiscountNavigation}
         options={{
-            tabBarIcon: ({size, color}) => <AntDesign size={size} color={color} name='shoppingcart' />,
+            tabBarIcon: ({size, color, focused}) => <AntDesign size={size} color={focused? color : "#011c34"} name='shoppingcart' />,
             headerShown: false
         }}
          />
@@ -49,7 +48,7 @@ function AppNavigation() {
         name={Screens.promo} 
         component={PromotionsNavigation}
         options={{
-            tabBarIcon: ({size, color}) => <Entypo size={size} color={color} name='code' />,
+            tabBarIcon: ({size, color, focused}) => <Entypo size={size} color={focused? color : "#011c34"} name='code' />,
             headerShown: false
         }}
          />
@@ -58,7 +57,7 @@ function AppNavigation() {
         name={Screens.wallets} 
         component={WalletActivityNavigation} 
         options={{
-            tabBarIcon: ({size, color, focused}) => <AntDesign size={size} color={color} name='wallet' />,
+            tabBarIcon: ({size, color, focused}) => <AntDesign size={size} color={focused? color : "#011c34"} name='wallet' />,
             headerShown: false
         }}
         />

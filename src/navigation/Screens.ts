@@ -26,5 +26,8 @@ export default {
     about: "ABOUT",
     verification: "PRODUCT  VERIFICATION",
     faqs: "FAQs",
-    financial_services: "Financial Services"
+    financial_services: "Financial Services",
+    shop_ai_categories: "Shopping Categories",
+    vaction_planner: "Vacation Planner",
+    date_planner: "Date Planner"
 }

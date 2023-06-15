@@ -23,6 +23,9 @@ const Container = styled.TouchableOpacity`
     justify-content: center;
     border-radius: 30px;
     background: #97CBEC;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 `
 const Text = styled.Text`
     color: ${Colors.light};

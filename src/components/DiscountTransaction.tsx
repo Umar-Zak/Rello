@@ -41,6 +41,9 @@ const SimpleFlex = styled.View`
 
 const TransactionTray = styled.View`
  width: 100%;
+ max-width: 800px;
+ margin-left: auto;
+ margin-right: auto;
  height: 70px;
  border-radius: 10px;
  background: #02203c;
