@@ -68,8 +68,9 @@ class Auth extends Https {
        await SecureStore.removeToken()
      }
 
-     private decodeToken(token: string): {id: string, exp: number, iat: number} | undefined{
+     private async decodeToken(): Promise<{id: string, exp: number, iat: number} | undefined>{
         try {
+            const token = await SecureStore.getToken() as string
             const decodedToken = jwtDecode<{id: string, exp: number, iat: number}>(token)
         return decodedToken
         } catch (error) {
@@ -79,8 +80,7 @@ class Auth extends Https {
 
      async getUserProfile(){
         try {
-            const token = await SecureStore.getToken() as string
-            const user = this.decodeToken(token)
+            const user = await this.decodeToken()
             const {data} = await this.get<UserProfile>(`customer/${user?.id}`)
             return data
         } catch (error:any) {
@@ -116,6 +116,15 @@ class Auth extends Https {
         }
      }
      
+     async deleteUserAccount(){
+        try {
+            const user = await this.decodeToken()
+            await this.delete(`customer/${user?.id}`)
+            await this.logout()
+        } catch (error) {
+            throw error
+        }
+     }
 }
 
 

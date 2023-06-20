@@ -3,7 +3,6 @@ import "styled-components"
 import styled from 'styled-components/native';
 import {MaterialIcons} from "@expo/vector-icons"
 import { AnyAction } from 'redux';
-import SkeletonContent from "react-native-skeleton-content"
 import Screen from '../components/Screen';
 import Colors from '../config/Colors';
 import {loadUserProfile} from "../store/auth/AuthSlice"

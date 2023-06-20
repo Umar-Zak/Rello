@@ -13,7 +13,7 @@
     },
     "name": "Corral Rewards",
     "slug": "mCorrel",
-    "version": "3.2.0",
+    "version": "3.2.2",
     "orientation": "portrait",
     "icon": "./assets/app-icon.png",
     "userInterfaceStyle": "light",
@@ -36,7 +36,7 @@
       }
     },
     "android": {
-      "versionCode": 28,
+      "versionCode": 29,
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/app-splash.png",
