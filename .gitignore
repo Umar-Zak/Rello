@@ -17,3 +17,5 @@ web-build/
 .env
 
 coverage/
+
+.vscode/

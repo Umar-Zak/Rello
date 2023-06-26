@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Dimensions, Animated} from "react-native"
+import {Dimensions, Animated, Alert} from "react-native"
 import {AntDesign} from "@expo/vector-icons"
 import styled from "styled-components/native";
 import {MaterialCommunityIcons} from "@expo/vector-icons"
@@ -11,11 +11,13 @@ import Auth from "../services/Auth";
 import {logoutUser} from "../store/auth/AuthSlice"
 import Screens from "../navigation/Screens"
 import { useAppDispatch, useAppSelector } from "../hooks/CustomReduxHooks";
+import Activity from "./Activity";
 
 const TransactionsChart = () => {
     const dispatch = useAppDispatch()
     const offset = useAppSelector((state) => state.ui.graphOffset)
     const [top] = useState(new Animated.Value(offset))
+    const [isLoading, setIsLoading] = useState(false)
     const navigation = useNavigation()
 
     useEffect(() => {
@@ -40,12 +42,36 @@ const TransactionsChart = () => {
         navigation.navigate(url as never)
     }
 
+    const handleDeleteAccount = () => {
+        
+        const message =  "Deleting your account will wipe out all your data from our systems. This is not reversible"
+        Alert.alert("WARNING", message, [
+            {
+                text: "Cancel"
+            },
+            {
+                text: "Continue",
+                onPress: async() => {
+                    try {
+                        setIsLoading(true)
+                        await Auth.deleteUserAccount()
+                        setIsLoading(false)
+                        dispatch(logoutUser() as unknown as AnyAction)
+                    } catch (error: any) {
+                        setIsLoading(false)
+                       Alert.alert("ERROR", "Something went wrong")
+                        
+                    }
+                }
+            }
+        ])
+    }
 
     return ( 
         <AnimatedContainer style={{
             top: top
         }}>
-    
+       {isLoading && <Activity/>}
       <SubContainer>
        <MenuItemsContainer>
         <MenuItem onPress={() => handleNavigationPressed(Screens.loyalty)}>
@@ -76,9 +102,11 @@ const TransactionsChart = () => {
         <MenuItemText>FAQs</MenuItemText>
         <MaterialCommunityIcons name="chevron-right" color={Colors.green} size={30} />
         </MenuItem>
+       <DeleteButton onPress={handleDeleteAccount}>
+        <DeleteText>Delete account</DeleteText>
+       </DeleteButton>
         <Liner/>
        </MenuItemsContainer>
-       
        <AuthContainer>
        <LogoutContainer onPress={handleLogout}>
         <AntDesign name="logout" color={Colors.green} size={25} />
@@ -127,12 +155,12 @@ export default TransactionsChart;
    background: white;
    padding-left: 10px;
    padding-right: 10px;
-   padding-top: 100px;
+   padding-top: 30px;
   `
 
 const MenuItemsContainer = styled.View`
  width: 100%;
- height: 470px;
+ height: 500px;
  background: white;
  margin-bottom: 15px;
  margin-bottom: 15px;
@@ -176,7 +204,7 @@ const LogoutContainer = styled.TouchableOpacity`
     align-items: center;
     margin-bottom: 30px;
     justify-content: center;
-    margin-top: 40px;
+    margin-top: 85px;
 `
 const Logout = styled.Text`
     margin-left: 10px;
@@ -190,4 +218,23 @@ const Logout = styled.Text`
   const AuthContainer = styled.View`
   width: 100%;
   height: 300px;
+  `
+
+  const DeleteButton = styled.TouchableOpacity`
+   width: 100%;
+   height: 50px;
+   max-width: 700px;
+   margin-left: auto;
+   margin-right: auto;
+   border-radius: 5px;
+   border: 1px solid red;
+   align-items: center;
+   justify-content: center;
+  `
+
+  const DeleteText = styled.Text`
+   color: red;
+   font-weight: 400;
+   font-size: 15px;
+   letter-spacing: 1px;
   `
