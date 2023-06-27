@@ -33,20 +33,18 @@ export const useNotifications = async () => {
       const { status } = await Notifications.requestPermissionsAsync();
       finalStatus = status;
     }
-    if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
-      return;
+    if (finalStatus == 'granted') {
+      token = (await Notifications.getExpoPushTokenAsync()).data as string;
+      await SecureStore.storeDeviceToken(token)
+  
+      Notifications.setNotificationHandler({
+        handleNotification: async () => ({
+          shouldShowAlert: true,
+          shouldPlaySound: false,
+          shouldSetBadge: false,
+        }),
+      });
     }
-    token = (await Notifications.getExpoPushTokenAsync()).data as string;
-    await SecureStore.storeDeviceToken(token)
-
-    Notifications.setNotificationHandler({
-      handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: false,
-        shouldSetBadge: false,
-      }),
-    });
     
   } else {
     alert('Must use physical device for Push Notifications');
