@@ -134,19 +134,21 @@ function SignUpScreen() {
             icon='user'
         />
         <AppTextInput 
-        autoCapitalize='none'
+            autoCapitalize='none'
             autoCorrect={false}
             label='Phone number*'  
             name='contact'
             keyboardType='phone-pad'
             icon='phone'
+            
         />
       <AppTextInput 
-        autoCapitalize='none'
+            autoCapitalize='none'
             autoCorrect={false}
             label='Email*'  
             name='email'
             icon='mail'
+            keyboardType='email-address'
         />
             <AppTextInput 
             secureTextEntry 
